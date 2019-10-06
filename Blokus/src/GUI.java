@@ -7,12 +7,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
+import javax.swing.JTextField;
 
 public class GUI extends JFrame {
 
@@ -20,9 +23,9 @@ public class GUI extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel LoginPage;
+	private static GUI frame;
+	private JPanel LoginPage,close_panel,settings_panel,logo_panel,play_panel;
 	int xy,xx;
-	Font sizedFont;
 
 	/**
 	 * Launch the application.
@@ -31,7 +34,7 @@ public class GUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI frame = new GUI();
+					frame = new GUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,6 +42,8 @@ public class GUI extends JFrame {
 			}
 		});
 	}
+	
+
 
 	/**
 	 * Create the frame.
@@ -46,17 +51,12 @@ public class GUI extends JFrame {
 	 * @throws FontFormatException 
 	 */
 	public GUI() {
-		  System.setProperty("awt.useSystemAAFontSettings","on");
-		  System.setProperty("swing.aatext", "true");
-		try {
-			InputStream is = GUI.class.getResourceAsStream("LatoRegular.ttf");
-			Font font = Font.createFont(Font.TRUETYPE_FONT, is);
-			sizedFont = font.deriveFont(12f);
-			
-		}catch (Exception e){
-//			e.printStackTrace();
-		}
+		// antialiasing for font smoothing 
+		System.setProperty("awt.useSystemAAFontSettings","on");
+		System.setProperty("swing.aatext", "true");
+		// creating routes
 		
+		// our frame
 		setUndecorated(true);
 		setResizable(false);
 		setBounds(100, 100, 687, 478);
@@ -86,66 +86,86 @@ public class GUI extends JFrame {
 		setContentPane(LoginPage);
 		LoginPage.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(138, 43, 226));
-		panel.setBounds(0, 0, 343, 489);
-		LoginPage.add(panel);
-		panel.setLayout(null);
+		logo_panel = new JPanel();
+		logo_panel.setBackground(new Color(138, 43, 226));
+		logo_panel.setBounds(0, 0, 343, 478);
+		LoginPage.add(logo_panel);
+		logo_panel.setLayout(null);
 		JLabel lblBlokus = new JLabel("<html><span style='font-size:40px'>"+"Blokus"+"</span></html>");
 		lblBlokus.setForeground(new Color(255, 255, 255));
 		lblBlokus.setBounds(84, 80, 152, 95);
-		panel.add(lblBlokus);
+		logo_panel.add(lblBlokus);
 		lblBlokus.setFont(new Font("Century Gothic", Font.PLAIN, 33));
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.addMouseListener(new MouseAdapter() {
+		settings_panel = new JPanel();
+		settings_panel.setBackground(Color.CYAN);
+		settings_panel.setBounds(342, 0, 345, 478);
+		LoginPage.add(settings_panel);
+		settings_panel.setLayout(null);
+		
+		play_panel = new JPanel();
+		play_panel.setBounds(101, 190, 140, 42);
+		settings_panel.add(play_panel);
+		play_panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Play clicked");
+				settings_panel.removeAll();
+				settings_panel.add(close_panel);
+				GPC gpc=new GPC();
+				gpc.setBounds(0,0,settings_panel.getWidth(),settings_panel.getHeight());
+				settings_panel.add(gpc);
+				settings_panel.repaint();
+				settings_panel.revalidate();
+				
+
 			}
 		});
-		panel_1.setForeground(Color.WHITE);
-		panel_1.setBackground(Color.GREEN);
-		panel_1.setBounds(443, 190, 140, 42);
-		LoginPage.add(panel_1);
+		play_panel.setForeground(Color.WHITE);
+		play_panel.setBackground(Color.GREEN);
 		
 		JLabel lblPlay = new JLabel("PLAY");
 		lblPlay.setForeground(Color.WHITE);
 		lblPlay.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		panel_1.add(lblPlay);
+		play_panel.add(lblPlay);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(128, 0, 0));
-		panel_2.setForeground(new Color(0, 0, 0));
-		panel_2.setBounds(443, 252, 140, 42);
-		LoginPage.add(panel_2);
+		JPanel load_panel = new JPanel();
+		load_panel.setBounds(101, 252, 140, 42);
+		settings_panel.add(load_panel);
+		load_panel.setBackground(new Color(128, 0, 0));
+		load_panel.setForeground(new Color(0, 0, 0));
 		
 		JLabel lblLoad = new JLabel("LOAD");
 		lblLoad.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		lblLoad.setForeground(Color.WHITE);
-		panel_2.add(lblLoad);
+		load_panel.add(lblLoad);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(255, 0, 0));
-		panel_3.setBounds(443, 314, 140, 42);
-		LoginPage.add(panel_3);
+		JPanel exit_panel = new JPanel();
+		exit_panel.setBounds(101, 314, 140, 42);
+		settings_panel.add(exit_panel);
+		exit_panel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+		});
+		exit_panel.setBackground(new Color(255, 0, 0));
 		
 		JLabel lblExit = new JLabel("EXIT");
 		lblExit.setForeground(new Color(255, 255, 255));
 		lblExit.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		panel_3.add(lblExit);
+		exit_panel.add(lblExit);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBorder(null);
-		panel_4.setBackground(Color.CYAN);
-		panel_4.setBounds(649, 11, 28, 36);
-		LoginPage.add(panel_4);
+		close_panel = new JPanel();
+		close_panel.setOpaque(false);
+		close_panel.setBounds(307, 11, 28, 36);
+		settings_panel.add(close_panel);
+		close_panel.setBorder(null);
+		close_panel.setBackground(Color.CYAN);
 		
 		JLabel lblX = new JLabel("<html><span style='font-size:15px'>"+"X"+"</span></html>");
-		panel_4.add(lblX);
+		close_panel.add(lblX);
 		lblX.setIcon(null);
 		lblX.setBackground(Color.RED);
-		lblX.setFont(sizedFont);
 		lblX.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
