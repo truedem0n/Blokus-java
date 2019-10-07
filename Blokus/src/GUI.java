@@ -6,16 +6,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Dictionary;
-import java.util.Hashtable;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 public class GUI extends JFrame {
 
@@ -34,6 +29,8 @@ public class GUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					UIManager.setLookAndFeel(
+				            UIManager.getCrossPlatformLookAndFeelClassName());
 					frame = new GUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -111,7 +108,7 @@ public class GUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				settings_panel.removeAll();
 				settings_panel.add(close_panel);
-				GPC gpc=new GPC();
+				GPC gpc=new GPC(close_panel,LoginPage,frame);
 				gpc.setBounds(0,0,settings_panel.getWidth(),settings_panel.getHeight());
 				settings_panel.add(gpc);
 				settings_panel.repaint();
