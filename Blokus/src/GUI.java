@@ -10,8 +10,6 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-//import org.json.*;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -30,7 +28,7 @@ public class GUI extends JFrame {
 	private static GUI frame;
 	private JPanel LoginPage,close_panel,welcome_panel,logo_panel,play_panel;
 	private int xy,xx;
-	private Dictionary GAME_SETTINGS; 
+	private Dictionary<?, ?> GAME_SETTINGS; 
 
 	/**
 	 * Launch the application.
@@ -74,7 +72,7 @@ public class GUI extends JFrame {
 	 */
 	public GUI() {
 		//Creating Game settings
-		GAME_SETTINGS=new Hashtable();
+		GAME_SETTINGS=new Hashtable<Object, Object>();
 		
 		// antialiasing for font smoothing 
 		System.setProperty("awt.useSystemAAFontSettings","on");
@@ -155,6 +153,7 @@ public class GUI extends JFrame {
 		
 		JPanel load_panel = new JPanel();
 		load_panel.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public void mouseClicked(MouseEvent s) {
 
