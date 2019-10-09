@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/atulm/Downloads/json-simple-1.1.jar"/>
+	<classpathentry kind="lib" path="G:/My Drive/MUN/Fall 2019/Comp 2005/comp2005_fall19-group11/Blokus/dependencies/json-simple-1.1.jar"/>
 	<classpathentry kind="output" path="out/production/Blokus"/>
 </classpath>
