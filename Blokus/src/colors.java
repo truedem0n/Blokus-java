@@ -5,6 +5,7 @@ import java.awt.Font;
 import javax.swing.JComboBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Dictionary;
 
 public class colors extends JPanel {
 	/**
@@ -12,21 +13,22 @@ public class colors extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Game game;
-
+	private String colors[] = { "Red","Green","Blue","Yellow"}; 
 	/**
 	 * Create the panel.
 	 * @param close_panel 
 	 * @param loginPage 
 	 * @param frame 
+	 * @param gAME_SETTINGS 
 	 */
-	public colors(JPanel close_panel, JPanel loginPage, GUI frame) {
+	public colors(JPanel close_panel, JPanel loginPage, GUI frame, Dictionary gAME_SETTINGS) {
 		
 		setBackground(Color.BLUE);
 		setBounds(342, 0, 345, 478);
 		setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.addMouseListener(new MouseAdapter() {
+		JPanel continue_panel = new JPanel();
+		continue_panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				game=new Game(frame);
@@ -38,53 +40,62 @@ public class colors extends JPanel {
 				loginPage.repaint();
 			}
 		});
-		panel.setLayout(null);
-		panel.setBackground(Color.ORANGE);
-		panel.setBounds(61, 283, 216, 49);
-		add(panel);
+		continue_panel.setLayout(null);
+		continue_panel.setBackground(Color.ORANGE);
+		continue_panel.setBounds(61, 283, 216, 49);
+		add(continue_panel);
 		
 		JLabel label = new JLabel("Continue");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		label.setBounds(66, 11, 79, 25);
-		panel.add(label);
+		continue_panel.add(label);
 		
-		JComboBox comboBox = new JComboBox(new Object[]{});
-		comboBox.setBounds(134, 192, 143, 22);
-		add(comboBox);
+		JComboBox player3_comboBox = new JComboBox(colors);
+		player3_comboBox.setBounds(134, 196, 143, 22);
+		add(player3_comboBox);
 		
-		JLabel label_1 = new JLabel("Difficulty: ");
-		label_1.setForeground(Color.WHITE);
-		label_1.setBounds(61, 196, 97, 14);
-		add(label_1);
+		JLabel lblPlayer_2 = new JLabel("Player 3");
+		lblPlayer_2.setForeground(Color.WHITE);
+		lblPlayer_2.setBounds(61, 200, 97, 14);
+		add(lblPlayer_2);
 		
-		JLabel label_2 = new JLabel("Minutes:");
-		label_2.setForeground(Color.WHITE);
-		label_2.setBounds(61, 165, 97, 14);
-		add(label_2);
+		JLabel lblPlayer_1 = new JLabel("Player 2");
+		lblPlayer_1.setForeground(Color.WHITE);
+		lblPlayer_1.setBounds(61, 170, 97, 14);
+		add(lblPlayer_1);
 		
-		JComboBox comboBox_1 = new JComboBox(new Object[]{});
-		comboBox_1.setBounds(134, 161, 143, 22);
-		add(comboBox_1);
+		JComboBox player2_comboBox = new JComboBox(colors);
+		player2_comboBox.setBounds(134, 166, 143, 22);
+		add(player2_comboBox);
 		
-		JComboBox comboBox_2 = new JComboBox(new Object[]{});
-		comboBox_2.setBounds(134, 133, 143, 22);
-		add(comboBox_2);
+		JComboBox player1_comboBox = new JComboBox(colors);
+		player1_comboBox.setBounds(134, 137, 143, 22);
+		add(player1_comboBox);
 		
-		JLabel label_3 = new JLabel("Time Limit:");
-		label_3.setForeground(Color.WHITE);
-		label_3.setBounds(61, 137, 63, 14);
-		add(label_3);
+		JLabel lblPlayer = new JLabel("Player 1");
+		lblPlayer.setForeground(Color.WHITE);
+		lblPlayer.setBounds(61, 141, 63, 14);
+		add(lblPlayer);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setLayout(null);
-		panel_1.setBackground(Color.ORANGE);
-		panel_1.setBounds(61, 353, 216, 49);
-		add(panel_1);
+		JPanel randomize_panel = new JPanel();
+		randomize_panel.setLayout(null);
+		randomize_panel.setBackground(Color.ORANGE);
+		randomize_panel.setBounds(61, 353, 216, 49);
+		add(randomize_panel);
 		
 		JLabel lblRandomize = new JLabel("Randomize");
 		lblRandomize.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblRandomize.setBounds(58, 11, 107, 25);
-		panel_1.add(lblRandomize);
+		randomize_panel.add(lblRandomize);
+		
+		JLabel lblPlayer_3 = new JLabel("Player 4");
+		lblPlayer_3.setForeground(Color.WHITE);
+		lblPlayer_3.setBounds(61, 229, 97, 14);
+		add(lblPlayer_3);
+		
+		JComboBox player4_comboBox = new JComboBox(colors);
+		player4_comboBox.setBounds(134, 225, 143, 22);
+		add(player4_comboBox);
 
 	}
 }

@@ -5,7 +5,6 @@ import javax.swing.JComboBox;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Dictionary;
 
 public class TMD extends JPanel {
 	
@@ -13,23 +12,21 @@ public class TMD extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String m1[] = { "10", "15", "20"}; 
+	private String m1[] = { "10 minutes", "15 minutes", "20 minutes"}; 
 	private String tl[] = { "YES","NO"}; 
 	private String df[] = { "Easy","Medium","Hard"}; 
 	private TMD tmd;private colors color;
 	private JPanel close_panel;
-	private JComboBox<?> timeLimit_comboBox,minutes_comboBox,difficulty_comboBox;
 	/**
 	 * Create the panel.
 	 * @param close_panel 
 	 * @param loginPage 
 	 * @param frame 
-	 * @param gAME_SETTINGS 
 	 */
-	public TMD(JPanel close_panel, JPanel loginPage, GUI frame, Dictionary gAME_SETTINGS) {
+	public TMD(JPanel close_panel, JPanel loginPage, GUI frame) {
 		this.close_panel=close_panel;
 		tmd=this;
-		System.out.println(gAME_SETTINGS.get("playerNumber"));
+		
 		setBackground(Color.GREEN);
 		setBounds(342, 0, 345, 478);
 		setLayout(null);
@@ -38,13 +35,13 @@ public class TMD extends JPanel {
 		lblTimeLimit.setBounds(61, 152, 63, 14);
 		add(lblTimeLimit);
 		
-		timeLimit_comboBox = new JComboBox<Object>(tl);
-		timeLimit_comboBox.setBounds(134, 148, 143, 22);
-		add(timeLimit_comboBox);
+		JComboBox<?> comboBox = new JComboBox<Object>(tl);
+		comboBox.setBounds(134, 148, 143, 22);
+		add(comboBox);
 		
-		minutes_comboBox = new JComboBox<Object>(m1);
-		minutes_comboBox.setBounds(134, 176, 143, 22);
-		add(minutes_comboBox);
+		JComboBox<?> comboBox_1 = new JComboBox<Object>(m1);
+		comboBox_1.setBounds(134, 176, 143, 22);
+		add(comboBox_1);
 		
 		JLabel lblMinutes = new JLabel("Minutes:");
 		lblMinutes.setBounds(61, 180, 97, 14);
@@ -54,18 +51,15 @@ public class TMD extends JPanel {
 		lblDifficulty.setBounds(61, 211, 97, 14);
 		add(lblDifficulty);
 		
-		difficulty_comboBox = new JComboBox<Object>(df);
-		difficulty_comboBox.setBounds(134, 207, 143, 22);
-		add(difficulty_comboBox);
+		JComboBox<?> comboBox_2 = new JComboBox<Object>(df);
+		comboBox_2.setBounds(134, 207, 143, 22);
+		add(comboBox_2);
 		
-		JPanel continue_panel = new JPanel();
-		continue_panel.addMouseListener(new MouseAdapter() {
+		JPanel panel = new JPanel();
+		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				gAME_SETTINGS.put("timeLimit", timeLimit_comboBox.getSelectedItem());
-				gAME_SETTINGS.put("minutes", minutes_comboBox.getSelectedItem());
-				gAME_SETTINGS.put("difficulty", difficulty_comboBox.getSelectedItem());		
-				color =new colors(close_panel,loginPage,frame,gAME_SETTINGS);
+				color =new colors(close_panel,loginPage,frame);
 				tmd.removeAll();
 				color.setBounds(0,0,tmd.getWidth(),tmd.getHeight());
 				color.add(close_panel);
@@ -74,15 +68,15 @@ public class TMD extends JPanel {
 				tmd.repaint();
 			}
 		});
-		continue_panel.setLayout(null);
-		continue_panel.setBackground(Color.ORANGE);
-		continue_panel.setBounds(61, 298, 216, 49);
-		add(continue_panel);
+		panel.setLayout(null);
+		panel.setBackground(Color.ORANGE);
+		panel.setBounds(61, 298, 216, 49);
+		add(panel);
 		
 		JLabel label_3 = new JLabel("Continue");
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		label_3.setBounds(66, 11, 79, 25);
-		continue_panel.add(label_3);
+		panel.add(label_3);
 
 	}
 }

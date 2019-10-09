@@ -5,7 +5,6 @@ import java.awt.Font;
 import javax.swing.JComboBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Dictionary;
 
 public class GPC extends JPanel {
 	/**
@@ -18,7 +17,6 @@ public class GPC extends JPanel {
 	private String g1[] = { "16x16", "20x20", "24x24"}; 
 	private String p1[] = { "1", "2", "3","4"}; 
 	private String c1[] = { "0", "1", "2","3"}; 
-	private JComboBox<?> gridSize_comboBox,playerNumber_comboBox,cpuNumber_comboBox;
 	
 
 	/**
@@ -26,11 +24,10 @@ public class GPC extends JPanel {
 	 * @param close_panel2 
 	 * @param loginPage 
 	 * @param frame 
-	 * @param GAME_SETTINGS 
 	 * 
 	 */
 	
-	public GPC(JPanel close_panel2, JPanel loginPage, GUI frame, Dictionary GAME_SETTINGS) {
+	public GPC(JPanel close_panel2, JPanel loginPage, GUI frame) {
 		this.close_panel=close_panel2;
 		setBackground(Color.ORANGE);
 		setBounds(342, 0, 345, 478);
@@ -48,27 +45,12 @@ public class GPC extends JPanel {
 		JLabel lblCpus = new JLabel("CPU(s):");
 		lblCpus.setBounds(59, 218, 97, 14);
 		add(lblCpus);
-		gridSize_comboBox = new JComboBox<Object>(g1);
-		gridSize_comboBox.setBounds(132, 155, 143, 22);
-		add(gridSize_comboBox);
 		
-		playerNumber_comboBox = new JComboBox<Object>(p1);
-		playerNumber_comboBox.setBounds(132, 183, 143, 22);
-		add(playerNumber_comboBox);
-		
-		cpuNumber_comboBox = new JComboBox<Object>(c1);
-		cpuNumber_comboBox.setBounds(132, 214, 143, 22);
-		add(cpuNumber_comboBox);
-		
-		JPanel continue_panel = new JPanel();
-		continue_panel.addMouseListener(new MouseAdapter() {
+		JPanel panel = new JPanel();
+		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				GAME_SETTINGS.put("gridSize",gridSize_comboBox.getSelectedIndex());
-				GAME_SETTINGS.put("playerNumber",playerNumber_comboBox.getSelectedItem());
-				GAME_SETTINGS.put("cpuNumber",cpuNumber_comboBox.getSelectedItem());
-				
-				tmd=new TMD(close_panel,loginPage,frame,GAME_SETTINGS);
+				tmd=new TMD(close_panel,loginPage,frame);
 				gpc.removeAll();
 				tmd.setBounds(0,0,gpc.getWidth(),gpc.getHeight());
 				tmd.add(close_panel);
@@ -77,17 +59,27 @@ public class GPC extends JPanel {
 				gpc.repaint();
 			}
 		});
-		continue_panel.setBackground(Color.GREEN);
-		continue_panel.setBounds(59, 305, 216, 49);
-		add(continue_panel);
-		continue_panel.setLayout(null);
+		panel.setBackground(Color.GREEN);
+		panel.setBounds(59, 305, 216, 49);
+		add(panel);
+		panel.setLayout(null);
 		
 		JLabel lblContinue = new JLabel("Continue");
 		lblContinue.setBounds(66, 11, 79, 25);
 		lblContinue.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		continue_panel.add(lblContinue);
+		panel.add(lblContinue);
 		
+		JComboBox<?> comboBox = new JComboBox<Object>(g1);
+		comboBox.setBounds(132, 155, 143, 22);
+		add(comboBox);
 		
+		JComboBox<?> comboBox_1 = new JComboBox<Object>(p1);
+		comboBox_1.setBounds(132, 183, 143, 22);
+		add(comboBox_1);
+		
+		JComboBox<?> comboBox_2 = new JComboBox<Object>(c1);
+		comboBox_2.setBounds(132, 214, 143, 22);
+		add(comboBox_2);
 
 	}
 }

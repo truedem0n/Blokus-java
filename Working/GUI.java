@@ -6,9 +6,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
-import java.util.Dictionary;
-import java.util.Hashtable;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,9 +19,8 @@ public class GUI extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static GUI frame;
-	private JPanel LoginPage,close_panel,welcome_panel,logo_panel,play_panel;
-	private int xy,xx;
-	private Dictionary GAME_SETTINGS; 
+	private JPanel LoginPage,close_panel,settings_panel,logo_panel,play_panel;
+	int xy,xx;
 
 	/**
 	 * Launch the application.
@@ -52,9 +48,6 @@ public class GUI extends JFrame {
 	 * @throws FontFormatException 
 	 */
 	public GUI() {
-		//Creating Game settings
-		GAME_SETTINGS=new Hashtable();
-		
 		// antialiasing for font smoothing 
 		System.setProperty("awt.useSystemAAFontSettings","on");
 		System.setProperty("swing.aatext", "true");
@@ -62,7 +55,7 @@ public class GUI extends JFrame {
 		
 		// our frame
 		setUndecorated(true);
-		setResizable(true);
+		setResizable(false);
 		setBounds(100, 100, 687, 478);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//setBounds(100, 100, 364, 475);
@@ -101,25 +94,25 @@ public class GUI extends JFrame {
 		logo_panel.add(lblBlokus);
 		lblBlokus.setFont(new Font("Century Gothic", Font.PLAIN, 33));
 		
-		welcome_panel = new JPanel();
-		welcome_panel.setBackground(Color.CYAN);
-		welcome_panel.setBounds(342, 0, 345, 478);
-		LoginPage.add(welcome_panel);
-		welcome_panel.setLayout(null);
+		settings_panel = new JPanel();
+		settings_panel.setBackground(Color.CYAN);
+		settings_panel.setBounds(342, 0, 345, 478);
+		LoginPage.add(settings_panel);
+		settings_panel.setLayout(null);
 		
 		play_panel = new JPanel();
 		play_panel.setBounds(101, 190, 140, 42);
-		welcome_panel.add(play_panel);
+		settings_panel.add(play_panel);
 		play_panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				welcome_panel.removeAll();
-				welcome_panel.add(close_panel);
-				GPC gpc=new GPC(close_panel,LoginPage,frame,GAME_SETTINGS);
-				gpc.setBounds(0,0,welcome_panel.getWidth(),welcome_panel.getHeight());
-				welcome_panel.add(gpc);
-				welcome_panel.repaint();
-				welcome_panel.revalidate();
+				settings_panel.removeAll();
+				settings_panel.add(close_panel);
+				GPC gpc=new GPC(close_panel,LoginPage,frame);
+				gpc.setBounds(0,0,settings_panel.getWidth(),settings_panel.getHeight());
+				settings_panel.add(gpc);
+				settings_panel.repaint();
+				settings_panel.revalidate();
 				
 
 			}
@@ -134,7 +127,7 @@ public class GUI extends JFrame {
 		
 		JPanel load_panel = new JPanel();
 		load_panel.setBounds(101, 252, 140, 42);
-		welcome_panel.add(load_panel);
+		settings_panel.add(load_panel);
 		load_panel.setBackground(new Color(128, 0, 0));
 		load_panel.setForeground(new Color(0, 0, 0));
 		
@@ -145,7 +138,7 @@ public class GUI extends JFrame {
 		
 		JPanel exit_panel = new JPanel();
 		exit_panel.setBounds(101, 314, 140, 42);
-		welcome_panel.add(exit_panel);
+		settings_panel.add(exit_panel);
 		exit_panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -162,7 +155,7 @@ public class GUI extends JFrame {
 		close_panel = new JPanel();
 		close_panel.setOpaque(false);
 		close_panel.setBounds(307, 11, 28, 36);
-		welcome_panel.add(close_panel);
+		settings_panel.add(close_panel);
 		close_panel.setBorder(null);
 		close_panel.setBackground(Color.CYAN);
 		

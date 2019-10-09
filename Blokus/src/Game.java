@@ -7,12 +7,42 @@ import javax.swing.JMenuItem;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPopupMenu;
 import java.awt.Component;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.GridLayout;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.JList;
+import java.awt.GridBagLayout;
+import javax.swing.JSeparator;
+
+
 
 public class Game extends JPanel {
+	private class customButton extends JButton{
+		private int x,y;
+		private boolean taken=false;
+		public customButton(String name,int x,int y) {
+			super(name);
+			this.x=x;
+			this.y=y;
+		}
+		public int[] getPos() {
+			int[] pos= {this.x,this.y};
+			return pos;
+		}
+		public boolean isTaken() {
+			return this.taken;
+		}
+		public void setTaken(boolean taken) {
+			this.taken=taken;
+		}
+	}
+	private int GRID_SIZE= 20;
+	private customButton button[][]=new customButton[GRID_SIZE][GRID_SIZE];
 
 	/**
 	 * Create the panel.
@@ -24,14 +54,31 @@ public class Game extends JPanel {
 		frame.setLocationRelativeTo(null);
 		setBounds(0, 0, 745, 520);
 		setLayout(null);
+				
+		JPanel SHAPES_LIST = new JPanel();
+		SHAPES_LIST.setBounds(10, 114, 170, 241);
+		add(SHAPES_LIST);
+		SHAPES_LIST.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(10, 114, 170, 241);
-		add(panel);
+		JButton block1 = new JButton("");
+		block1.setForeground(Color.RED);
+		block1.setBackground(Color.RED);
+		block1.setBounds(68, 43, 40, 40);
+		SHAPES_LIST.add(block1);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(20, 366, 148, 40);
-		add(panel_1);
+		JSeparator separator = new JSeparator();
+		separator.setBounds(0, 133, 170, 2);
+		SHAPES_LIST.add(separator);
+		
+		JButton button_1 = new JButton("");
+		button_1.setForeground(Color.RED);
+		button_1.setBackground(Color.RED);
+		button_1.setBounds(48, 164, 80, 40);
+		SHAPES_LIST.add(button_1);
+		
+		JPanel surrender = new JPanel();
+		surrender.setBounds(20, 366, 148, 40);
+		add(surrender);
 		
 		JLabel lblScore = new JLabel("Score: 0");
 		lblScore.setBounds(20, 478, 48, 14);
@@ -50,150 +97,59 @@ public class Game extends JPanel {
 		lblOptions.setBounds(92, 11, 48, 14);
 		add(lblOptions);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(190, 89, 545, 420);
-		add(panel_2);
-		panel_2.setLayout(new GridLayout(10, 10));
+		JPanel GAME_BOARD = new JPanel();
+		GAME_BOARD.setBounds(190, 89, 545, 420);
+		add(GAME_BOARD);
+		GAME_BOARD.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));
 		
-		JButton btnNewButton_1 = new JButton("New button");
-		panel_2.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("New button");
-		panel_2.add(btnNewButton_2);
-		
-		JButton button = new JButton("New button");
-		panel_2.add(button);
-		
-		JButton button_1 = new JButton("New button");
-		panel_2.add(button_1);
-		
-		JButton button_2 = new JButton("New button");
-		panel_2.add(button_2);
-		
-		JButton button_3 = new JButton("New button");
-		panel_2.add(button_3);
-		
-		JButton button_4 = new JButton("New button");
-		panel_2.add(button_4);
-		
-		JButton button_5 = new JButton("New button");
-		panel_2.add(button_5);
-		
-		JButton button_6 = new JButton("New button");
-		panel_2.add(button_6);
-		
-		JButton button_7 = new JButton("New button");
-		panel_2.add(button_7);
-		
-		JButton btnNewButton = new JButton("New button");
-		panel_2.add(btnNewButton);
-		
-		JButton button_9 = new JButton("New button");
-		panel_2.add(button_9);
-		
-		JButton button_8 = new JButton("New button");
-		panel_2.add(button_8);
-		
-		JButton button_11 = new JButton("New button");
-		panel_2.add(button_11);
-		
-		JButton button_10 = new JButton("New button");
-		panel_2.add(button_10);
-		
-		JButton button_13 = new JButton("New button");
-		panel_2.add(button_13);
-		
-		JButton button_12 = new JButton("New button");
-		panel_2.add(button_12);
-		
-		JButton button_17 = new JButton("New button");
-		panel_2.add(button_17);
-		
-		JButton button_16 = new JButton("New button");
-		panel_2.add(button_16);
-		
-		JButton button_15 = new JButton("New button");
-		panel_2.add(button_15);
-		
-		JButton button_18 = new JButton("New button");
-		panel_2.add(button_18);
-		
-		JButton button_14 = new JButton("New button");
-		panel_2.add(button_14);
-		
-		JButton button_19 = new JButton("New button");
-		panel_2.add(button_19);
-		
-		JButton button_21 = new JButton("New button");
-		panel_2.add(button_21);
-		
-		JButton button_20 = new JButton("New button");
-		panel_2.add(button_20);
-		
-		JButton button_22 = new JButton("New button");
-		panel_2.add(button_22);
-		
-		JButton button_25 = new JButton("New button");
-		panel_2.add(button_25);
-		
-		JButton button_24 = new JButton("New button");
-		panel_2.add(button_24);
-		
-		JButton button_23 = new JButton("New button");
-		panel_2.add(button_23);
-		
-		JButton button_27 = new JButton("New button");
-		panel_2.add(button_27);
-		
-		JButton button_26 = new JButton("New button");
-		panel_2.add(button_26);
-		
-		JButton button_29 = new JButton("New button");
-		panel_2.add(button_29);
-		
-		JButton button_28 = new JButton("New button");
-		panel_2.add(button_28);
-		
-		JButton button_30 = new JButton("New button");
-		panel_2.add(button_30);
-		
-		JButton button_33 = new JButton("New button");
-		panel_2.add(button_33);
-		
-		JButton button_32 = new JButton("New button");
-		panel_2.add(button_32);
-		
-		JButton button_31 = new JButton("New button");
-		panel_2.add(button_31);
-		
-		JButton button_34 = new JButton("New button");
-		panel_2.add(button_34);
-		
-		JButton button_36 = new JButton("New button");
-		panel_2.add(button_36);
-		
-		JButton button_35 = new JButton("New button");
-		panel_2.add(button_35);
+		for (int i=0;i<GRID_SIZE;i++)
+			for (int j=0;j<GRID_SIZE;j++) {
+				button[j][i] = new customButton("",j,i);
+				button[j][i].setBackground(Color.white);
+				button[j][i].addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						customButton thisButton=((customButton)e.getSource());
+						int x=thisButton.getPos()[0];
+						int y=thisButton.getPos()[1];
+						if(!thisButton.isTaken()&&!button[x+1][y].isTaken()) {
+							((customButton)e.getSource()).setBackground(Color.red);
+							((customButton)e.getSource()).getPos();
+							
+							button[x+1][y].setBackground(Color.red);
+							button[x+1][y].setTaken(true);
+							thisButton.setTaken(true);
+						}
+					}
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						customButton thisButton=((customButton)e.getSource());
+						int x=thisButton.getPos()[0];
+						int y=thisButton.getPos()[1];
+						if(!thisButton.isTaken()&&!button[x+1][y].isTaken()) {
+							thisButton.setBackground(Color.red);
+							((customButton)e.getSource()).getPos();
+							button[x+1][y].setBackground(Color.red);
+						}
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						customButton thisButton=((customButton)e.getSource());
+						int x=thisButton.getPos()[0];
+						int y=thisButton.getPos()[1];
+						if(!thisButton.isTaken()&&!button[x+1][y].isTaken()) {
+							((customButton)e.getSource()).setBackground(Color.white);
+							button[x+1][y].setBackground(Color.white);
+						}
+					}
+				});
+				GAME_BOARD.add(button[j][i]);
+				
+			}
 		
 		JLabel lblTimeLeft = new JLabel("Time left: 00:00");
 		lblTimeLeft.setBounds(646, 64, 89, 14);
 		add(lblTimeLeft);
-	}
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
 	}
 }
