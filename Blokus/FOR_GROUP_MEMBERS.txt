@@ -1,0 +1,3 @@
+Only open this project with Eclipse, Intellij, or other IDEs
+
+do not run javac *.java in src folder  because that is going to mess up the classpath for Eclipse or any other IDE.
