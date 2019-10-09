@@ -1,4 +1,6 @@
 import javax.swing.JPanel;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -7,17 +9,24 @@ import javax.swing.JMenuItem;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPopupMenu;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.GridLayout;
+
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.JList;
 import java.awt.GridBagLayout;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
+
+import java.awt.ScrollPane;
 
 
 
@@ -57,25 +66,73 @@ public class Game extends JPanel {
 				
 		JPanel SHAPES_LIST = new JPanel();
 		SHAPES_LIST.setBounds(10, 114, 170, 241);
-		add(SHAPES_LIST);
 		SHAPES_LIST.setLayout(null);
+		add(SHAPES_LIST);
 		
-		JButton block1 = new JButton("");
-		block1.setForeground(Color.RED);
-		block1.setBackground(Color.RED);
-		block1.setBounds(68, 43, 40, 40);
-		SHAPES_LIST.add(block1);
+		JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setAutoscrolls(true);
+        SHAPES_LIST.add(panel,BorderLayout.NORTH);
+
+        JScrollPane scrollPane = new JScrollPane(panel);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(8);
+        scrollPane.setBounds(-1, -1, 190, 241);
+
+        JPanel contentPane = new JPanel(null);
+        contentPane.setBounds(-1,-1,175,241);
+        contentPane.add(scrollPane);
+        
+        
+
+        for(int i = 1; i <= 5; i++) {
+
+        	JSeparator separator = new JSeparator();
+            separator.setBackground(Color.RED);
+    		separator.setPreferredSize(new Dimension(175, 20));
+    		separator.setBounds(-1,0,175,20);
+        	
+        	
+            JPanel sp1 = new JPanel();
+            sp1.setLayout(new FlowLayout());
+            sp1.setBackground(Color.WHITE);
+            sp1.setPreferredSize(new Dimension(170, 170));
+
+            JPanel ssp1 = new JPanel();
+            ssp1.setLayout(null);
+            ssp1.setBackground(Color.WHITE);
+            ssp1.setPreferredSize(new Dimension(170, 170));
+
+
+            JLabel l3 = new JLabel("Title: ");
+            l3.setForeground(Color.BLACK);
+            l3.setPreferredSize(new Dimension(100, 20));
+            JTextField t1 = new JTextField("Electronic Basics");
+            t1.setPreferredSize(new Dimension(170, 20));
+
+            
+    		
+
+            //sp1.add(separator);
+            for (int x=0;x<i;x++) {
+            	JButton button=new JButton();
+            	button.setBounds(20+x*20,50,20,20);
+            	ssp1.add(button);
+            }
+            //ssp1.add(t1);
+            if(i!=0)
+            	sp1.add(separator);
+            
+
+
+            sp1.add(ssp1);
+            panel.add(sp1);
+
+        }
 		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 133, 170, 2);
-		SHAPES_LIST.add(separator);
-		
-		JButton button_1 = new JButton("");
-		button_1.setForeground(Color.RED);
-		button_1.setBackground(Color.RED);
-		button_1.setBounds(48, 164, 80, 40);
-		SHAPES_LIST.add(button_1);
-		
+        SHAPES_LIST.add(contentPane);
+        
 		JPanel surrender = new JPanel();
 		surrender.setBounds(20, 366, 148, 40);
 		add(surrender);
@@ -151,5 +208,7 @@ public class Game extends JPanel {
 		JLabel lblTimeLeft = new JLabel("Time left: 00:00");
 		lblTimeLeft.setBounds(646, 64, 89, 14);
 		add(lblTimeLeft);
+		
+		
 	}
 }

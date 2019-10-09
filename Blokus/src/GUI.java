@@ -8,7 +8,13 @@ import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
-
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+//import org.json.*;
+import org.json.simple.*;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -43,8 +49,23 @@ public class GUI extends JFrame {
 			}
 		});
 	}
-	
-
+	private static void parseEmployeeObject(JSONObject employee)
+    {
+        //Get employee object within list
+        JSONObject employeeObject = (JSONObject) employee.get("employee");
+         
+        //Get employee first name
+        String firstName = (String) employeeObject.get("firstName");   
+        System.out.println(firstName);
+         
+        //Get employee last name
+        String lastName = (String) employeeObject.get("lastName"); 
+        System.out.println(lastName);
+         
+        //Get employee website name
+        String website = (String) employeeObject.get("website");   
+        System.out.println(website);
+    }
 
 	/**
 	 * Create the frame.
@@ -133,6 +154,30 @@ public class GUI extends JFrame {
 		play_panel.add(lblPlay);
 		
 		JPanel load_panel = new JPanel();
+		load_panel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent s) {
+
+				
+				JSONParser jsonParser = new JSONParser();
+		        try (FileReader reader = new FileReader("sessions.json"))
+		        {
+		            //Read JSON file
+		            Object obj = jsonParser.parse(reader);
+		            JSONArray employeeList = (JSONArray) obj;
+		            System.out.println(employeeList);
+		            //Iterate over employee array
+		            employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
+		        } catch (FileNotFoundException e) {
+		            e.printStackTrace();
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        } catch (ParseException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		
+		});
 		load_panel.setBounds(101, 252, 140, 42);
 		welcome_panel.add(load_panel);
 		load_panel.setBackground(new Color(128, 0, 0));
