@@ -16,12 +16,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.awt.GridLayout;
-
+import java.awt.Cursor;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+
+
 import javax.swing.JList;
 import java.awt.GridBagLayout;
 import javax.swing.JSeparator;
@@ -62,6 +66,7 @@ public class Game extends JPanel {
 	}
 	private int GRID_SIZE= 20,currentButtonActionAdder;
 	private int[][] actions={{0,0}};
+	private Dictionary map;
 	private customButton button[][]=new customButton[GRID_SIZE][GRID_SIZE];
 	private shapeButton[][][] SHAPE_LIST=new shapeButton[21][5][5];
 	private int[][][] shapes= {
@@ -93,12 +98,29 @@ public class Game extends JPanel {
 			{{-1,0},{1,0},{0,0},{0,1},{0,-1}},
 			{{-1,0},{0,-1},{0,0},{1,0},{2,0}},
 	};
+	
+	
+	private boolean isPlaceable(int x, int y, int[][] actions) {
+		try {
+			for(int i=0;i<actions.length;i++) {
+				if(button[x+actions[i][0]][y+actions[i][1]].isTaken()) {
+					return false;
+				}
+			}
+		}
+		catch(Exception e) {
+			return false;
+		}
+		return true;
+	}
 
 	/**
 	 * Create the panel.
 	 * @param frame 
 	 */
 	public Game(GUI frame) {
+		map=new Hashtable();
+		
 		setBackground(Color.LIGHT_GRAY);
 		frame.setBounds(0, 0, 745, 720-200);
 		frame.setLocationRelativeTo(null);
@@ -220,23 +242,18 @@ public class Game extends JPanel {
 						customButton thisButton=((customButton)e.getSource());
 						int x=thisButton.getPos()[0];
 						int y=thisButton.getPos()[1];
-//						if(!thisButton.isTaken()&&!button[x+1][y].isTaken()) {
-//							((customButton)e.getSource()).setBackground(Color.red);
-//							((customButton)e.getSource()).getPos();
-//							
-//							button[x+1][y].setBackground(Color.red);
-//							button[x+1][y].setTaken(true);
-//							thisButton.setTaken(true);
-//						}
-						for(int i=0;i<actions.length;i++) {
-							if(!button[x+actions[i][0]][y+actions[i][1]].isTaken()) {
-								((customButton)e.getSource()).setBackground(Color.red);
-								((customButton)e.getSource()).getPos();
-								button[x+actions[i][0]][y+actions[i][1]].setBackground(Color.red);
-								button[x+actions[i][0]][y+actions[i][1]].setTaken(true);
-								thisButton.setTaken(true);
+						try {
+							for(int i=0;i<actions.length;i++) {
+								if(!button[x+actions[i][0]][y+actions[i][1]].isTaken() && isPlaceable(x,y,actions)) {
+									((customButton)e.getSource()).setBackground(Color.red);
+									((customButton)e.getSource()).getPos();
+									button[x+actions[i][0]][y+actions[i][1]].setBackground(Color.red);
+									button[x+actions[i][0]][y+actions[i][1]].setTaken(true);
+									thisButton.setTaken(true);
+									map.put(String.valueOf(x+actions[i][0]+"_"+x+actions[i][1]), true);
+								}
 							}
-						}
+						}catch(Exception s) {button[x][y].setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));}
 						
 					}
 					@Override
@@ -244,10 +261,14 @@ public class Game extends JPanel {
 						customButton thisButton=((customButton)e.getSource());
 						int x=thisButton.getPos()[0];
 						int y=thisButton.getPos()[1];
-						for(int i=0;i<actions.length;i++) {
-							if(!button[x+actions[i][0]][y+actions[i][1]].isTaken()) {
-								button[x+actions[i][0]][y+actions[i][1]].setBackground(Color.red);
+						try {
+							for(int i=0;i<actions.length;i++) {
+								if(!button[x+actions[i][0]][y+actions[i][1]].isTaken() && isPlaceable(x,y,actions)) {
+									button[x+actions[i][0]][y+actions[i][1]].setBackground(Color.red);
+								}
 							}
+						}catch(Exception s) {
+							button[x][y].setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 						}
 						
 					}
@@ -256,11 +277,13 @@ public class Game extends JPanel {
 						customButton thisButton=((customButton)e.getSource());
 						int x=thisButton.getPos()[0];
 						int y=thisButton.getPos()[1];
-						for(int i=0;i<actions.length;i++) {
-							if(!button[x+actions[i][0]][y+actions[i][1]].isTaken()) {
+						try {for(int i=0;i<actions.length;i++) {
+							System.out.println();
+							if(!button[x+actions[i][0]][y+actions[i][1]].isTaken() && map.get(String.valueOf(x+actions[i][0]+"_"+x+actions[i][1]))!="true") {
 								button[x+actions[i][0]][y+actions[i][1]].setBackground(Color.white);
 							}
-						}
+						}}catch(Exception s) {button[x][y].setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));}
+						
 					}
 				});
 				GAME_BOARD.add(button[j][i]);
