@@ -42,7 +42,7 @@ public class colors extends JPanel {
 		});
 		continue_panel.setLayout(null);
 		continue_panel.setBackground(Color.ORANGE);
-		continue_panel.setBounds(61, 283, 216, 49);
+		continue_panel.setBounds(59, 305, 216, 49);
 		add(continue_panel);
 		
 		JLabel label = new JLabel("Continue");
@@ -80,7 +80,7 @@ public class colors extends JPanel {
 		JPanel randomize_panel = new JPanel();
 		randomize_panel.setLayout(null);
 		randomize_panel.setBackground(Color.ORANGE);
-		randomize_panel.setBounds(61, 353, 216, 49);
+		randomize_panel.setBounds(59, 371, 216, 49);
 		add(randomize_panel);
 		
 		JLabel lblRandomize = new JLabel("Randomize");

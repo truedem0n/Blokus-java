@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
 import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
@@ -50,8 +51,48 @@ public class Game extends JPanel {
 			this.taken=taken;
 		}
 	}
-	private int GRID_SIZE= 20;
+	private class shapeButton extends JButton{
+		private int i;
+		public shapeButton(int i) {
+			this.i=i;
+		}
+		public int getIndex() {
+			return this.i;
+		}
+	}
+	private int GRID_SIZE= 20,currentButtonActionAdder;
+	private int[][] actions={{0,0}};
 	private customButton button[][]=new customButton[GRID_SIZE][GRID_SIZE];
+	private shapeButton[][][] SHAPE_LIST=new shapeButton[21][5][5];
+	private int[][][] shapes= {
+			
+			{{0,0}},
+			
+			{{0,0},{1,0}},
+			
+			{{-1,0},{0,0},{1,0}},
+			{{-1,0},{0,0},{0,1}},
+			
+			{{-2,0},{-1,0},{0,0},{1,0}},
+			{{-1,0},{0,0},{1,0},{1,1}},
+			{{-1,0},{0,0},{1,0},{0,-1}},
+			{{0,0},{1,0},{0,-1},{1,-1}},
+			{{-1,1},{-1,0},{0,0},{0,-1}},
+			
+			
+			{{-2,0},{-1,0},{0,0},{1,0},{2,0}},
+			{{-2,0},{-1,0},{0,0},{1,0},{1,1}},
+			{{-1,1},{-1,0},{0,0},{0,-1},{0,-2}},
+			{{-1,0},{0,0},{-1,-1},{0,-1},{0,-2}},
+			{{0,-2},{-1,-2},{-1,-1},{-1,0},{0,0}},
+			{{-1,1},{0,1},{0,0},{0,-1},{1,-1}},
+			{{-1,1},{-1,0},{0,0},{0,-1},{1,-1}},
+			{{-2,0},{-1,0},{0,0},{0,-1},{0,-2}},
+			{{-2,0},{-1,0},{0,0},{0,-1},{0,1}},
+			{{-1,1},{0,1},{0,0},{1,0},{0,-1}},
+			{{-1,0},{1,0},{0,0},{0,1},{0,-1}},
+			{{-1,0},{0,-1},{0,0},{1,0},{2,0}},
+	};
 
 	/**
 	 * Create the panel.
@@ -84,14 +125,18 @@ public class Game extends JPanel {
         contentPane.setBounds(-1,-1,175,241);
         contentPane.add(scrollPane);
         
-        
+        ActionListener shapeSetter=e->{
+        	actions=shapes[((shapeButton)e.getSource()).getIndex()];
+        	System.out.println(Arrays.deepToString(actions));
+        };
 
-        for(int i = 1; i <= 5; i++) {
-
+        for(int i = 1; i <= 21; i++) {
+        	
+        	currentButtonActionAdder=i-1;
         	JSeparator separator = new JSeparator();
             separator.setBackground(Color.RED);
-    		separator.setPreferredSize(new Dimension(175, 20));
-    		separator.setBounds(-1,0,175,20);
+    		separator.setPreferredSize(new Dimension(175, 5));
+    		separator.setBounds(-1,0,175,10);
         	
         	
             JPanel sp1 = new JPanel();
@@ -100,25 +145,20 @@ public class Game extends JPanel {
             sp1.setPreferredSize(new Dimension(170, 170));
 
             JPanel ssp1 = new JPanel();
-            ssp1.setLayout(null);
+            ssp1.setLayout(new GridLayout(5,5));
             ssp1.setBackground(Color.WHITE);
-            ssp1.setPreferredSize(new Dimension(170, 170));
-
-
-            JLabel l3 = new JLabel("Title: ");
-            l3.setForeground(Color.BLACK);
-            l3.setPreferredSize(new Dimension(100, 20));
-            JTextField t1 = new JTextField("Electronic Basics");
-            t1.setPreferredSize(new Dimension(170, 20));
-
-            
-    		
+            ssp1.setPreferredSize(new Dimension(150, 150));   		
 
             //sp1.add(separator);
-            for (int x=0;x<i;x++) {
-            	JButton button=new JButton();
-            	button.setBounds(20+x*20,50,20,20);
-            	ssp1.add(button);
+            for (int x=0;x<5;x++) {
+            	for (int y=0;y<5;y++) {
+            		shapeButton button=new shapeButton(i-1);
+                	button.setPreferredSize(new Dimension(15, 15));
+                	if(x!=2||y!=2)button.setVisible(false);
+                	ssp1.add(button);
+                	button.addActionListener(shapeSetter);
+                	SHAPE_LIST[i-1][x][y]=button;
+                }
             }
             //ssp1.add(t1);
             if(i!=0)
@@ -128,10 +168,20 @@ public class Game extends JPanel {
 
             sp1.add(ssp1);
             panel.add(sp1);
-
+            
         }
 		
         SHAPES_LIST.add(contentPane);
+        for (int i=0;i<SHAPE_LIST.length;i++)
+        	for (int j=0;j<SHAPE_LIST.length;j++)
+        		for (int k=0;k<SHAPE_LIST.length;k++) {
+        			if (j==2&&k==2) {
+        				for (int l=0;l<shapes[i].length;l++) {
+        					SHAPE_LIST[i][shapes[i][l][1]+k][shapes[i][l][0]+j].setVisible(true);;
+        				}
+        			}
+        		}
+        
         
 		JPanel surrender = new JPanel();
 		surrender.setBounds(20, 366, 148, 40);
@@ -170,34 +220,46 @@ public class Game extends JPanel {
 						customButton thisButton=((customButton)e.getSource());
 						int x=thisButton.getPos()[0];
 						int y=thisButton.getPos()[1];
-						if(!thisButton.isTaken()&&!button[x+1][y].isTaken()) {
-							((customButton)e.getSource()).setBackground(Color.red);
-							((customButton)e.getSource()).getPos();
-							
-							button[x+1][y].setBackground(Color.red);
-							button[x+1][y].setTaken(true);
-							thisButton.setTaken(true);
+//						if(!thisButton.isTaken()&&!button[x+1][y].isTaken()) {
+//							((customButton)e.getSource()).setBackground(Color.red);
+//							((customButton)e.getSource()).getPos();
+//							
+//							button[x+1][y].setBackground(Color.red);
+//							button[x+1][y].setTaken(true);
+//							thisButton.setTaken(true);
+//						}
+						for(int i=0;i<actions.length;i++) {
+							if(!button[x+actions[i][0]][y+actions[i][1]].isTaken()) {
+								((customButton)e.getSource()).setBackground(Color.red);
+								((customButton)e.getSource()).getPos();
+								button[x+actions[i][0]][y+actions[i][1]].setBackground(Color.red);
+								button[x+actions[i][0]][y+actions[i][1]].setTaken(true);
+								thisButton.setTaken(true);
+							}
 						}
+						
 					}
 					@Override
 					public void mouseEntered(MouseEvent e) {
 						customButton thisButton=((customButton)e.getSource());
 						int x=thisButton.getPos()[0];
 						int y=thisButton.getPos()[1];
-						if(!thisButton.isTaken()&&!button[x+1][y].isTaken()) {
-							thisButton.setBackground(Color.red);
-							((customButton)e.getSource()).getPos();
-							button[x+1][y].setBackground(Color.red);
+						for(int i=0;i<actions.length;i++) {
+							if(!button[x+actions[i][0]][y+actions[i][1]].isTaken()) {
+								button[x+actions[i][0]][y+actions[i][1]].setBackground(Color.red);
+							}
 						}
+						
 					}
 					@Override
 					public void mouseExited(MouseEvent e) {
 						customButton thisButton=((customButton)e.getSource());
 						int x=thisButton.getPos()[0];
 						int y=thisButton.getPos()[1];
-						if(!thisButton.isTaken()&&!button[x+1][y].isTaken()) {
-							((customButton)e.getSource()).setBackground(Color.white);
-							button[x+1][y].setBackground(Color.white);
+						for(int i=0;i<actions.length;i++) {
+							if(!button[x+actions[i][0]][y+actions[i][1]].isTaken()) {
+								button[x+actions[i][0]][y+actions[i][1]].setBackground(Color.white);
+							}
 						}
 					}
 				});

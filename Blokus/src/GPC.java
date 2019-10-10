@@ -64,17 +64,19 @@ public class GPC extends JPanel {
 		continue_panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				GAME_SETTINGS.put("gridSize",gridSize_comboBox.getSelectedIndex());
-				GAME_SETTINGS.put("playerNumber",playerNumber_comboBox.getSelectedItem());
-				GAME_SETTINGS.put("cpuNumber",cpuNumber_comboBox.getSelectedItem());
-				
-				tmd=new TMD(close_panel,loginPage,frame,GAME_SETTINGS);
-				gpc.removeAll();
-				tmd.setBounds(0,0,gpc.getWidth(),gpc.getHeight());
-				tmd.add(close_panel);
-				gpc.add(tmd);
-				gpc.revalidate();
-				gpc.repaint();
+				if((Integer.valueOf(String.valueOf(playerNumber_comboBox.getSelectedItem()))+Integer.valueOf(String.valueOf(cpuNumber_comboBox.getSelectedItem())))>1&&(Integer.valueOf(String.valueOf(playerNumber_comboBox.getSelectedItem()))+Integer.valueOf(String.valueOf(cpuNumber_comboBox.getSelectedItem())))<5) {
+					GAME_SETTINGS.put("gridSize",gridSize_comboBox.getSelectedIndex());
+					GAME_SETTINGS.put("playerNumber",playerNumber_comboBox.getSelectedItem());
+					GAME_SETTINGS.put("cpuNumber",cpuNumber_comboBox.getSelectedItem());
+					
+					tmd=new TMD(close_panel,loginPage,frame,GAME_SETTINGS);
+					gpc.removeAll();
+					tmd.setBounds(0,0,gpc.getWidth(),gpc.getHeight());
+					tmd.add(close_panel);
+					gpc.add(tmd);
+					gpc.revalidate();
+					gpc.repaint();
+				}
 			}
 		});
 		continue_panel.setBackground(Color.GREEN);

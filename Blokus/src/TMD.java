@@ -76,7 +76,7 @@ public class TMD extends JPanel {
 		});
 		continue_panel.setLayout(null);
 		continue_panel.setBackground(Color.ORANGE);
-		continue_panel.setBounds(61, 298, 216, 49);
+		continue_panel.setBounds(59, 305, 216, 49);
 		add(continue_panel);
 		
 		JLabel label_3 = new JLabel("Continue");

@@ -47,10 +47,10 @@ public class GUI extends JFrame {
 			}
 		});
 	}
-	private static void parseEmployeeObject(JSONObject employee)
+	private static void parseEmployeeObject(JSONObject session)
     {
         //Get employee object within list
-        JSONObject employeeObject = (JSONObject) employee.get("employee");
+        JSONObject employeeObject = (JSONObject) session.get("employee");
          
         //Get employee first name
         String firstName = (String) employeeObject.get("firstName");   
