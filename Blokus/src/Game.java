@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Graphics;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JCheckBoxMenuItem;
@@ -20,12 +22,14 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.awt.GridLayout;
 import java.awt.Cursor;
+
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
-
-
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JList;
 import java.awt.GridBagLayout;
 import javax.swing.JSeparator;
@@ -36,11 +40,11 @@ import java.awt.ScrollPane;
 
 
 public class Game extends JPanel {
-	private class customButton extends JButton{
-		private int x,y;
+	private class customButton extends JPanel{
+		private int x,y,linien=1;
 		private boolean taken=false;
 		public customButton(String name,int x,int y) {
-			super(name);
+			//super(name);
 			this.x=x;
 			this.y=y;
 		}
@@ -54,8 +58,19 @@ public class Game extends JPanel {
 		public void setTaken(boolean taken) {
 			this.taken=taken;
 		}
+		public void paintComponent(Graphics g){
+	        super.paintComponent(g);
+	        int d = 0;
+	        int h = 0;
+	        for(int i = 0; i < this.linien; i++){
+	            g.drawLine(0,h, getWidth(), h);
+	            g.drawLine(d,0,d,getHeight());
+	            h += getHeight()/this.linien;
+	            d +=getWidth()/this.linien;
+	        }
+	    }
 	}
-	private class shapeButton extends JButton{
+	private class shapeButton extends JPanel{
 		private int i;
 		public shapeButton(int i) {
 			this.i=i;
@@ -147,10 +162,6 @@ public class Game extends JPanel {
         contentPane.setBounds(-1,-1,175,241);
         contentPane.add(scrollPane);
         
-        ActionListener shapeSetter=e->{
-        	actions=shapes[((shapeButton)e.getSource()).getIndex()];
-        	System.out.println(Arrays.deepToString(actions));
-        };
 
         for(int i = 1; i <= 21; i++) {
         	
@@ -178,7 +189,17 @@ public class Game extends JPanel {
                 	button.setPreferredSize(new Dimension(15, 15));
                 	if(x!=2||y!=2)button.setVisible(false);
                 	ssp1.add(button);
-                	button.addActionListener(shapeSetter);
+                	button.addMouseListener(new MouseAdapter() {
+            			@Override
+            			public void mouseClicked(MouseEvent e) { 				
+            				actions=shapes[((shapeButton)e.getSource()).getIndex()];
+            			}
+            		});
+                	Border emptyBorder = BorderFactory.createEmptyBorder();
+                	button.setBorder(null);
+                	//button.set
+                	button.setFocusable(false);
+                	button.setBackground(Color.red);
                 	SHAPE_LIST[i-1][x][y]=button;
                 }
             }
@@ -236,6 +257,7 @@ public class Game extends JPanel {
 			for (int j=0;j<GRID_SIZE;j++) {
 				button[j][i] = new customButton("",j,i);
 				button[j][i].setBackground(Color.white);
+				button[j][i].setBorder(BorderFactory.createEmptyBorder(5,10,10,10));
 				button[j][i].addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
@@ -250,7 +272,12 @@ public class Game extends JPanel {
 									button[x+actions[i][0]][y+actions[i][1]].setBackground(Color.red);
 									button[x+actions[i][0]][y+actions[i][1]].setTaken(true);
 									thisButton.setTaken(true);
-									map.put(String.valueOf(x+actions[i][0]+"_"+x+actions[i][1]), true);
+									for(int j=0;j<actions.length;j++) {
+										map.put(String.valueOf(x+actions[j][0]+"_"+y+actions[j][1]), true);
+										button[x+actions[j][0]][y+actions[j][1]].setTaken(true);
+										System.out.println(String.valueOf((x+actions[j][0])+"_"+(y+actions[j][1])));
+									}
+									
 								}
 							}
 						}catch(Exception s) {button[x][y].setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));}
@@ -264,6 +291,7 @@ public class Game extends JPanel {
 						try {
 							for(int i=0;i<actions.length;i++) {
 								if(!button[x+actions[i][0]][y+actions[i][1]].isTaken() && isPlaceable(x,y,actions)) {
+									System.out.println(isPlaceable(x,y,actions));
 									button[x+actions[i][0]][y+actions[i][1]].setBackground(Color.red);
 								}
 							}
@@ -278,9 +306,12 @@ public class Game extends JPanel {
 						int x=thisButton.getPos()[0];
 						int y=thisButton.getPos()[1];
 						try {for(int i=0;i<actions.length;i++) {
-							System.out.println();
-							if(!button[x+actions[i][0]][y+actions[i][1]].isTaken() && map.get(String.valueOf(x+actions[i][0]+"_"+x+actions[i][1]))!="true") {
-								button[x+actions[i][0]][y+actions[i][1]].setBackground(Color.white);
+							if(isPlaceable(x,y,actions)&&!button[x+actions[i][0]][y+actions[i][1]].isTaken() && map.get(String.valueOf(x+actions[i][0]+"_"+x+actions[i][1]))==null) {
+								for(int j=0;j<actions.length;j++) {
+									button[x+actions[j][0]][y+actions[j][1]].setBackground(Color.white);
+								}
+								
+								
 							}
 						}}catch(Exception s) {button[x][y].setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));}
 						
