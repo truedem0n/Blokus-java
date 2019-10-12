@@ -1,23 +1,22 @@
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.FontFormatException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import org.json.simple.*;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.UIManager;
 
 public class GUI extends JFrame {
 
@@ -70,7 +69,7 @@ public class GUI extends JFrame {
 	 * @throws IOException 
 	 * @throws FontFormatException 
 	 */
-	public GUI() {
+    public GUI() throws IOException {
 		//Creating Game settings
 		GAME_SETTINGS=new Hashtable<Object, Object>();
 		
@@ -81,7 +80,6 @@ public class GUI extends JFrame {
 		
 		// our frame
 		setUndecorated(true);
-		setResizable(true);
 		setBounds(100, 100, 687, 478);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//setBounds(100, 100, 364, 475);
@@ -108,9 +106,21 @@ public class GUI extends JFrame {
 		LoginPage.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(LoginPage);
 		LoginPage.setLayout(null);
-		
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File("logo.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 		logo_panel = new JPanel();
-		logo_panel.setBackground(new Color(138, 43, 226));
+        Image dimg = img.getScaledInstance(343, 478,
+                Image.SCALE_SMOOTH);
+        JLabel label = new JLabel(new ImageIcon(dimg));
+        label.setBounds(0, 0, 343, 478);
+
+
+        logo_panel.add(label);
+        //logo_panel.setBackground(new Color(138, 43, 226));
 		logo_panel.setBounds(0, 0, 343, 478);
 		LoginPage.add(logo_panel);
 		logo_panel.setLayout(null);
