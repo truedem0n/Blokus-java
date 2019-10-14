@@ -1,7 +1,11 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -58,6 +62,7 @@ public class Game extends JPanel {
 				d += getWidth() / this.linien;
 			}
 		}
+
 		private int i;
 
 		public shapeButton(int i) {
@@ -74,31 +79,34 @@ public class Game extends JPanel {
 	private Dictionary map;
 	JPanel ssp1;
 	private customButton[][] button = new customButton[GRID_SIZE][GRID_SIZE];
-	private shapeButton[][][] SHAPE_LIST = new shapeButton[21][6][6];
+	private shapeButton[][][] SHAPE_LIST = new shapeButton[21][7][7];
 	private int[][][] shapes = {
-
 			{{0, 0}},
 
 			{{0, 0}, {1, 0}},
 
-			{{-1, 0}, {0, 0}, {1, 0}}, {{-1, 0}, {0, 0}, {0, 1}},
+			{{-1, 0}, {0, 0}, {1, 0}},
+			{{-1, 0}, {0, 0}, {0, 1}},
 
-			{{-2, 0}, {-1, 0}, {0, 0}, {1, 0}}, {{-1, 0}, {0, 0}, {1, 0}, {1, 1}},
-			{{-1, 0}, {0, 0}, {1, 0}, {0, -1}}, {{0, 0}, {1, 0}, {0, -1}, {1, -1}},
+			{{-2, 0}, {-1, 0}, {0, 0}, {1, 0}},
+			{{-1, 0}, {0, 0}, {1, 0}, {1, 1}},
+			{{-1, 0}, {0, 0}, {1, 0}, {0, -1}},
+			{{0, 0}, {1, 0}, {0, -1}, {1, -1}},
 			{{-1, 1}, {-1, 0}, {0, 0}, {0, -1}},
 
 			{{-2, 0}, {-1, 0}, {0, 0}, {1, 0}, {2, 0}},
 			{{-2, 0}, {-1, 0}, {0, 0}, {1, 0}, {1, 1}},
 			{{-1, 1}, {-1, 0}, {0, 0}, {0, -1}, {0, -2}},
 			{{-1, 0}, {0, 0}, {-1, -1}, {0, -1}, {0, -2}},
-			{{0, -2}, {-1, -2}, {-1, -1}, {-1, 0}, {0, 0}},
+			{{1, -1}, {0, -1}, {1, 1}, {0, 1}, {0, 0}},//
 			{{-1, 1}, {0, 1}, {0, 0}, {0, -1}, {1, -1}},
 			{{-1, 1}, {-1, 0}, {0, 0}, {0, -1}, {1, -1}},
 			{{-2, 0}, {-1, 0}, {0, 0}, {0, -1}, {0, -2}},
 			{{-2, 0}, {-1, 0}, {0, 0}, {0, -1}, {0, 1}},
 			{{-1, 1}, {0, 1}, {0, 0}, {1, 0}, {0, -1}},
 			{{-1, 0}, {1, 0}, {0, 0}, {0, 1}, {0, -1}},
-			{{-1, 0}, {0, -1}, {0, 0}, {1, 0}, {2, 0}},};
+			{{-1, 0}, {0, -1}, {0, 0}, {1, 0}, {2, 0}}
+	};
 
 	private boolean isPlaceable(int x, int y, int[][] actions) {
 		try {
@@ -129,29 +137,129 @@ public class Game extends JPanel {
 		for (int i = 0; i < SHAPE_LIST.length; i++)
 			for (int j = 0; j < SHAPE_LIST.length; j++)
 				for (int k = 0; k < SHAPE_LIST.length; k++) {
-					if (j == 2 && k == 2) {
+					if (j == 3 && k == 3) {
 						for (int l = 0; l < shapes[i].length; l++) {
 							SHAPE_LIST[i][shapes[i][l][1] + k][shapes[i][l][0] + j].setVisible(true);
 						}
 					}
-					if ((j == 5 && k == 0) || (j == 5 && (k == 3 || k == 2)) || (j == 5 && k == 5)) {
+					if ((j == 6 && k == 0) || (j == 6 && (k == 2 || k == 4)) || (j == 6 && k == 6)) {
 						SHAPE_LIST[i][j][k].setVisible(true);
-						SHAPE_LIST[i][j][k].setBackground(Color.DARK_GRAY);
+						SHAPE_LIST[i][j][k].setBackground(Color.white);
 					}
 				}
 	}
 
+	// flip horizontally
 	private void flipH(int[][] actions) {
 		for (int i = 0; i < actions.length; i++)
-
 			actions[i][0] = -actions[i][0];
-
-
 	}
 
+	//flip vertically
 	private void flipV(int[][] actions) {
 		for (int i = 0; i < actions.length; i++)
 			actions[i][1] = -actions[i][1];
+	}
+	//rotate clockwise
+
+	private void rotateCoordinatesCW() {
+		for (int i = 0; i < actions.length; i++) {
+			if (actions[i][0] == 0) {
+				if (actions[i][1] == 0) {
+					actions[i][0] = 0;
+					actions[i][1] = 0;
+				} else if (actions[i][1] == 1) {
+					actions[i][0] = -1;
+					actions[i][1] = 0;
+				} else if (actions[i][1] == -1) {
+					actions[i][0] = 1;
+					actions[i][1] = 0;
+				} else if (actions[i][1] == 2) {
+					actions[i][0] = -2;
+					actions[i][1] = 0;
+				} else if (actions[i][1] == -2) {
+					actions[i][0] = 2;
+					actions[i][1] = 0;
+				}
+			} else if (actions[i][0] == 1) {
+				if (actions[i][1] == 0) {
+					actions[i][0] = 0;
+					actions[i][1] = 1;
+				} else if (actions[i][1] == 1) {
+					actions[i][0] = -1;
+					actions[i][1] = 1;
+				} else if (actions[i][1] == -1) {
+					actions[i][0] = 1;
+					actions[i][1] = 1;
+				} else if (actions[i][1] == 2) {
+					actions[i][0] = 1;
+					actions[i][1] = 2;
+				} else if (actions[i][1] == -2) {
+					actions[i][0] = 1;
+					actions[i][1] = 2;
+				}
+			} else if (actions[i][0] == -1) {
+				if (actions[i][1] == 0) {
+					actions[i][0] = 0;
+					actions[i][1] = -1;
+				} else if (actions[i][1] == 1) {
+					actions[i][0] = -1;
+					actions[i][1] = -1;
+				} else if (actions[i][1] == -1) {
+					actions[i][0] = 1;
+					actions[i][1] = -1;
+				} else if (actions[i][1] == 2) {
+					actions[i][0] = -1;
+					actions[i][1] = -2;
+				} else if (actions[i][1] == -2) {
+					actions[i][0] = 1;
+					actions[i][1] = -2;
+				}
+			} else if (actions[i][0] == 2) {
+				if (actions[i][1] == 0) {
+					actions[i][0] = 0;
+					actions[i][1] = 2;
+				} else if (actions[i][1] == 1) {
+					actions[i][0] = -2;
+					actions[i][1] = 1;
+				} else if (actions[i][1] == -1) {
+					actions[i][0] = 2;
+					actions[i][1] = 1;
+				} else if (actions[i][1] == 2) {
+					actions[i][0] = -2;
+					actions[i][1] = 2;
+				} else if (actions[i][1] == -2) {
+					actions[i][0] = 2;
+					actions[i][1] = 2;
+				}
+			} else if (actions[i][0] == -2) {
+				if (actions[i][1] == 0) {
+					actions[i][0] = 0;
+					actions[i][1] = -2;
+				} else if (actions[i][1] == 1) {
+					actions[i][0] = -2;
+					actions[i][1] = -1;
+				} else if (actions[i][1] == -1) {
+					actions[i][0] = 2;
+					actions[i][1] = -1;
+				} else if (actions[i][1] == 2) {
+					actions[i][0] = -2;
+					actions[i][1] = -2;
+				} else if (actions[i][1] == -2) {
+					actions[i][0] = 2;
+					actions[i][1] = -2;
+				}
+
+			}
+		}
+	}
+
+	private void rotateCoordinatesCCW() {
+		rotateCoordinatesCW();
+		for (int i = 0; i < actions.length; i++) {
+			actions[i][0] = -actions[i][0];
+			actions[i][1] = -actions[i][1];
+		}
 	}
 
 	/**
@@ -189,7 +297,6 @@ public class Game extends JPanel {
 		contentPane.add(scrollPane);
 
 		for (int i = 1; i <= 21; i++) {
-
 			currentButtonActionAdder = i - 1;
 			JSeparator separator = new JSeparator();
 			separator.setBackground(Color.RED);
@@ -202,37 +309,37 @@ public class Game extends JPanel {
 			sp1.setPreferredSize(new Dimension(170, 170));
 
 			ssp1 = new JPanel();
-			ssp1.setLayout(new GridLayout(6, 6));
+			ssp1.setLayout(new GridLayout(7, 7));
 			ssp1.setBackground(Color.WHITE);
 			ssp1.setPreferredSize(new Dimension(150, 150));
 
 			// sp1.add(separator);
-			for (int x = 0; x <= 5; x++) {
-				for (int y = 0; y <= 5; y++) {
+			for (int x = 0; x <= 6; x++) {
+				for (int y = 0; y <= 6; y++) {
 					shapeButton button = new shapeButton(i - 1);
 					button.setPreferredSize(new Dimension(15, 15));
-					if (x != 2 || y != 2)
+					if (x != 4 || y != 4)
 						button.setVisible(false);
-					if (!((x == 5 && y == 0) || (x == 5 && y == 5))) {
+					if (!((x == 6 && y == 0) || (x == 6 && y == 6))) {
 						button.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mouseClicked(MouseEvent e) {
 								actions = shapes[((shapeButton) e.getSource()).getIndex()];
 							}
 						});
-					} else if (x == 5 && y == 0) {
-						button.addMouseListener(new MouseAdapter() {
-							@Override
-							public void mouseClicked(MouseEvent e) {
-								actions = shapes[((shapeButton) e.getSource()).getIndex()];
-								flipH(actions);
-								hideShape(e);
-								drawShapes();
-								ssp1.repaint();
-								ssp1.revalidate();
-							}
-						});
-					} else if (x == 5 && y == 5) {
+					}
+					if (x == 6 && y == 0) {
+						BufferedImage img = null;
+						try {
+							img = ImageIO.read(new File("flipVertical.png"));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						Image dimg = img.getScaledInstance(17, 17,
+								Image.SCALE_SMOOTH);
+						JLabel label = new JLabel(new ImageIcon(dimg));
+						label.setBounds(-10, -10, 15, 15);
+						button.add(label);
 						button.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mouseClicked(MouseEvent e) {
@@ -245,8 +352,84 @@ public class Game extends JPanel {
 							}
 						});
 					}
+					if (x == 6 && y == 6) {
+						BufferedImage img = null;
+						try {
+							img = ImageIO.read(new File("flipHorizontal.png"));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						Image dimg = img.getScaledInstance(17, 17,
+								Image.SCALE_SMOOTH);
+						JLabel label = new JLabel(new ImageIcon(dimg));
+						label.setBounds(-10, -10, 15, 15);
+						button.add(label);
+						button.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								actions = shapes[((shapeButton) e.getSource()).getIndex()];
+								flipH(actions);
+								hideShape(e);
+								drawShapes();
+								ssp1.repaint();
+								ssp1.revalidate();
+							}
+						});
+					}
+					if (x == 6 && y == 4) {
+						//Setting up rotateCW
+						BufferedImage img = null;
+						try {
+							img = ImageIO.read(new File("rotateClockWise.png"));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						Image dimg = img.getScaledInstance(17, 17,
+								Image.SCALE_SMOOTH);
+						JLabel label = new JLabel(new ImageIcon(dimg));
+						label.setBounds(-10, -10, 15, 15);
+						button.add(label);
+						button.setBackground(Color.white);
+						button.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+
+								shapeButton thisButton = ((shapeButton) e.getSource());
+								actions = shapes[thisButton.getIndex()];
+								rotateCoordinatesCW();
+								hideShape(e);
+								drawShapes();
+							}
+						});
+					}
+					if (x == 6 && y == 2) {
+						//Setting up rotateCW
+						BufferedImage img = null;
+						try {
+							img = ImageIO.read(new File("rotateAntiClockWise.png"));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						Image dimg = img.getScaledInstance(17, 17,
+								Image.SCALE_SMOOTH);
+						JLabel label = new JLabel(new ImageIcon(dimg));
+						label.setBounds(-10, -10, 15, 15);
+						button.add(label);
+						button.setBackground(Color.white);
+						button.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+
+								shapeButton thisButton = ((shapeButton) e.getSource());
+								actions = shapes[thisButton.getIndex()];
+								rotateCoordinatesCCW();
+								hideShape(e);
+								drawShapes();
+							}
+						});
+					}
 					button.setBorder(null);
-					// button.set
+					button.setVisible(false);
 					button.setFocusable(false);
 					button.setBackground(Color.red);
 					SHAPE_LIST[i - 1][x][y] = button;
