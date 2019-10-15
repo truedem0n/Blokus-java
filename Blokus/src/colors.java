@@ -31,7 +31,9 @@ public class colors extends JPanel {
 		continue_panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				frame.setVisible(false);
 				game=new Game(frame);
+				frame.setVisible(true);
 				loginPage.removeAll();
 				loginPage.add(game);
 				close_panel.setBounds(1215-500, 11, 28, 36);

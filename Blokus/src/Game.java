@@ -1,11 +1,16 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -267,7 +272,9 @@ public class Game extends JPanel {
 	 *
 	 * @param frame
 	 */
-	public Game(GUI frame) {
+	public Game(GUI frame)  {
+
+
 		map = new Hashtable();
 
 		setBackground(Color.LIGHT_GRAY);
