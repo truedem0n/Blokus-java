@@ -95,7 +95,7 @@ public class colors extends JPanel {
 		lblPlayer_3.setBounds(61, 229, 97, 14);
 		add(lblPlayer_3);
 		
-		JComboBox player4_comboBox = new JComboBox(colors);
+		JComboBox<String> player4_comboBox = new JComboBox(colors);
 		player4_comboBox.setBounds(134, 225, 143, 22);
 		add(player4_comboBox);
 

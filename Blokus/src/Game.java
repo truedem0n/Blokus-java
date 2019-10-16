@@ -1,21 +1,26 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
 public class Game extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private class customButton extends JPanel {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		private int x, y, linien = 1;
 
 		private boolean taken = false;
@@ -45,6 +50,7 @@ public class Game extends JPanel {
 			int d = 0;
 			int h = 0;
 			for (int i = 0; i < this.linien; i++) {
+				g.setColor(Color.gray);
 				g.drawLine(0, h, getWidth(), h);
 				g.drawLine(d, 0, d, getHeight());
 				h += getHeight() / this.linien;
@@ -54,28 +60,15 @@ public class Game extends JPanel {
 	}
 
 	private class shapeButton extends JPanel {
-		private int linien = 1;
 
-		public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			int d = 0;
-			int h = 0;
-			for (int i = 0; i < this.linien; i++) {
-				g.drawLine(0, h, getWidth(), h);
-				g.drawLine(d, 0, d, getHeight());
-				h += getHeight() / this.linien;
-				d += getWidth() / this.linien;
-			}
-		}
-
-		private int i;
+		private int index;
 
 		public shapeButton(int i) {
-			this.i = i;
+			this.index = i;
 		}
 
 		public int getIndex() {
-			return this.i;
+			return this.index;
 		}
 	}
 
@@ -126,9 +119,6 @@ public class Game extends JPanel {
 		return true;
 	}
 
-
-	private void rotate() {
-	}
 
 	private void hideShape(MouseEvent e) {
 		int index = ((shapeButton) e.getSource()).getIndex();
