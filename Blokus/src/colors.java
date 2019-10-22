@@ -21,7 +21,7 @@ public class colors extends JPanel {
 	 * @param frame 
 	 * @param gAME_SETTINGS 
 	 */
-	public colors(JPanel close_panel, JPanel loginPage, GUI frame, Dictionary gAME_SETTINGS) {
+	public colors(JPanel close_panel, JPanel loginPage, GUI frame, Dictionary<Object,Object> gAME_SETTINGS) {
 		
 		setBackground(Color.BLUE);
 		setBounds(342, 0, 345, 478);
@@ -36,7 +36,7 @@ public class colors extends JPanel {
 				frame.setVisible(true);
 				loginPage.removeAll();
 				loginPage.add(game);
-				close_panel.setBounds(1215-500, 11, 28, 36);
+				close_panel.setBounds(680, 11, 28, 36);
 				game.add(close_panel);
 				loginPage.revalidate();
 				loginPage.repaint();
@@ -52,7 +52,7 @@ public class colors extends JPanel {
 		label.setBounds(66, 11, 79, 25);
 		continue_panel.add(label);
 		
-		JComboBox player3_comboBox = new JComboBox(colors);
+		JComboBox<String> player3_comboBox = new JComboBox<String>(colors);
 		player3_comboBox.setBounds(134, 196, 143, 22);
 		add(player3_comboBox);
 		
@@ -66,11 +66,11 @@ public class colors extends JPanel {
 		lblPlayer_1.setBounds(61, 170, 97, 14);
 		add(lblPlayer_1);
 		
-		JComboBox player2_comboBox = new JComboBox(colors);
+		JComboBox<String> player2_comboBox = new JComboBox<String>(colors);
 		player2_comboBox.setBounds(134, 166, 143, 22);
 		add(player2_comboBox);
 		
-		JComboBox player1_comboBox = new JComboBox(colors);
+		JComboBox<String> player1_comboBox = new JComboBox<String>(colors);
 		player1_comboBox.setBounds(134, 137, 143, 22);
 		add(player1_comboBox);
 		
@@ -95,7 +95,7 @@ public class colors extends JPanel {
 		lblPlayer_3.setBounds(61, 229, 97, 14);
 		add(lblPlayer_3);
 		
-		JComboBox<String> player4_comboBox = new JComboBox(colors);
+		JComboBox<String> player4_comboBox = new JComboBox<String>(colors);
 		player4_comboBox.setBounds(134, 225, 143, 22);
 		add(player4_comboBox);
 

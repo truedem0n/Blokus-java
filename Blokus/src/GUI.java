@@ -27,7 +27,7 @@ public class GUI extends JFrame {
 	private static GUI frame;
 	private JPanel LoginPage,close_panel,welcome_panel,logo_panel,play_panel;
 	private int xy,xx;
-	private Dictionary<?, ?> GAME_SETTINGS; 
+	private Dictionary<Object, Object> GAME_SETTINGS; 
 
 	/**
 	 * Launch the application.

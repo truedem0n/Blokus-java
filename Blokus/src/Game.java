@@ -1,6 +1,8 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -61,6 +63,10 @@ public class Game extends JPanel {
 
 	private class shapeButton extends JPanel {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private int index;
 
 		public shapeButton(int i) {
@@ -72,10 +78,11 @@ public class Game extends JPanel {
 		}
 	}
 
-	private int GRID_SIZE = 16, currentButtonActionAdder;
+	private int GRID_SIZE = 16, seconds;
+	JLabel lblTimeLeft;
 	private int[][] actions = {{0, 0}};
-	private Dictionary map;
-	JPanel ssp1;
+	private Dictionary<Object,Object> map;
+	JPanel ssp1;Timer timer;
 	private customButton[][] button = new customButton[GRID_SIZE][GRID_SIZE];
 	private shapeButton[][][] SHAPE_LIST = new shapeButton[21][7][7];
 	private int[][][] shapes = {
@@ -265,12 +272,12 @@ public class Game extends JPanel {
 	public Game(GUI frame)  {
 
 
-		map = new Hashtable();
+		map = new Hashtable<Object, Object>();
 
 		setBackground(Color.LIGHT_GRAY);
-		frame.setBounds(0, 0, 745, 720 - 100);
+		frame.setBounds(0, 0, 709, 608);
 		frame.setLocationRelativeTo(null);
-		setBounds(0, 0, 745, 620);
+		setBounds(0, 0, 709, 608);
 		setLayout(null);
 
 		JPanel SHAPES_LIST = new JPanel();
@@ -294,7 +301,6 @@ public class Game extends JPanel {
 		contentPane.add(scrollPane);
 
 		for (int i = 1; i <= 21; i++) {
-			currentButtonActionAdder = i - 1;
 			JSeparator separator = new JSeparator();
 			separator.setBackground(Color.RED);
 			separator.setPreferredSize(new Dimension(175, 5));
@@ -332,10 +338,10 @@ public class Game extends JPanel {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-						Image dimg = img.getScaledInstance(17, 17,
+						Image dimg = img.getScaledInstance(15, 15,
 								Image.SCALE_SMOOTH);
 						JLabel label = new JLabel(new ImageIcon(dimg));
-						label.setBounds(-10, -10, 15, 15);
+						label.setBounds(-10, -10, 14, 14);
 						button.add(label);
 						button.addMouseListener(new MouseAdapter() {
 							@Override
@@ -356,7 +362,7 @@ public class Game extends JPanel {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-						Image dimg = img.getScaledInstance(17, 17,
+						Image dimg = img.getScaledInstance(15, 15,
 								Image.SCALE_SMOOTH);
 						JLabel label = new JLabel(new ImageIcon(dimg));
 						label.setBounds(-10, -10, 15, 15);
@@ -449,6 +455,12 @@ public class Game extends JPanel {
 		JPanel surrender = new JPanel();
 		surrender.setBounds(20, 366, 148, 40);
 		add(surrender);
+		surrender.setLayout(null);
+		
+		JLabel lblSurrender = new JLabel("Surrender");
+		lblSurrender.setFont(new Font("Century Gothic", Font.PLAIN, 15));
+		lblSurrender.setBounds(36, 11, 77, 18);
+		surrender.add(lblSurrender);
 
 		JLabel lblScore = new JLabel("Score: 0");
 		lblScore.setBounds(20, 478, 48, 14);
@@ -462,10 +474,6 @@ public class Game extends JPanel {
 		JLabel lblTurn = new JLabel("Turn");
 		lblTurn.setBounds(76, 89, 31, 14);
 		add(lblTurn);
-
-		JLabel lblOptions = new JLabel("Options");
-		lblOptions.setBounds(92, 11, 48, 14);
-		add(lblOptions);
 
 		JPanel GAME_BOARD = new JPanel();
 		GAME_BOARD.setBounds(190, 89, 500, 500);
@@ -549,9 +557,36 @@ public class Game extends JPanel {
 
 			}
 
-		JLabel lblTimeLeft = new JLabel("Time left: 00:00");
-		lblTimeLeft.setBounds(646, 64, 89, 14);
+		lblTimeLeft = new JLabel("Time left: 10:00");
+		seconds=0;
+		timer = new Timer(1000, new ActionListener() {
+
+	        public void actionPerformed(ActionEvent e) {
+	        	if (seconds>600)
+	        		timer.stop();
+	        	seconds+=1;
+	        	lblTimeLeft.setText("Time left:"+( String.format("%02d", (600-seconds)/60))+":"+( String.format("%02d", (600-seconds)%60)));
+	        	
+	        }
+	    });
+	    timer.setRepeats(true);
+	    timer.start();
+		lblTimeLeft.setBounds(608, 64, 89, 14);
 		add(lblTimeLeft);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBackground(Color.LIGHT_GRAY);
+		menuBar.setBounds(95, 11, 99, 22);s
+		menuBar.setBorder(null);
+		add(menuBar);
+		
+		JMenu mnOptions = new JMenu("Options");
+		mnOptions.setFont(new Font("Century Gothic", Font.PLAIN, 15));
+		menuBar.add(mnOptions);
+		
+		JMenuItem mntmOption = new JMenuItem("Option1");
+		mntmOption.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		mnOptions.add(mntmOption);
 
 	}
 }
