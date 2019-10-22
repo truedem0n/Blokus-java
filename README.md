@@ -8,3 +8,8 @@
       Dylan Ellsworth<br>
       Atul Mehla<br>
   </p>
+
+<p> About the Project<br>
+      https://lmgtfy.com/?q=Blokus (let me google that for you Blokus)
+</p>
+
