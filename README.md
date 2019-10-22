@@ -4,6 +4,7 @@
       <b>Team members</b><br>
       Ricky Hineman<br>
       Farhan Rashid<br>
-      Devin<br>
-      Dylan<br>
+      Devin Leriche<br>
+      Dylan Ellsworth<br>
+      Atul Mehla<br>
   </p>
