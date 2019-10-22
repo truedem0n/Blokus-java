@@ -28,7 +28,6 @@ public class TMD extends JPanel {
 	 */
 	public TMD(JPanel close_panel, JPanel loginPage, GUI frame, Dictionary<Object,Object> gAME_SETTINGS) {
 		tmd=this;
-		System.out.println(gAME_SETTINGS.get("playerNumber"));
 		setBackground(Color.GREEN);
 		setBounds(342, 0, 345, 478);
 		setLayout(null);

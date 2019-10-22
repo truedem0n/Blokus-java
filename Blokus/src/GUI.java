@@ -108,7 +108,7 @@ public class GUI extends JFrame {
 		LoginPage.setLayout(null);
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("logo.jpg"));
+            img = ImageIO.read(new File("images/logo.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -169,7 +169,7 @@ public class GUI extends JFrame {
 
 				
 				JSONParser jsonParser = new JSONParser();
-		        try (FileReader reader = new FileReader("sessions.json"))
+		        try (FileReader reader = new FileReader("sessions/sessions.json"))
 		        {
 		            //Read JSON file
 		            Object obj = jsonParser.parse(reader);
