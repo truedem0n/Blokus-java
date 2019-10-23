@@ -4,6 +4,12 @@
       <b>Team members</b><br>
       Ricky Hineman<br>
       Farhan Rashid<br>
-      Devin<br>
-      Dylan<br>
+      Devin Leriche<br>
+      Dylan Ellsworth<br>
+      Atul Mehla<br>
   </p>
+
+<p> About the Project<br>
+      https://lmgtfy.com/?q=Blokus (let me google that for you Blokus)
+</p>
+
