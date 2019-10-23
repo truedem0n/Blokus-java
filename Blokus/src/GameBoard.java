@@ -102,14 +102,9 @@ public class GameBoard extends JPanel {
 						int y = thisButton.getPos()[1];
 						try {
 							for (int i = 0; i < actions.length; i++) {
-								if (isPlaceable(x, y, actions)
-										&& !button[x + actions[i][0]][y + actions[i][1]].isTaken() && map.get(
-										x + actions[i][0] + "_" + x + actions[i][1]) == null) {
-									for (int j = 0; j < actions.length; j++) {
-										button[x + actions[j][0]][y + actions[j][1]].setBackground(Color.white);
-									}
+								if(!button[x + actions[i][0]][y + actions[i][1]].isTaken())
+										button[x + actions[i][0]][y + actions[i][1]].setBackground(Color.white);
 
-								}
 							}
 						} catch (Exception s) {
 							button[x][y].setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
