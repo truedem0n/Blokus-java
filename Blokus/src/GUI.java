@@ -106,21 +106,17 @@ public class GUI extends JFrame {
 		LoginPage.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(LoginPage);
 		LoginPage.setLayout(null);
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File("images/logo.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+		
+        ImageIcon img = new ImageIcon(GUI.class.getResource("images/logo.jpg"));
+        Image dimg=img.getImage().getScaledInstance(343, 478,Image.SCALE_SMOOTH);
+        
 		logo_panel = new JPanel();
-        Image dimg = img.getScaledInstance(343, 478,
-                Image.SCALE_SMOOTH);
         JLabel label = new JLabel(new ImageIcon(dimg));
         label.setBounds(0, 0, 343, 478);
 
 
         logo_panel.add(label);
-        //logo_panel.setBackground(new Color(138, 43, 226));
 		logo_panel.setBounds(0, 0, 343, 478);
 		LoginPage.add(logo_panel);
 		logo_panel.setLayout(null);

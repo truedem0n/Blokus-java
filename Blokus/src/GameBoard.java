@@ -109,7 +109,6 @@ public class GameBoard extends JPanel {
 						} catch (Exception s) {
 							button[x][y].setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 						}
-
 					}
 				});
 				add(button[j][i]);

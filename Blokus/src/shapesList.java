@@ -251,14 +251,8 @@ public class shapesList extends JPanel {
 						});
 					}
 					if (x == 6 && y == 0) {
-						BufferedImage img = null;
-						try {
-							img = ImageIO.read(new File("images/flipVertical.png"));
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						Image dimg = img.getScaledInstance(15, 15,
-								Image.SCALE_SMOOTH);
+						ImageIcon img = new ImageIcon(GUI.class.getResource("images/flipVertical.png"));	
+						Image dimg = img.getImage().getScaledInstance(15, 15,Image.SCALE_SMOOTH);
 						JLabel label = new JLabel(new ImageIcon(dimg));
 						label.setBounds(-10, -10, 14, 14);
 						button.add(label);
@@ -275,14 +269,8 @@ public class shapesList extends JPanel {
 						});
 					}
 					if (x == 6 && y == 6) {
-						BufferedImage img = null;
-						try {
-							img = ImageIO.read(new File("images/flipHorizontal.png"));
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						Image dimg = img.getScaledInstance(15, 15,
-								Image.SCALE_SMOOTH);
+						ImageIcon img = new ImageIcon(GUI.class.getResource("images/flipHorizontal.png"));	
+						Image dimg = img.getImage().getScaledInstance(15, 15,Image.SCALE_SMOOTH);
 						JLabel label = new JLabel(new ImageIcon(dimg));
 						label.setBounds(-10, -10, 15, 15);
 						button.add(label);
@@ -300,14 +288,9 @@ public class shapesList extends JPanel {
 					}
 					if (x == 6 && y == 4) {
 						//Setting up rotateCW
-						BufferedImage img = null;
-						try {
-							img = ImageIO.read(new File("images/rotateClockWise.png"));
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						Image dimg = img.getScaledInstance(17, 17,
-								Image.SCALE_SMOOTH);
+						ImageIcon img = new ImageIcon(GUI.class.getResource("images/rotateClockWise.png"));
+						Image dimg = img.getImage().getScaledInstance(17, 17,Image.SCALE_SMOOTH);
+						
 						JLabel label = new JLabel(new ImageIcon(dimg));
 						label.setBounds(-10, -10, 15, 15);
 						button.add(label);
@@ -326,14 +309,8 @@ public class shapesList extends JPanel {
 					}
 					if (x == 6 && y == 2) {
 						//Setting up rotateCW
-						BufferedImage img = null;
-						try {
-							img = ImageIO.read(new File("images/rotateAntiClockWise.png"));
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						Image dimg = img.getScaledInstance(17, 17,
-								Image.SCALE_SMOOTH);
+						ImageIcon img = new ImageIcon(GUI.class.getResource("images/rotateAntiClockWise.png"));
+						Image dimg = img.getImage().getScaledInstance(17, 17,Image.SCALE_SMOOTH);
 						JLabel label = new JLabel(new ImageIcon(dimg));
 						label.setBounds(-10, -10, 15, 15);
 						button.add(label);
