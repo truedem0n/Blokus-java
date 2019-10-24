@@ -66,9 +66,11 @@ public class shapesList extends JPanel {
 			for (int i = 0; i < actions.length; i++)
 				actions[i][1] = -actions[i][1];
 		}
+		
 		//rotate clockwise
-
 		private void rotateCoordinatesCW() {
+			
+			// take coordinates and rotate them
 			for (int i = 0; i < actions.length; i++) {
 				if (actions[i][0] == 0) {
 					if (actions[i][1] == 0) {
@@ -162,12 +164,15 @@ public class shapesList extends JPanel {
 
 		private void rotateCoordinatesCCW() {
 			rotateCoordinatesCW();
+			// rotate coordinates clock wise and negate all the coordinates to inverse them
+			// this implements the functionality of counter clockwise rotaton
 			for (int i = 0; i < actions.length; i++) {
 				actions[i][0] = -actions[i][0];
 				actions[i][1] = -actions[i][1];
 			}
 		}
 	
+		// hides all the buttons of a shape
 	private void hideShape(MouseEvent e) {
 		int index = ((shapeButton) e.getSource()).getIndex();
 		for (int j = 0; j < SHAPE_LIST[index].length; j++)
@@ -175,7 +180,8 @@ public class shapesList extends JPanel {
 				SHAPE_LIST[index][j][k].setVisible(false);
 			}
 	}
-
+	
+	// draw the shapes shapes according to the current action
 	private void drawShapes() {
 		for (int i = 0; i < SHAPE_LIST.length; i++)
 			for (int j = 0; j < SHAPE_LIST.length; j++)
@@ -196,9 +202,12 @@ public class shapesList extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * shapeList Constructor
 	 */
 	public shapesList() {
 		setLayout(null);
+		
+		// creating shape panel
 		JPanel SHAPES_LIST = new JPanel();
 		SHAPES_LIST.setBounds(0, 0, 170, 265);
 		SHAPES_LIST.setLayout(null);
