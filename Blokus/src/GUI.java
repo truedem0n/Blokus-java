@@ -197,15 +197,23 @@ public class GUI extends JFrame {
 		
 		close_panel = new JPanel();
 		close_panel.setOpaque(false);
-		close_panel.setBounds(307, 11, 28, 36);
+		close_panel.setBounds(307, 11, 28, 43);
 		welcome_panel.add(close_panel);
 		close_panel.setBorder(null);
 		close_panel.setBackground(Color.CYAN);
 		
-		JLabel lblX = new JLabel("<html><span style='font-size:15px'>"+"X"+"</span></html>");
+		JLabel lblX = new JLabel("<html><span style='font-size:20px'>"+"X"+"</span></html>");
+		lblX.setHorizontalAlignment(SwingConstants.CENTER);
+		lblX.setFont(new Font("Century Gothic", Font.PLAIN, 15));
 		close_panel.add(lblX);
 		lblX.setIcon(null);
 		lblX.setBackground(Color.RED);
+		close_panel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+		});
 		lblX.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

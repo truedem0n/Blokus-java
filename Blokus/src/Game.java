@@ -20,7 +20,7 @@ public class Game extends JPanel {
 	 */
 	public Game(GUI frame)  {
 		
-		setBackground(Color.LIGHT_GRAY);
+		setBackground(new Color(63, 71, 204));
 		frame.setBounds(0, 0, 709, 608);
 		frame.setLocationRelativeTo(null);
 		setBounds(0, 0, 709, 608);
@@ -33,25 +33,31 @@ public class Game extends JPanel {
 		add(shapelist);
 		
 		JPanel surrender = new JPanel();
+		surrender.setForeground(Color.WHITE);
 		surrender.setBounds(20, 384, 148, 40);
+		surrender.setBackground(new Color(2, 40, 89));
 		add(surrender);
 		surrender.setLayout(null);
 		
 		JLabel lblSurrender = new JLabel("Surrender");
+		lblSurrender.setForeground(Color.WHITE);
 		lblSurrender.setFont(new Font("Century Gothic", Font.PLAIN, 15));
 		lblSurrender.setBounds(36, 11, 130, 18);
 		surrender.add(lblSurrender);
 
 		JLabel lblScore = new JLabel("Score: 0");
+		lblScore.setForeground(Color.white);
 		lblScore.setBounds(20, 478, 128, 14);
 		add(lblScore);
 
 		JLabel lblBlokus = new JLabel(" Blokus");
+		lblBlokus.setForeground(Color.white);
 		lblBlokus.setFont(new Font("Century Gothic", Font.PLAIN, 25));
 		lblBlokus.setBounds(0, 1, 148, 32);
 		add(lblBlokus);
 
 		JLabel lblTurn = new JLabel("Turn");
+		lblTurn.setForeground(Color.white);
 		lblTurn.setBounds(76, 89, 31, 14);
 		add(lblTurn);
 
@@ -61,6 +67,8 @@ public class Game extends JPanel {
 		GAME_BOARD.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));
 
 		lblTimeLeft = new JLabel("Time left: 10:00");
+		lblTimeLeft.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTimeLeft.setForeground(Color.white);
 		seconds=0;
 		timer = new Timer(1000, new ActionListener() {
 
@@ -74,16 +82,17 @@ public class Game extends JPanel {
 	    });
 	    timer.setRepeats(true);
 	    timer.start();
-		lblTimeLeft.setBounds(587, 64, 110, 14);
+		lblTimeLeft.setBounds(561, 64, 136, 14);
 		add(lblTimeLeft);
 		
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBackground(Color.LIGHT_GRAY);
-		menuBar.setBounds(95, 11, 99, 22);
+		menuBar.setBackground(new Color(63, 71, 204));
+		menuBar.setBounds(95, 7, 99, 22);
 		menuBar.setBorder(null);
 		add(menuBar);
 		
 		JMenu mnOptions = new JMenu("Options");
+		mnOptions.setForeground(Color.white);
 		mnOptions.setFont(new Font("Century Gothic", Font.PLAIN, 15));
 		menuBar.add(mnOptions);
 		

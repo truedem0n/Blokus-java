@@ -36,7 +36,7 @@ public class colors extends JPanel {
 				frame.setVisible(true);
 				loginPage.removeAll();
 				loginPage.add(game);
-				close_panel.setBounds(680, 11, 28, 36);
+				close_panel.setBounds(680, 2, 28, 36);
 				game.add(close_panel);
 				loginPage.revalidate();
 				loginPage.repaint();
