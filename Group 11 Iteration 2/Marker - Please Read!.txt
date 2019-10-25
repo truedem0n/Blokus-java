@@ -20,3 +20,4 @@ Some notes regarding Minor Release and code
  "java GUI"
 -If you want to see our latest code at anytime feel free to have a look at
  our blokus folder in root directory of this repository.
+ **Note: The two sequence diagrams will be pushed by 5 PM tomorrow (Saturday). Mark Hatcher has approved of this.
