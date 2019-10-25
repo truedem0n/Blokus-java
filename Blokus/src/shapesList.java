@@ -327,7 +327,22 @@ public class shapesList extends JPanel {
 						button.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mouseClicked(MouseEvent e) {
-
+								shapeButton thisButton = ((shapeButton) e.getSource());
+								actions = shapes[thisButton.getIndex()];
+								rotateCoordinatesCCW();
+								hideShape(e);
+								drawShapes();
+							}
+							@Override
+							public void mouseDragged(MouseEvent e) {
+								shapeButton thisButton = ((shapeButton) e.getSource());
+								actions = shapes[thisButton.getIndex()];
+								rotateCoordinatesCCW();
+								hideShape(e);
+								drawShapes();
+							}
+							@Override
+							public void mouseMoved(MouseEvent e) {
 								shapeButton thisButton = ((shapeButton) e.getSource());
 								actions = shapes[thisButton.getIndex()];
 								rotateCoordinatesCCW();

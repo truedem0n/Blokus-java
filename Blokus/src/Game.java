@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.awt.event.MouseMotionAdapter;
 
 public class Game extends JPanel {
 	/**
@@ -59,26 +60,26 @@ public class Game extends JPanel {
 
 		
 		shapelist=new shapesList();
-		shapelist.setBounds(10, 114, 169, 241);
+		shapelist.setBounds(10, 114, 169, 259);
 		add(shapelist);
 		
 		JPanel surrender = new JPanel();
-		surrender.setBounds(20, 366, 148, 40);
+		surrender.setBounds(20, 384, 148, 40);
 		add(surrender);
 		surrender.setLayout(null);
 		
 		JLabel lblSurrender = new JLabel("Surrender");
 		lblSurrender.setFont(new Font("Century Gothic", Font.PLAIN, 15));
-		lblSurrender.setBounds(36, 11, 77, 18);
+		lblSurrender.setBounds(36, 11, 130, 18);
 		surrender.add(lblSurrender);
 
 		JLabel lblScore = new JLabel("Score: 0");
-		lblScore.setBounds(20, 478, 48, 14);
+		lblScore.setBounds(20, 478, 128, 14);
 		add(lblScore);
 
 		JLabel lblBlokus = new JLabel(" Blokus");
 		lblBlokus.setFont(new Font("Century Gothic", Font.PLAIN, 25));
-		lblBlokus.setBounds(0, 1, 82, 32);
+		lblBlokus.setBounds(0, 1, 148, 32);
 		add(lblBlokus);
 
 		JLabel lblTurn = new JLabel("Turn");
@@ -88,10 +89,33 @@ public class Game extends JPanel {
 		GAME_BOARD = new GameBoard(GRID_SIZE);
 		GAME_BOARD.addMouseListener(new MouseAdapter() {
 			@Override
+			public void mouseEntered(MouseEvent e) {
+				GAME_BOARD.setAction(shapelist.getAction());
+				GAME_BOARD.setAction(shapelist.getAction());
+				GAME_BOARD.setAction(shapelist.getAction());
+			}
+			@Override
 			public void mouseExited(MouseEvent e) {
+				GAME_BOARD.setAction(shapelist.getAction());
+				GAME_BOARD.setAction(shapelist.getAction());
 				GAME_BOARD.setAction(shapelist.getAction());
 			}
 		});
+		GAME_BOARD.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				GAME_BOARD.setAction(shapelist.getAction());
+				GAME_BOARD.setAction(shapelist.getAction());
+				GAME_BOARD.setAction(shapelist.getAction());
+			}
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				GAME_BOARD.setAction(shapelist.getAction());
+				GAME_BOARD.setAction(shapelist.getAction());
+				GAME_BOARD.setAction(shapelist.getAction());
+			}
+		});
+
 		GAME_BOARD.setBounds(189, 89, 508, 508);
 		add(GAME_BOARD);
 		GAME_BOARD.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));
@@ -110,7 +134,7 @@ public class Game extends JPanel {
 	    });
 	    timer.setRepeats(true);
 	    timer.start();
-		lblTimeLeft.setBounds(608, 64, 89, 14);
+		lblTimeLeft.setBounds(587, 64, 110, 14);
 		add(lblTimeLeft);
 		
 		JMenuBar menuBar = new JMenuBar();
