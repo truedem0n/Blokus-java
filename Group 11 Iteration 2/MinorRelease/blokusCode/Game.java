@@ -9,12 +9,10 @@ import java.util.Hashtable;
 
 public class Game extends JPanel {
 	/**
-	 * 
+	 * All the declarartions required for this class
 	 */
 	private static final long serialVersionUID = 1L;
-	
-
-	private int GRID_SIZE = 16, seconds;
+	private int GRID_SIZE = 20, seconds;
 	private shapesList shapelist;
 	JLabel lblTimeLeft;
 	private Dictionary<Object,Object> map;
