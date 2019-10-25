@@ -9,7 +9,7 @@ import java.util.Dictionary;
 
 public class GPC extends JPanel {
 	/**
-	 * 
+	 *  All the declarations
 	 */
 	private static final long serialVersionUID = 1L;
 	private GPC gpc;
@@ -32,20 +32,23 @@ public class GPC extends JPanel {
 	
 	public GPC(JPanel close_panel2, JPanel loginPage, GUI frame, Dictionary GAME_SETTINGS) {
 		this.close_panel=close_panel2;
-		setBackground(Color.ORANGE);
+		setBackground(new Color(63, 71, 204));
 		setBounds(342, 0, 345, 478);
 		setLayout(null);
 		gpc=this;
 		
 		JLabel lblNewLabel = new JLabel("Grid size:");
+		lblNewLabel.setForeground(Color.white);
 		lblNewLabel.setBounds(59, 159, 63, 14);
 		add(lblNewLabel);
 		
 		JLabel lblPlayers = new JLabel("Players:");
+		lblPlayers.setForeground(Color.white);
 		lblPlayers.setBounds(59, 187, 97, 14);
 		add(lblPlayers);
 		
 		JLabel lblCpus = new JLabel("CPU(s):");
+		lblCpus.setForeground(Color.white);
 		lblCpus.setBounds(59, 218, 97, 14);
 		add(lblCpus);
 		gridSize_comboBox = new JComboBox<Object>(g1);
@@ -79,13 +82,14 @@ public class GPC extends JPanel {
 				}
 			}
 		});
-		continue_panel.setBackground(Color.GREEN);
+		continue_panel.setBackground(Color.ORANGE);
 		continue_panel.setBounds(59, 305, 216, 49);
 		add(continue_panel);
 		continue_panel.setLayout(null);
 		
 		JLabel lblContinue = new JLabel("Continue");
-		lblContinue.setBounds(66, 11, 79, 25);
+		lblContinue.setForeground(Color.white);
+		lblContinue.setBounds(66, 11, 140, 25);
 		lblContinue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		continue_panel.add(lblContinue);
 		

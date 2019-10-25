@@ -3,15 +3,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -46,23 +43,6 @@ public class GUI extends JFrame {
 			}
 		});
 	}
-	private static void parseEmployeeObject(JSONObject session)
-    {
-        //Get employee object within list
-        JSONObject employeeObject = (JSONObject) session.get("employee");
-         
-        //Get employee first name
-        String firstName = (String) employeeObject.get("firstName");   
-        System.out.println(firstName);
-         
-        //Get employee last name
-        String lastName = (String) employeeObject.get("lastName"); 
-        System.out.println(lastName);
-         
-        //Get employee website name
-        String website = (String) employeeObject.get("website");   
-        System.out.println(website);
-    }
 
 	/**
 	 * Create the frame.
@@ -127,7 +107,7 @@ public class GUI extends JFrame {
 		lblBlokus.setFont(new Font("Century Gothic", Font.PLAIN, 33));
 		
 		welcome_panel = new JPanel();
-		welcome_panel.setBackground(Color.CYAN);
+		welcome_panel.setBackground(new Color(63, 71, 204));
 		welcome_panel.setBounds(342, 0, 345, 478);
 		LoginPage.add(welcome_panel);
 		welcome_panel.setLayout(null);
@@ -151,8 +131,10 @@ public class GUI extends JFrame {
 		});
 		play_panel.setForeground(Color.WHITE);
 		play_panel.setBackground(Color.GREEN);
+		play_panel.setLayout(null);
 		
 		JLabel lblPlay = new JLabel("PLAY");
+		lblPlay.setBounds(46, 5, 84, 26);
 		lblPlay.setForeground(Color.WHITE);
 		lblPlay.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		play_panel.add(lblPlay);
@@ -187,8 +169,10 @@ public class GUI extends JFrame {
 		welcome_panel.add(load_panel);
 		load_panel.setBackground(new Color(128, 0, 0));
 		load_panel.setForeground(new Color(0, 0, 0));
+		load_panel.setLayout(null);
 		
 		JLabel lblLoad = new JLabel("LOAD");
+		lblLoad.setBounds(42, 5, 88, 26);
 		lblLoad.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		lblLoad.setForeground(Color.WHITE);
 		load_panel.add(lblLoad);
@@ -203,8 +187,10 @@ public class GUI extends JFrame {
 			}
 		});
 		exit_panel.setBackground(new Color(255, 0, 0));
+		exit_panel.setLayout(null);
 		
 		JLabel lblExit = new JLabel("EXIT");
+		lblExit.setBounds(51, 5, 89, 26);
 		lblExit.setForeground(new Color(255, 255, 255));
 		lblExit.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		exit_panel.add(lblExit);
@@ -228,4 +214,22 @@ public class GUI extends JFrame {
 		});
 		lblX.setForeground(Color.RED);
 	}
+    
+    private static void parseEmployeeObject(JSONObject session)
+    {
+        //Get employee object within list
+        JSONObject employeeObject = (JSONObject) session.get("employee");
+         
+        //Get employee first name
+        String firstName = (String) employeeObject.get("firstName");   
+        System.out.println(firstName);
+         
+        //Get employee last name
+        String lastName = (String) employeeObject.get("lastName"); 
+        System.out.println(lastName);
+         
+        //Get employee website name
+        String website = (String) employeeObject.get("website");   
+        System.out.println(website);
+    }
 }

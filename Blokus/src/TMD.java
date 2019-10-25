@@ -11,7 +11,7 @@ import java.util.Dictionary;
 public class TMD extends JPanel {
 	
 	/**
-	 * 
+	 *   All the declarartions
 	 */
 	private static final long serialVersionUID = 1L;
 	private String m1[] = { "10", "15", "20"}; 
@@ -26,13 +26,14 @@ public class TMD extends JPanel {
 	 * @param frame 
 	 * @param gAME_SETTINGS 
 	 */
-	public TMD(JPanel close_panel, JPanel loginPage, GUI frame, Dictionary<Object,Object> gAME_SETTINGS) {
+	public TMD(JPanel close_panel, JPanel loginPage, GUI frame, Dictionary gAME_SETTINGS) {
 		tmd=this;
-		setBackground(Color.GREEN);
+		setBackground(new Color(63, 71, 204));
 		setBounds(342, 0, 345, 478);
 		setLayout(null);
 		
 		JLabel lblTimeLimit = new JLabel("Time Limit:");
+		lblTimeLimit.setForeground(Color.white);
 		lblTimeLimit.setBounds(61, 152, 63, 14);
 		add(lblTimeLimit);
 		
@@ -54,10 +55,12 @@ public class TMD extends JPanel {
 		add(minutes_comboBox);
 		
 		JLabel lblMinutes = new JLabel("Minutes:");
+		lblMinutes.setForeground(Color.white);
 		lblMinutes.setBounds(61, 180, 97, 14);
 		add(lblMinutes);
 		
 		JLabel lblDifficulty = new JLabel("Difficulty: ");
+		lblDifficulty.setForeground(Color.white);
 		lblDifficulty.setBounds(61, 211, 97, 14);
 		add(lblDifficulty);
 		
@@ -87,8 +90,9 @@ public class TMD extends JPanel {
 		add(continue_panel);
 		
 		JLabel label_3 = new JLabel("Continue");
+		label_3.setForeground(Color.white);
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		label_3.setBounds(66, 11, 79, 25);
+		label_3.setBounds(66, 11, 140, 25);
 		continue_panel.add(label_3);
 
 	}

@@ -6,10 +6,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -21,7 +17,8 @@ public class shapesList extends JPanel {
 	
 	private shapeButton[][][] SHAPE_LIST = new shapeButton[21][7][7];
 	private int[][] actions = {{0, 0}};
-	JPanel ssp1;
+	private GameBoard playingAtBoard;
+	private JPanel ssp1;
 	private int[][][] shapes = {
 			{{0, 0}},
 
@@ -54,151 +51,6 @@ public class shapesList extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-		// flip horizontally
-		private void flipH(int[][] actions) {
-			for (int i = 0; i < actions.length; i++)
-				actions[i][0] = -actions[i][0];
-		}
-
-		//flip vertically
-		private void flipV(int[][] actions) {
-			for (int i = 0; i < actions.length; i++)
-				actions[i][1] = -actions[i][1];
-		}
-		
-		//rotate clockwise
-		private void rotateCoordinatesCW() {
-			
-			// take coordinates and rotate them
-			for (int i = 0; i < actions.length; i++) {
-				if (actions[i][0] == 0) {
-					if (actions[i][1] == 0) {
-						actions[i][0] = 0;
-						actions[i][1] = 0;
-					} else if (actions[i][1] == 1) {
-						actions[i][0] = -1;
-						actions[i][1] = 0;
-					} else if (actions[i][1] == -1) {
-						actions[i][0] = 1;
-						actions[i][1] = 0;
-					} else if (actions[i][1] == 2) {
-						actions[i][0] = -2;
-						actions[i][1] = 0;
-					} else if (actions[i][1] == -2) {
-						actions[i][0] = 2;
-						actions[i][1] = 0;
-					}
-				} else if (actions[i][0] == 1) {
-					if (actions[i][1] == 0) {
-						actions[i][0] = 0;
-						actions[i][1] = 1;
-					} else if (actions[i][1] == 1) {
-						actions[i][0] = -1;
-						actions[i][1] = 1;
-					} else if (actions[i][1] == -1) {
-						actions[i][0] = 1;
-						actions[i][1] = 1;
-					} else if (actions[i][1] == 2) {
-						actions[i][0] = 1;
-						actions[i][1] = 2;
-					} else if (actions[i][1] == -2) {
-						actions[i][0] = 1;
-						actions[i][1] = 2;
-					}
-				} else if (actions[i][0] == -1) {
-					if (actions[i][1] == 0) {
-						actions[i][0] = 0;
-						actions[i][1] = -1;
-					} else if (actions[i][1] == 1) {
-						actions[i][0] = -1;
-						actions[i][1] = -1;
-					} else if (actions[i][1] == -1) {
-						actions[i][0] = 1;
-						actions[i][1] = -1;
-					} else if (actions[i][1] == 2) {
-						actions[i][0] = -1;
-						actions[i][1] = -2;
-					} else if (actions[i][1] == -2) {
-						actions[i][0] = 1;
-						actions[i][1] = -2;
-					}
-				} else if (actions[i][0] == 2) {
-					if (actions[i][1] == 0) {
-						actions[i][0] = 0;
-						actions[i][1] = 2;
-					} else if (actions[i][1] == 1) {
-						actions[i][0] = -2;
-						actions[i][1] = 1;
-					} else if (actions[i][1] == -1) {
-						actions[i][0] = 2;
-						actions[i][1] = 1;
-					} else if (actions[i][1] == 2) {
-						actions[i][0] = -2;
-						actions[i][1] = 2;
-					} else if (actions[i][1] == -2) {
-						actions[i][0] = 2;
-						actions[i][1] = 2;
-					}
-				} else if (actions[i][0] == -2) {
-					if (actions[i][1] == 0) {
-						actions[i][0] = 0;
-						actions[i][1] = -2;
-					} else if (actions[i][1] == 1) {
-						actions[i][0] = -2;
-						actions[i][1] = -1;
-					} else if (actions[i][1] == -1) {
-						actions[i][0] = 2;
-						actions[i][1] = -1;
-					} else if (actions[i][1] == 2) {
-						actions[i][0] = -2;
-						actions[i][1] = -2;
-					} else if (actions[i][1] == -2) {
-						actions[i][0] = 2;
-						actions[i][1] = -2;
-					}
-
-				}
-			}
-		}
-
-		private void rotateCoordinatesCCW() {
-			rotateCoordinatesCW();
-			// rotate coordinates clock wise and negate all the coordinates to inverse them
-			// this implements the functionality of counter clockwise rotaton
-			for (int i = 0; i < actions.length; i++) {
-				actions[i][0] = -actions[i][0];
-				actions[i][1] = -actions[i][1];
-			}
-		}
-	
-		// hides all the buttons of a shape
-	private void hideShape(MouseEvent e) {
-		int index = ((shapeButton) e.getSource()).getIndex();
-		for (int j = 0; j < SHAPE_LIST[index].length; j++)
-			for (int k = 0; k < SHAPE_LIST[index][j].length; k++) {
-				SHAPE_LIST[index][j][k].setVisible(false);
-			}
-	}
-	
-	// draw the shapes shapes according to the current action
-	private void drawShapes() {
-		for (int i = 0; i < SHAPE_LIST.length; i++)
-			for (int j = 0; j < SHAPE_LIST.length; j++)
-				for (int k = 0; k < SHAPE_LIST.length; k++) {
-					if (j == 3 && k == 3) {
-						for (int l = 0; l < shapes[i].length; l++) {
-							SHAPE_LIST[i][shapes[i][l][1] + k][shapes[i][l][0] + j].setVisible(true);
-						}
-					}
-					if ((j == 6 && k == 0) || (j == 6 && (k == 2 || k == 4)) || (j == 6 && k == 6)) {
-						SHAPE_LIST[i][j][k].setVisible(true);
-						SHAPE_LIST[i][j][k].setBackground(Color.white);
-					}
-				}
-	}
-	
-	
 
 	/**
 	 * Create the panel.
@@ -256,6 +108,7 @@ public class shapesList extends JPanel {
 							@Override
 							public void mouseClicked(MouseEvent e) {
 								actions = shapes[((shapeButton) e.getSource()).getIndex()];
+								playingAtBoard.setActions(actions);
 							}
 						});
 					}
@@ -274,6 +127,8 @@ public class shapesList extends JPanel {
 								drawShapes();
 								ssp1.repaint();
 								ssp1.revalidate();
+								playingAtBoard.setActions(actions);
+								
 							}
 						});
 					}
@@ -292,6 +147,7 @@ public class shapesList extends JPanel {
 								drawShapes();
 								ssp1.repaint();
 								ssp1.revalidate();
+								playingAtBoard.setActions(actions);
 							}
 						});
 					}
@@ -313,6 +169,7 @@ public class shapesList extends JPanel {
 								rotateCoordinatesCW();
 								hideShape(e);
 								drawShapes();
+								playingAtBoard.setActions(actions);
 							}
 						});
 					}
@@ -332,6 +189,7 @@ public class shapesList extends JPanel {
 								rotateCoordinatesCCW();
 								hideShape(e);
 								drawShapes();
+								playingAtBoard.setActions(actions);
 							}
 							@Override
 							public void mouseDragged(MouseEvent e) {
@@ -340,6 +198,7 @@ public class shapesList extends JPanel {
 								rotateCoordinatesCCW();
 								hideShape(e);
 								drawShapes();
+								playingAtBoard.setActions(actions);
 							}
 							@Override
 							public void mouseMoved(MouseEvent e) {
@@ -348,6 +207,7 @@ public class shapesList extends JPanel {
 								rotateCoordinatesCCW();
 								hideShape(e);
 								drawShapes();
+								playingAtBoard.setActions(actions);
 							}
 						});
 					}
@@ -374,6 +234,153 @@ public class shapesList extends JPanel {
 
 	}
 
+	// flip horizontally
+			private void flipH(int[][] actions) {
+				for (int i = 0; i < actions.length; i++)
+					actions[i][0] = -actions[i][0];
+			}
+
+			//flip vertically
+			private void flipV(int[][] actions) {
+				for (int i = 0; i < actions.length; i++)
+					actions[i][1] = -actions[i][1];
+			}
+			
+			//rotate clockwise
+			private void rotateCoordinatesCW() {
+				
+				// take coordinates and rotate them
+				for (int i = 0; i < actions.length; i++) {
+					if (actions[i][0] == 0) {
+						if (actions[i][1] == 0) {
+							actions[i][0] = 0;
+							actions[i][1] = 0;
+						} else if (actions[i][1] == 1) {
+							actions[i][0] = -1;
+							actions[i][1] = 0;
+						} else if (actions[i][1] == -1) {
+							actions[i][0] = 1;
+							actions[i][1] = 0;
+						} else if (actions[i][1] == 2) {
+							actions[i][0] = -2;
+							actions[i][1] = 0;
+						} else if (actions[i][1] == -2) {
+							actions[i][0] = 2;
+							actions[i][1] = 0;
+						}
+					} else if (actions[i][0] == 1) {
+						if (actions[i][1] == 0) {
+							actions[i][0] = 0;
+							actions[i][1] = 1;
+						} else if (actions[i][1] == 1) {
+							actions[i][0] = -1;
+							actions[i][1] = 1;
+						} else if (actions[i][1] == -1) {
+							actions[i][0] = 1;
+							actions[i][1] = 1;
+						} else if (actions[i][1] == 2) {
+							actions[i][0] = 1;
+							actions[i][1] = 2;
+						} else if (actions[i][1] == -2) {
+							actions[i][0] = 1;
+							actions[i][1] = 2;
+						}
+					} else if (actions[i][0] == -1) {
+						if (actions[i][1] == 0) {
+							actions[i][0] = 0;
+							actions[i][1] = -1;
+						} else if (actions[i][1] == 1) {
+							actions[i][0] = -1;
+							actions[i][1] = -1;
+						} else if (actions[i][1] == -1) {
+							actions[i][0] = 1;
+							actions[i][1] = -1;
+						} else if (actions[i][1] == 2) {
+							actions[i][0] = -1;
+							actions[i][1] = -2;
+						} else if (actions[i][1] == -2) {
+							actions[i][0] = 1;
+							actions[i][1] = -2;
+						}
+					} else if (actions[i][0] == 2) {
+						if (actions[i][1] == 0) {
+							actions[i][0] = 0;
+							actions[i][1] = 2;
+						} else if (actions[i][1] == 1) {
+							actions[i][0] = -2;
+							actions[i][1] = 1;
+						} else if (actions[i][1] == -1) {
+							actions[i][0] = 2;
+							actions[i][1] = 1;
+						} else if (actions[i][1] == 2) {
+							actions[i][0] = -2;
+							actions[i][1] = 2;
+						} else if (actions[i][1] == -2) {
+							actions[i][0] = 2;
+							actions[i][1] = 2;
+						}
+					} else if (actions[i][0] == -2) {
+						if (actions[i][1] == 0) {
+							actions[i][0] = 0;
+							actions[i][1] = -2;
+						} else if (actions[i][1] == 1) {
+							actions[i][0] = -2;
+							actions[i][1] = -1;
+						} else if (actions[i][1] == -1) {
+							actions[i][0] = 2;
+							actions[i][1] = -1;
+						} else if (actions[i][1] == 2) {
+							actions[i][0] = -2;
+							actions[i][1] = -2;
+						} else if (actions[i][1] == -2) {
+							actions[i][0] = 2;
+							actions[i][1] = -2;
+						}
+
+					}
+				}
+			}
+
+			private void rotateCoordinatesCCW() {
+				rotateCoordinatesCW();
+				// rotate coordinates clock wise and negate all the coordinates to inverse them
+				// this implements the functionality of counter clockwise rotaton
+				for (int i = 0; i < actions.length; i++) {
+					actions[i][0] = -actions[i][0];
+					actions[i][1] = -actions[i][1];
+				}
+			}
+		
+			// hides all the buttons of a shape
+		private void hideShape(MouseEvent e) {
+			int index = ((shapeButton) e.getSource()).getIndex();
+			for (int j = 0; j < SHAPE_LIST[index].length; j++)
+				for (int k = 0; k < SHAPE_LIST[index][j].length; k++) {
+					SHAPE_LIST[index][j][k].setVisible(false);
+				}
+		}
+		//Sets the reference to the board being played at
+		public void setPlayingAtBoard(GameBoard playingAtBoard) {
+			this.playingAtBoard = playingAtBoard;
+		}
+		
+		// draw the shapes shapes according to the current action
+		private void drawShapes() {
+			for (int i = 0; i < SHAPE_LIST.length; i++)
+				for (int j = 0; j < SHAPE_LIST.length; j++)
+					for (int k = 0; k < SHAPE_LIST.length; k++) {
+						if (j == 3 && k == 3) {
+							for (int l = 0; l < shapes[i].length; l++) {
+								SHAPE_LIST[i][shapes[i][l][1] + k][shapes[i][l][0] + j].setVisible(true);
+							}
+						}
+						if ((j == 6 && k == 0) || (j == 6 && (k == 2 || k == 4)) || (j == 6 && k == 6)) {
+							SHAPE_LIST[i][j][k].setVisible(true);
+							SHAPE_LIST[i][j][k].setBackground(Color.white);
+						}
+					}
+		}
+	
 	public int[][] getAction() {
 		// TODO Auto-generated method stub
 		return this.actions;
