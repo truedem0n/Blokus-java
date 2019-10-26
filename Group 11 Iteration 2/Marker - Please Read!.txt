@@ -7,7 +7,7 @@ Some notes regarding Minor Release and code
  functionality of the two use cases is still similar.
 -When running the jar please make valid selections for players & computers
  otherwise the continue button would not work.
--We originally were supposed to implement load a game session in our 
+-We were originally supposed to implement load a game session in our 
  minor release but since to load a game we should first have save a 
  game session in place. Therefore, we decided to change our load a game
  session use case to rotation/flip of a shape.
