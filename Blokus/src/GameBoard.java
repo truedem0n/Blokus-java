@@ -2,9 +2,13 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
@@ -18,6 +22,8 @@ public class GameBoard extends JPanel {
 	private int GRID_SIZE=16;
 	private customButton[][] button;
 	private Dictionary<String,String> map;
+	AudioInputStream audioInputStream;
+	Clip clip;
 	
 	/**
 	 * Create the panel.
@@ -41,6 +47,16 @@ public class GameBoard extends JPanel {
 	}
 	
 	private void setUpBoard() {
+		
+		try {
+			audioInputStream = AudioSystem.getAudioInputStream(new File("src/sounds/placed.wav").getAbsoluteFile());
+			clip=AudioSystem.getClip();
+			clip.open(audioInputStream);
+			}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 		for (int i = 0; i < GRID_SIZE; i++)
 			for (int j = 0; j < GRID_SIZE; j++) {
 				button[j][i] = new customButton("", j, i);
@@ -49,6 +65,15 @@ public class GameBoard extends JPanel {
 				button[j][i].addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
+						try {
+							clip.setFramePosition(0);
+							clip.start();
+							}
+						catch(Exception s) {
+							s.printStackTrace();
+							
+						}
+						
 						customButton thisButton = ((customButton) e.getSource());
 						int x = thisButton.getPos()[0];
 						int y = thisButton.getPos()[1];

@@ -12,9 +12,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 public class shapesList extends JPanel {
-	
+	AudioInputStream audioInputStream;
+	Clip clip;
 	private shapeButton[][][] SHAPE_LIST = new shapeButton[21][7][7];
 	private int[][] actions = {{0, 0}};
 	private GameBoard playingAtBoard;
@@ -58,6 +63,15 @@ public class shapesList extends JPanel {
 	 */
 	public shapesList() {
 		setLayout(null);
+		
+		try {
+			audioInputStream = AudioSystem.getAudioInputStream(new File("src/sounds/selected.wav").getAbsoluteFile());
+			clip=AudioSystem.getClip();
+			clip.open(audioInputStream);
+			}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 		// creating shape panel
 		JPanel SHAPES_LIST = new JPanel();
@@ -107,6 +121,14 @@ public class shapesList extends JPanel {
 						button.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mouseClicked(MouseEvent e) {
+								try {
+									clip.setFramePosition(0);
+									clip.start();
+									}
+								catch(Exception s) {
+									s.printStackTrace();
+									
+								}
 								actions = shapes[((shapeButton) e.getSource()).getIndex()];
 								playingAtBoard.setActions(actions);
 							}
@@ -121,6 +143,14 @@ public class shapesList extends JPanel {
 						button.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mouseClicked(MouseEvent e) {
+								try {
+									clip.setFramePosition(0);
+									clip.start();
+									}
+								catch(Exception s) {
+									s.printStackTrace();
+									
+								}
 								actions = shapes[((shapeButton) e.getSource()).getIndex()];
 								flipV(actions);
 								hideShape(e);
@@ -141,6 +171,14 @@ public class shapesList extends JPanel {
 						button.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mouseClicked(MouseEvent e) {
+								try {
+									clip.setFramePosition(0);
+									clip.start();
+									}
+								catch(Exception s) {
+									s.printStackTrace();
+									
+								}
 								actions = shapes[((shapeButton) e.getSource()).getIndex()];
 								flipH(actions);
 								hideShape(e);
@@ -163,7 +201,14 @@ public class shapesList extends JPanel {
 						button.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mouseClicked(MouseEvent e) {
-
+								try {
+									clip.setFramePosition(0);
+									clip.start();
+									}
+								catch(Exception s) {
+									s.printStackTrace();
+									
+								}
 								shapeButton thisButton = ((shapeButton) e.getSource());
 								actions = shapes[thisButton.getIndex()];
 								rotateCoordinatesCW();
@@ -184,24 +229,14 @@ public class shapesList extends JPanel {
 						button.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mouseClicked(MouseEvent e) {
-								shapeButton thisButton = ((shapeButton) e.getSource());
-								actions = shapes[thisButton.getIndex()];
-								rotateCoordinatesCCW();
-								hideShape(e);
-								drawShapes();
-								playingAtBoard.setActions(actions);
-							}
-							@Override
-							public void mouseDragged(MouseEvent e) {
-								shapeButton thisButton = ((shapeButton) e.getSource());
-								actions = shapes[thisButton.getIndex()];
-								rotateCoordinatesCCW();
-								hideShape(e);
-								drawShapes();
-								playingAtBoard.setActions(actions);
-							}
-							@Override
-							public void mouseMoved(MouseEvent e) {
+								try {
+									clip.setFramePosition(0);
+									clip.start();
+									}
+								catch(Exception s) {
+									s.printStackTrace();
+									
+								}
 								shapeButton thisButton = ((shapeButton) e.getSource());
 								actions = shapes[thisButton.getIndex()];
 								rotateCoordinatesCCW();
