@@ -2,6 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseWheelListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Game extends JPanel {
 	/**
@@ -62,6 +66,16 @@ public class Game extends JPanel {
 		add(lblTurn);
 
 		GAME_BOARD = new GameBoard(GRID_SIZE,shapelist);
+		GAME_BOARD.addMouseWheelListener(new MouseWheelListener() {
+			public void mouseWheelMoved(MouseWheelEvent e) {
+				GAME_BOARD.clearCurrentAction();
+				shapelist.scrollActionHide();
+				shapelist.rotateClockWise();
+				shapelist.scrollActionDraw();
+				GAME_BOARD.drawCurrentAction();
+				
+			}
+		});
 		GAME_BOARD.setBounds(189, 89, 508, 508);
 		add(GAME_BOARD);
 		GAME_BOARD.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));

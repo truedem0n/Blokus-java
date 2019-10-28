@@ -10,6 +10,14 @@ import java.util.Dictionary;
 public class GPC extends JPanel {
 	/**
 	 *  All the declarations
+	 *  
+	 *  g1,p1,c1 are the options for grid sizing
+	 *  number of players, and computers
+	 *  
+	 *  close_panel is the same panel defined in GUI class but being
+	 *  passed down to GPC class
+	 *  
+	 *  JCombo box is used for the dropdown
 	 */
 	private static final long serialVersionUID = 1L;
 	private GPC gpc;
@@ -28,14 +36,29 @@ public class GPC extends JPanel {
 	 * @param frame 
 	 * @param GAME_SETTINGS 
 	 * 
+	 * 
+	 * class constructor
 	 */
 	
+	
 	public GPC(JPanel close_panel2, JPanel loginPage, GUI frame, Dictionary GAME_SETTINGS) {
+		
+		/**
+		 * Create the panel.
+		 * @param close_panel2 
+		 * @param loginPage 
+		 * @param frame 
+		 * @param GAME_SETTINGS 
+		 * 
+		 * 
+		 * class constructor
+		 */
 		this.close_panel=close_panel2;
 		setBackground(new Color(63, 71, 204));
 		setBounds(342, 0, 345, 478);
 		setLayout(null);
 		gpc=this;
+		
 		
 		JLabel lblNewLabel = new JLabel("Grid size:");
 		lblNewLabel.setForeground(Color.white);
@@ -67,6 +90,11 @@ public class GPC extends JPanel {
 		continue_panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				// when continue is clicked it should check the number of players playing the game is valid
+				// condition is true a new panel TMD is created 
+				// passing login panel and frame so that we can so that we can change them
+				// the  sub class
 				if((Integer.valueOf(String.valueOf(playerNumber_comboBox.getSelectedItem()))+Integer.valueOf(String.valueOf(cpuNumber_comboBox.getSelectedItem())))>1&&(Integer.valueOf(String.valueOf(playerNumber_comboBox.getSelectedItem()))+Integer.valueOf(String.valueOf(cpuNumber_comboBox.getSelectedItem())))<5) {
 					GAME_SETTINGS.put("gridSize",gridSize_comboBox.getSelectedIndex());
 					GAME_SETTINGS.put("playerNumber",playerNumber_comboBox.getSelectedItem());

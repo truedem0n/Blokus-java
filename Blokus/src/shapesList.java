@@ -18,9 +18,10 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 public class shapesList extends JPanel {
-	AudioInputStream audioInputStream;
-	Clip clip;
+	private AudioInputStream audioInputStream;
+	private Clip clip;
 	private shapeButton[][][] SHAPE_LIST = new shapeButton[21][7][7];
+	private MouseEvent event;
 	private int[][] actions = {{0, 0}};
 	private GameBoard playingAtBoard;
 	private JPanel ssp1;
@@ -64,6 +65,8 @@ public class shapesList extends JPanel {
 	public shapesList() {
 		setLayout(null);
 		
+		
+		// loading the wav file
 		try {
 			audioInputStream = AudioSystem.getAudioInputStream(new File("src/sounds/selected.wav").getAbsoluteFile());
 			clip=AudioSystem.getClip();
@@ -121,6 +124,7 @@ public class shapesList extends JPanel {
 						button.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mouseClicked(MouseEvent e) {
+								event=e;
 								try {
 									clip.setFramePosition(0);
 									clip.start();
@@ -268,8 +272,9 @@ public class shapesList extends JPanel {
 		SHAPES_LIST.add(contentPane);
 
 	}
+	
 
-	// flip horizontally
+			// flip horizontally
 			private void flipH(int[][] actions) {
 				for (int i = 0; i < actions.length; i++)
 					actions[i][0] = -actions[i][0];
@@ -279,6 +284,10 @@ public class shapesList extends JPanel {
 			private void flipV(int[][] actions) {
 				for (int i = 0; i < actions.length; i++)
 					actions[i][1] = -actions[i][1];
+			}
+			
+			public void rotateClockWise() {
+				rotateCoordinatesCW();
 			}
 			
 			//rotate clockwise
@@ -409,15 +418,35 @@ public class shapesList extends JPanel {
 								SHAPE_LIST[i][shapes[i][l][1] + k][shapes[i][l][0] + j].setVisible(true);
 							}
 						}
-						if ((j == 6 && k == 0) || (j == 6 && (k == 2 || k == 4)) || (j == 6 && k == 6)) {
+						else if ((j == 6 && k == 0) || (j == 6 && (k == 2 || k == 4)) || (j == 6 && k == 6)) {
 							SHAPE_LIST[i][j][k].setVisible(true);
 							SHAPE_LIST[i][j][k].setBackground(Color.white);
 						}
 					}
 		}
 	
+		public void scrollActionHide() {
+			try {
+				hideShape(event);
+			}catch(Exception e) {
+				
+			}
+		}
+		public void scrollActionDraw() {
+			drawShapes();
+		}
+		public void rightClickFlipH() {
+			flipH(actions);
+			hideShape(event);
+			drawShapes();
+		}
+		public void rightClickFlipV() {
+			flipV(actions);
+			hideShape(event);
+			drawShapes();
+		}
+		
 	public int[][] getAction() {
-		// TODO Auto-generated method stub
 		return this.actions;
 	}
 }

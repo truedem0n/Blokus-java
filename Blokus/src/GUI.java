@@ -18,11 +18,21 @@ import java.util.Hashtable;
 public class GUI extends JFrame {
 
 	/**
+	 * serial version uid is just a class identifier (ignore this)
+	 * frame is the main Jframe  of this application
+	 * panels are being used to design the application
+	 * their layout is kept null because I (Atul) use 
+	 * window builder tool of eclipse to drag and drop 
+	 * components for faster development 
 	 * 
+	 * int xy and xx are  just the vairables keeping care
+	 * of dragging functionality of the game
+	 * 
+	 * GAME_SETTINGS this will be used for saving game settings
 	 */
 	private static final long serialVersionUID = 1L;
 	private static GUI frame;
-	private JPanel LoginPage,close_panel,welcome_panel,logo_panel,play_panel;
+	private JPanel containerPanel,close_panel,welcome_panel,logo_panel,play_panel;
 	private int xy,xx;
 	private Dictionary<Object, Object> GAME_SETTINGS; 
 
@@ -50,7 +60,7 @@ public class GUI extends JFrame {
 	 * @throws FontFormatException 
 	 */
     public GUI() throws IOException {
-		//Creating Game settings
+		//hashtable that will be used for load a game configuration or save a game configuration
 		GAME_SETTINGS=new Hashtable<Object, Object>();
 		
 		// antialiasing for font smoothing 
@@ -58,14 +68,27 @@ public class GUI extends JFrame {
 		System.setProperty("swing.aatext", "true");
 		// creating routes
 		
-		// our frame
+		// setting main application frame settings
 		setUndecorated(true);
 		setBounds(100, 100, 687, 478);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//setBounds(100, 100, 364, 475);
 		setLocationRelativeTo(null);
-		LoginPage = new JPanel();
-		LoginPage.addMouseMotionListener(new MouseMotionAdapter() {
+		
+		
+		/**
+		 * this is the main panel 
+		 * containing the blokus logo panel 
+		 * and play, load, and exit panel
+		 */
+		containerPanel = new JPanel();
+		
+		/**
+		 * This functionality allows us to drag our frame using these two listeners
+		 * we are basically grabbing cursor location and changing the frame location 
+		 * according to the cursor
+		 */
+		containerPanel.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				int x = e.getXOnScreen();
@@ -74,43 +97,42 @@ public class GUI extends JFrame {
 			}
 			
 		});
-		LoginPage.addMouseListener(new MouseAdapter() {
+		containerPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				xx = e.getX();
 		        xy = e.getY();
 			}
 		});
-		LoginPage.setForeground(Color.WHITE);
-		LoginPage.setBackground(Color.CYAN);
-		LoginPage.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(LoginPage);
-		LoginPage.setLayout(null);
+		containerPanel.setForeground(Color.WHITE);
+		containerPanel.setBackground(Color.CYAN);
+		containerPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(containerPanel);
+		containerPanel.setLayout(null);
 
-		
+		/**
+		 * this is the blokus logo
+		 */
         ImageIcon img = new ImageIcon(GUI.class.getResource("images/logo.jpg"));
         Image dimg=img.getImage().getScaledInstance(343, 478,Image.SCALE_SMOOTH);
         
+        // adding the blokus logo to the panel via jlabel
 		logo_panel = new JPanel();
-        JLabel label = new JLabel(new ImageIcon(dimg));
-        label.setBounds(0, 0, 343, 478);
-
-
-        logo_panel.add(label);
+        JLabel logoLabel = new JLabel(new ImageIcon(dimg));
+        logoLabel.setBounds(0, 0, 343, 478);
+        logo_panel.add(logoLabel);
 		logo_panel.setBounds(0, 0, 343, 478);
-		LoginPage.add(logo_panel);
+		containerPanel.add(logo_panel);
 		logo_panel.setLayout(null);
-		JLabel lblBlokus = new JLabel("<html><span style='font-size:40px'>"+"Blokus"+"</span></html>");
-		lblBlokus.setForeground(new Color(255, 255, 255));
-		lblBlokus.setBounds(84, 80, 152, 95);
-		logo_panel.add(lblBlokus);
-		lblBlokus.setFont(new Font("Century Gothic", Font.PLAIN, 33));
 		
+		// this panel would be storing our play load and exit buttons
 		welcome_panel = new JPanel();
 		welcome_panel.setBackground(new Color(63, 71, 204));
 		welcome_panel.setBounds(342, 0, 345, 478);
-		LoginPage.add(welcome_panel);
+		containerPanel.add(welcome_panel);
 		welcome_panel.setLayout(null);
+		
+		
 		
 		play_panel = new JPanel();
 		play_panel.setBounds(101, 190, 140, 42);
@@ -118,9 +140,12 @@ public class GUI extends JFrame {
 		play_panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				// if play is create a gpc panel and add that to welcome_panel container
+				// also remove everything before adding
 				welcome_panel.removeAll();
 				welcome_panel.add(close_panel);
-				GPC gpc=new GPC(close_panel,LoginPage,frame,GAME_SETTINGS);
+				GPC gpc=new GPC(close_panel,containerPanel,frame,GAME_SETTINGS);
 				gpc.setBounds(0,0,welcome_panel.getWidth(),welcome_panel.getHeight());
 				welcome_panel.add(gpc);
 				welcome_panel.repaint();
@@ -202,6 +227,8 @@ public class GUI extends JFrame {
 		close_panel.setBorder(null);
 		close_panel.setBackground(Color.CYAN);
 		
+		
+		// this is the close button label
 		JLabel lblX = new JLabel("<html><span style='font-size:20px'>"+"X"+"</span></html>");
 		lblX.setHorizontalAlignment(SwingConstants.CENTER);
 		lblX.setFont(new Font("Century Gothic", Font.PLAIN, 15));
@@ -223,6 +250,8 @@ public class GUI extends JFrame {
 		lblX.setForeground(Color.RED);
 	}
     
+    
+    // this method will be use eventually when save a game starts working
     private static void parseEmployeeObject(JSONObject session)
     {
         //Get employee object within list
