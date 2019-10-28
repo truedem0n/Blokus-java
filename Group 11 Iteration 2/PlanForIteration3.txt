@@ -1,0 +1,14 @@
+Scheduled meeting (group chat) times:
+  - Wednesday, October 30th @ 7:00 PM
+  - Wednesday, November 6th @ 7:00 PM
+  - Regular communication will also be kept between these dates
+  
+Tentative list of responsibilities and deadlines:
+  1. Atul - Logical Architecture Diagram, November 5th @ 10:00 PM
+  2. Devin - Two New Sequence Diagrams, November 1st @ 11:00 PM
+  3. Dylan - Two Revised Use Case Descriptions, November
+  4. Farhan - Two New Use Case Descriptions, November
+  5. Ricky - Two Revised Sequence Diagrams, November 3rd @ 9:00 PM
+  ** The minor release will be subdivided into coding tasks and distributed amongst group members
+     over the iteration period. We collectively plan to have the minor release finished by
+     November 4th @ 11:30 PM.
