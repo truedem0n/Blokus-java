@@ -12,3 +12,5 @@ Tentative list of responsibilities and deadlines:
   ** The minor release will be subdivided into coding tasks and distributed amongst group members
      over the iteration period. We collectively plan to have the minor release finished by
      November 4th @ 11:30 PM.
+ 
+The two new use cases we plan to implement are "load/save game", and "enable colour-blind mode". 
