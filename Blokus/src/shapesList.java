@@ -18,8 +18,24 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 public class shapesList extends JPanel {
+	
+	
+	enum Turn{
+		FIRST,
+		SECOND,
+		THIRD,
+		FOURTH
+	};
+	enum TurnAI{
+		FIRST,
+		SECOND,
+		THIRD,
+	};
+	
+	
 	private AudioInputStream audioInputStream;
 	private Clip clip;
+	private Color color;
 	private shapeButton[][][] SHAPE_LIST = new shapeButton[21][7][7];
 	private MouseEvent event;
 	private int[][] actions = {{0, 0}};
@@ -62,7 +78,9 @@ public class shapesList extends JPanel {
 	 * Create the panel.
 	 * shapeList Constructor
 	 */
-	public shapesList() {
+	public shapesList(Color color) {
+		this.color=color;
+		
 		setLayout(null);
 		
 		
@@ -253,7 +271,7 @@ public class shapesList extends JPanel {
 					button.setBorder(null);
 					button.setVisible(false);
 					button.setFocusable(false);
-					button.setBackground(Color.red);
+					button.setBackground(color);
 					SHAPE_LIST[i - 1][x][y] = button;
 					
 					ssp1.add(button);

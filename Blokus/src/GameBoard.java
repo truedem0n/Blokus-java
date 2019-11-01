@@ -21,7 +21,7 @@ public class GameBoard extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private int[][] actions = {{0, 0}};
 	private MouseEvent event;
-	private shapesList shapes;
+	private Player players;
 	private int GRID_SIZE=16;
 	private customButton[][] button;
 	private Dictionary<String,String> map;
@@ -32,12 +32,12 @@ public class GameBoard extends JPanel {
 	 * Create the panel.
 	 * call the constructor
 	 */
-	public GameBoard(int gridSize,shapesList shapes) {
+	public GameBoard(int gridSize,Player players) {
 		this.GRID_SIZE=gridSize;
 		button = new customButton[GRID_SIZE][GRID_SIZE];
 		map=new Hashtable<String,String>();
-		this.shapes=shapes;
-		shapes.setPlayingAtBoard(this);
+		this.players=players;
+		players.setPlayingAtBoard(this);
 		setUpBoard();
 	}
 
@@ -76,12 +76,12 @@ public class GameBoard extends JPanel {
 					        }
 					        if (SwingUtilities.isMiddleMouseButton(e)) {
 					        	clearGrid();
-						          shapes.rightClickFlipV();
+					        	players.rightClickFlipV();
 						          drawOnGrid();	
 					        }
 					        if (SwingUtilities.isRightMouseButton(e)) {
 					        	clearGrid();
-					          shapes.rightClickFlipH();
+					        	players.rightClickFlipH();
 					          drawOnGrid();	
 					          
 					        }
@@ -124,23 +124,25 @@ public class GameBoard extends JPanel {
 		int x = thisButton.getPos()[0];
 		int y = thisButton.getPos()[1];
 		try {
-			for (int i = 0; i < actions.length; i++) {
-				if (!button[x + actions[i][0]][y + actions[i][1]].isTaken()
-						&& isPlaceable(x, y, actions)) {
-					clip.setFramePosition(0);
-					clip.start();
-					thisButton.setBackground(Color.red);
-					button[x + actions[i][0]][y + actions[i][1]].setBackground(Color.red);
-					button[x + actions[i][0]][y + actions[i][1]].setTaken(true);
-					thisButton.setTaken(true);
-					for (int j = 0; j < actions.length; j++) {
-						map.put(x + actions[j][0] + "_" + y + actions[j][1], "true");
-						button[x + actions[j][0]][y + actions[j][1]].setTaken(true);
+			if (notPlaceableNWSE(x, y, actions))
+				if(isDiagonallyPlaceable(x, y, actions))
+					for (int i = 0; i < actions.length; i++) {
+						if (!button[x + actions[i][0]][y + actions[i][1]].isTaken()
+								&& isPlaceable(x, y, actions)) {
+							clip.setFramePosition(0);
+							clip.start();
+							thisButton.setBackground(Color.red);
+							button[x + actions[i][0]][y + actions[i][1]].setBackground(Color.red);
+							button[x + actions[i][0]][y + actions[i][1]].setTaken(true);
+							thisButton.setTaken(true);
+							for (int j = 0; j < actions.length; j++) {
+								map.put(x + actions[j][0] + "_" + y + actions[j][1], "true");
+								button[x + actions[j][0]][y + actions[j][1]].setTaken(true);
+							}
+							actions=new int[0][0];
+						}
+						
 					}
-					actions=new int[0][0];
-				}
-				
-			}
 		} catch (Exception s) {
 			button[x][y].setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 		}
@@ -197,5 +199,44 @@ public class GameBoard extends JPanel {
 		}
 		return true;
 	}
+	
+	// this method checks if from a given location on the board
+	// if one step North/West/South/East has any block or not
+	// if yes return  false otherwise true
+	private boolean notPlaceableNWSE(int x, int y, int[][] actions) {
+		int[][] cardinalActions= {{0,1},{1,0},{-1,0},{0,-1}};
+			for (int i = 0; i < actions.length; i++) {
+				for(int j=0;j<cardinalActions.length;j++) {
+					// if check to make sure does not go below zero and above the grid size in both x and y directions
+					if((x+actions[i][0]+cardinalActions[j][0]>0 && x+actions[i][0]+cardinalActions[j][0]<this.GRID_SIZE)
+							&&(y+actions[i][1]+cardinalActions[j][1]>0 && y+actions[i][1]+cardinalActions[j][1]<this.GRID_SIZE)){
+						if (button[x + actions[i][0]+cardinalActions[j][0]][y + actions[i][1]+cardinalActions[j][1]].isTaken()) {
+							return false;
+						}
+					}
+				}
 
+			}
+		return true;
+	}
+	private boolean isDiagonallyPlaceable(int x, int y, int[][] actions) {
+		int[][] cardinalActions= {{1,1},{-1,-1},{-1,1},{1,-1}};
+			for (int i = 0; i < actions.length; i++) {
+				for(int j=0;j<cardinalActions.length;j++) {
+					// if check to make sure does not go below zero and above the grid size in both x and y directions
+					if((x+actions[i][0]+cardinalActions[j][0]>0 && x+actions[i][0]+cardinalActions[j][0]<this.GRID_SIZE)
+							&&(y+actions[i][1]+cardinalActions[j][1]>0 && y+actions[i][1]+cardinalActions[j][1]<this.GRID_SIZE)){
+						if (button[x + actions[i][0]+cardinalActions[j][0]][y + actions[i][1]+cardinalActions[j][1]].isTaken()) {
+							return true;
+						}
+					}
+				}
+
+			}
+			System.out.println("Working");
+			if((x==0 && y==0 && !button[x][y].isTaken()) || (x==0 && y==this.GRID_SIZE-1  && !button[x][y].isTaken()) 
+					|| (x==this.GRID_SIZE-1 && y==0  && !button[x][y].isTaken()) || (x==this.GRID_SIZE-1 && y==this.GRID_SIZE-1  && !button[x][y].isTaken()))
+				return true;
+		return false;
+	}
 }

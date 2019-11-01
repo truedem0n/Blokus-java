@@ -13,6 +13,7 @@ public class Game extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int GRID_SIZE = 20, seconds;
+	private Player players;
 	private shapesList shapelist;
 	private JLabel lblTimeLeft;
 	private Timer timer;
@@ -24,17 +25,21 @@ public class Game extends JPanel {
 	 */
 	public Game(GUI frame)  {
 		
+		
+		
 		setBackground(new Color(63, 71, 204));
 		frame.setBounds(0, 0, 709, 608);
 		frame.setLocationRelativeTo(null);
 		setBounds(0, 0, 709, 608);
 		setLayout(null);
 
-
+		players=new Player(Color.red);
+		players.setBounds(10, 114, 169, 259);
+		add(players);
 		
-		shapelist=new shapesList();
-		shapelist.setBounds(10, 114, 169, 259);
-		add(shapelist);
+//		shapelist=new shapesList(Color.black);
+//		shapelist.setBounds(10, 114, 169, 259);
+//		add(shapelist);
 		
 		JPanel surrender = new JPanel();
 		surrender.setForeground(Color.WHITE);
@@ -65,13 +70,13 @@ public class Game extends JPanel {
 		lblTurn.setBounds(76, 89, 31, 14);
 		add(lblTurn);
 
-		GAME_BOARD = new GameBoard(GRID_SIZE,shapelist);
+		GAME_BOARD = new GameBoard(GRID_SIZE,players);
 		GAME_BOARD.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				GAME_BOARD.clearCurrentAction();
-				shapelist.scrollActionHide();
-				shapelist.rotateClockWise();
-				shapelist.scrollActionDraw();
+				players.scrollActionHide();
+				players.rotateClockWise();
+				players.scrollActionDraw();
 				GAME_BOARD.drawCurrentAction();
 				
 			}
@@ -114,5 +119,9 @@ public class Game extends JPanel {
 		mntmOption.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		mnOptions.add(mntmOption);
 
+	}
+	
+	private void settingsLoader() {
+		
 	}
 }
