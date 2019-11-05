@@ -115,7 +115,7 @@ public class Game extends JPanel {
 		mnOptions.setFont(new Font("Century Gothic", Font.PLAIN, 15));
 		menuBar.add(mnOptions);
 		
-		JMenuItem mntmOption = new JMenuItem("Option1");
+		JMenuItem mntmOption = new JMenuItem("Save");
 		mntmOption.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		mnOptions.add(mntmOption);
 

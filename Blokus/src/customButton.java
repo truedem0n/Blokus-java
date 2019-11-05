@@ -11,12 +11,22 @@ public class customButton extends JPanel {
 
 	private int x, y, linien = 1;
 
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	private Color color=Color.white;
 	private boolean taken = false;
 
 	public customButton(String name, int x, int y) {
 		// super(name);
 		this.x = x;
 		this.y = y;
+		this.setBackground(color);
 	}
 
 	public int[] getPos() {

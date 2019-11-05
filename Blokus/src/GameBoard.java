@@ -43,6 +43,16 @@ public class GameBoard extends JPanel {
 
 	
 	public String getBoard() {
+		String startingState="";
+		for (int i=0;i<GRID_SIZE;i++)
+			for (int j=0;j<GRID_SIZE;j++){
+				Color color= button[i][j].getColor();
+				if(color.equals(Color.white))
+					System.out.println(color.toString());
+			}
+
+
+
 		return "";
 	}
 	
@@ -101,6 +111,8 @@ public class GameBoard extends JPanel {
 				});
 				add(button[j][i]);
 			}
+		button[10][10].setTaken(true);
+		
 	}
 	
 	public void clearCurrentAction() {
@@ -113,7 +125,7 @@ public class GameBoard extends JPanel {
 	private void placeShapeOnGrid() {
 		MouseEvent e=event;
 		try {
-			
+			getBoard();
 			}
 		catch(Exception s) {
 			s.printStackTrace();
@@ -224,11 +236,11 @@ public class GameBoard extends JPanel {
 			for (int i = 0; i < actions.length; i++) {
 				for(int j=0;j<cardinalActions.length;j++) {
 					// if check to make sure does not go below zero and above the grid size in both x and y directions
-					if((x+actions[i][0]+cardinalActions[j][0]>0 && x+actions[i][0]+cardinalActions[j][0]<this.GRID_SIZE)
-							&&(y+actions[i][1]+cardinalActions[j][1]>0 && y+actions[i][1]+cardinalActions[j][1]<this.GRID_SIZE)){
+					//if((x+actions[i][0]+cardinalActions[j][0]>0 && x+actions[i][0]+cardinalActions[j][0]<this.GRID_SIZE)
+					//		&&(y+actions[i][1]+cardinalActions[j][1]>0 && y+actions[i][1]+cardinalActions[j][1]<this.GRID_SIZE)){
 						if (button[x + actions[i][0]+cardinalActions[j][0]][y + actions[i][1]+cardinalActions[j][1]].isTaken()) {
 							return true;
-						}
+						//}
 					}
 				}
 
