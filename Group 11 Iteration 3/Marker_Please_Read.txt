@@ -8,17 +8,14 @@ Some Notes Regarding Iteration 3
 -Please save a session first and then try the load use case.
 -The load feature only has one save as of now but we're planning to use
  to add a gui to show all the sessions later on in the course.
--The included code in minor release cannot be run using this command anymore
- because we have included a external jar library called json-simple.
- "javac *.java"
- "java GUI"
--If you want to run the code please open the folder inside "Actual Project"
- in Eclipse and include the json library.
+-The included code in minor release can be run using this command.
+ "javac -cp ".;json-simple-1.1.jar" *.java"
+ "java -cp ".;json-simple-1.1.jar" GUI"
 -We are using json to save and load our board data since it's the most well
- know data structure to keep data.
--When the game starts there will be a black block which is the  starting point
+ know data structure to pass data.
+-When the game starts, you will be presented with a black block which is the starting point
  (temporarily) to place a shape, this is because we were trying to figure out
  how the rules are going to work, but you can still place the shape like in an 
- actual game of blockus but only on the corners of the  black shape.
+ actual game of blockus but only on the corners of the black shape.
 -If you want to see our latest code at anytime feel free to have a look at
  our blokus folder in root directory of this repository.
