@@ -1,0 +1,20 @@
+Some Notes Regarding Iteration 3
+
+-The jar file only runs on Linux and you can run it on a linux machine 
+ using this command
+ "java -jar blokus.jar"
+-The jar file would not work if you do not have any session saved
+ It would stop working if you load it without
+-The included code in minor release cannot be run using this command anymore
+ because we have included a external jar library called json-simple.
+ "javac *.java"
+ "java GUI"
+-If you want to run the code please open the folder inside "Actual Project"
+ in Eclipse and include the json library.
+-We are using json to save and load our board data
+-When the game starts there will be a black block which is the  starting point
+ temporarily to place a shape, this is because we were trying to figure out
+ how the rules are going to work, but you can still place the shape like in an 
+ actual game of blockus but only on the corners of the  black shape.
+-If you want to see our latest code at anytime feel free to have a look at
+ our blokus folder in root directory of this repository.
