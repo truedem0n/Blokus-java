@@ -138,7 +138,7 @@ public class shapesList extends JPanel {
 					button.setPreferredSize(new Dimension(15, 15));
 					if (x != 4 || y != 4)
 						button.setVisible(false);
-					if (!((x == 6 && y == 0) || (x == 6 && y == 6))) {
+					if (!((x == 6 && y == 0) || (x == 6 && y == 6) || (x == 6 && y == 4) || (x == 6 && y == 2))) {
 						button.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mouseClicked(MouseEvent e) {
@@ -150,6 +150,21 @@ public class shapesList extends JPanel {
 								catch(Exception s) {
 									s.printStackTrace();
 									
+								}
+								actions = shapes[((shapeButton) e.getSource()).getIndex()];
+								playingAtBoard.setActions(actions);
+							}
+							// same as mouseClicked just to show drag and drop functionality
+							@Override
+							public void mousePressed(MouseEvent e) {
+								event=e;
+								try {
+									clip.setFramePosition(0);
+									clip.start();
+								}
+								catch(Exception s) {
+									s.printStackTrace();
+
 								}
 								actions = shapes[((shapeButton) e.getSource()).getIndex()];
 								playingAtBoard.setActions(actions);

@@ -104,6 +104,7 @@ public class GameBoard extends JPanel {
                         }
                     }
 
+
                     @Override
                     public void mouseEntered(MouseEvent e) {
                         event = e;
