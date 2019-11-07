@@ -1,0 +1,13 @@
+Iteration4 plans:
+[#]       [Activity]      [Responsible]   [Review on]   [Complete By]   [Comments]
+------------------------------------------------------------------------------------
+ 1  | Future Networking | Dylan         | November 12 | November 19   | 
+      Study
+      
+ 2  | Design Pattern    | Ricky         | November 12 | November 19   |
+      Study               Devin
+      
+ 3  | Unit Tests        | Atul          | November 13 | November 19   |
+                          Farhan
+                          
+ 4  | Final Release     | All of Group  | November 13 | November 18   | Coding to be sub-divided amongst group memebers
