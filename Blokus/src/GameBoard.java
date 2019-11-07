@@ -42,7 +42,7 @@ public class GameBoard extends JPanel {
     }
 
 
-    public String[][] getBoard() {
+    public String[][][] getBoard() {
         String[][][] boardState = new String[GRID_SIZE][GRID_SIZE][3];
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
@@ -69,9 +69,9 @@ public class GameBoard extends JPanel {
                     boardState[i][j][2] = String.valueOf(j);
                 }
             }
-			boardState += "\n";
+			//boardState += "\n";
         }
-        return "";
+        return boardState;
     }
 
     public void setActions(int[][] actions) {
