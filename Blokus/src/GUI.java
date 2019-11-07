@@ -170,23 +170,18 @@ public class GUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent s) {
 
-				
-				JSONParser jsonParser = new JSONParser();
-		        try (FileReader reader = new FileReader("sessions/sessions.json"))
-		        {
-		            //Read JSON file
-		            Object obj = jsonParser.parse(reader);
-		            JSONArray employeeList = (JSONArray) obj;
-		            System.out.println(employeeList);
-		            //Iterate over employee array
-		            employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
-		        } catch (FileNotFoundException e) {
-		            e.printStackTrace();
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		        } catch (ParseException e) {
-		            e.printStackTrace();
-		        }
+				// sample arrary
+				String [][][] sampleArray={{{"r","0","0"},{"r","0","1"},{"r","0","2"}}};
+
+				frame.setVisible(false);
+				Game game=new Game(frame,sampleArray);
+				frame.setVisible(true);
+				containerPanel.removeAll();
+				containerPanel.add(game);
+				close_panel.setBounds(680, 2, 28, 36);
+				game.add(close_panel);
+				containerPanel.revalidate();
+				containerPanel.repaint();
 		    }
 		
 		});

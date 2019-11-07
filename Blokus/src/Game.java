@@ -18,15 +18,13 @@ public class Game extends JPanel {
 	private JLabel lblTimeLeft;
 	private Timer timer;
 	private GameBoard GAME_BOARD;
+
 	/**
 	 * Create the panel.
 	 *
 	 * @param frame
 	 */
-	public Game(GUI frame)  {
-		
-		
-		
+	public Game(GUI frame,String[][][] savedArray)  {
 		setBackground(new Color(63, 71, 204));
 		frame.setBounds(0, 0, 709, 608);
 		frame.setLocationRelativeTo(null);
@@ -36,10 +34,7 @@ public class Game extends JPanel {
 		players=new Player(Color.red);
 		players.setBounds(10, 114, 169, 259);
 		add(players);
-		
-//		shapelist=new shapesList(Color.black);
-//		shapelist.setBounds(10, 114, 169, 259);
-//		add(shapelist);
+
 		
 		JPanel surrender = new JPanel();
 		surrender.setForeground(Color.WHITE);
@@ -70,7 +65,7 @@ public class Game extends JPanel {
 		lblTurn.setBounds(76, 89, 31, 14);
 		add(lblTurn);
 
-		GAME_BOARD = new GameBoard(GRID_SIZE,players);
+		GAME_BOARD = new GameBoard(GRID_SIZE,players,savedArray);
 		GAME_BOARD.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				GAME_BOARD.clearCurrentAction();

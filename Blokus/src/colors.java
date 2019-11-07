@@ -32,7 +32,7 @@ public class colors extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				frame.setVisible(false);
-				game=new Game(frame);
+				game=new Game(frame,null);
 				frame.setVisible(true);
 				loginPage.removeAll();
 				loginPage.add(game);

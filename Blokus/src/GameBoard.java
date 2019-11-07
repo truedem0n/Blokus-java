@@ -32,13 +32,13 @@ public class GameBoard extends JPanel {
      * Create the panel.
      * call the constructor
      */
-    public GameBoard(int gridSize, Player players) {
+    public GameBoard(int gridSize, Player players, String[][][] savedArray) {
         this.GRID_SIZE = gridSize;
         button = new customButton[GRID_SIZE][GRID_SIZE];
         map = new Hashtable<String, String>();
         this.players = players;
         players.setPlayingAtBoard(this);
-        setUpBoard();
+        setUpBoard(savedArray);
     }
 
 
@@ -47,29 +47,29 @@ public class GameBoard extends JPanel {
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
                 Color color = button[i][j].getColor();
-                if (color.getRGB()==Color.red.getRGB()) {
+                if (color.getRGB() == Color.red.getRGB()) {
                     boardState[i][j][0] = "r";
                     boardState[i][j][1] = String.valueOf(i);
                     boardState[i][j][2] = String.valueOf(j);
-                } else if (color.getRGB()==Color.green.getRGB()) {
+                } else if (color.getRGB() == Color.green.getRGB()) {
                     boardState[i][j][0] = "g";
                     boardState[i][j][1] = String.valueOf(i);
                     boardState[i][j][2] = String.valueOf(j);
-                } else if (color.getRGB()==Color.blue.getRGB()) {
+                } else if (color.getRGB() == Color.blue.getRGB()) {
                     boardState[i][j][0] = "b";
                     boardState[i][j][1] = String.valueOf(i);
                     boardState[i][j][2] = String.valueOf(j);
-                } else if (color.getRGB()==Color.yellow.getRGB()) {
+                } else if (color.getRGB() == Color.yellow.getRGB()) {
                     boardState[i][j][0] = "y";
                     boardState[i][j][1] = String.valueOf(i);
                     boardState[i][j][2] = String.valueOf(j);
-                }else{
+                } else {
                     boardState[i][j][0] = "0";
                     boardState[i][j][1] = String.valueOf(i);
                     boardState[i][j][2] = String.valueOf(j);
                 }
             }
-			//boardState += "\n";
+            //boardState += "\n";
         }
         return boardState;
     }
@@ -78,8 +78,8 @@ public class GameBoard extends JPanel {
         this.actions = actions;
     }
 
-    private void setUpBoard() {
-
+    private void setUpBoard(String[][][] savedArray) {
+        // loading the audio files
         try {
             audioInputStream = AudioSystem.getAudioInputStream(new File("src/sounds/placed.wav").getAbsoluteFile());
             clip = AudioSystem.getClip();
@@ -93,6 +93,12 @@ public class GameBoard extends JPanel {
                 button[j][i] = new customButton("", j, i);
                 button[j][i].setBackground(Color.white);
                 button[j][i].setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
+                if (savedArray != null) {
+                    if(savedArray[j][i][0]=="r"){
+                        button[j][i].setBackground(Color.red);
+                        button[j][i].setTaken(true);
+                    }
+                }
                 button[j][i].addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
@@ -129,6 +135,7 @@ public class GameBoard extends JPanel {
                 });
                 add(button[j][i]);
             }
+        // testing blokus rules with use of this block
         button[10][10].setTaken(true);
         button[10][10].setBackground(Color.black);
     }
