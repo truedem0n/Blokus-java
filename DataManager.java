@@ -17,12 +17,10 @@ import org.json.simple.parser.ParseException;
 public class DataManager {
 	private static File boardSaveData = new File("session_data.json");
 	private static File gameSaveData = new File("settings_data.json");
+	private static String[][] loadArray;
 	
 	@SuppressWarnings("unchecked")
-	public static String save(String[][] shapes) {
-
-		// when saving a file we need to see if the file already exists or not and the status of save
-		String status="";
+	public static void save(String[][] shapes) {
 		//Takes array from getBoard()
 		int size = shapes.length; //Get the size of the nxn board
 		
@@ -51,18 +49,14 @@ public class DataManager {
 			file.flush();
 			file.close();
 			//Catch exception (not important):
-			status="sucess";
 		} catch (IOException e) {
 			e.printStackTrace();
-			status="failed";
 		}
-		return status;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static String load() {
+	public static String[][] load() {
 		JSONParser parser = new JSONParser(); //Create a JSONParser
-		String status="";
 		//Try to read data file:
 		try {
 			FileReader reader = new FileReader(boardSaveData); //Open file
@@ -71,16 +65,18 @@ public class DataManager {
 			//Iterate over JSON object:
 			blockList.forEach(shape -> parseGameData((JSONObject) shape)); //There's only one JSONObject, see parse function
 			//Catch exceptions (not important):
-
-			status="sucess";
-		} catch (Exception e) {
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found!");
+		} catch (IOException e) {
 			e.printStackTrace();
-			status="failed";
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
-		return status;
+		
+		return loadArray;
 	}
 
-  private static String[][] parseGameData(JSONObject obj){
+  private static void parseGameData(JSONObject obj){
 	  JSONObject loadObj = (JSONObject) obj.get("Data"); //Grab the outer JSONObject
 	  int size = Integer.parseInt((String) loadObj.get("Size")); //Grab the value of size that was stored in save()
 	  String[][] returnArray = new String[size][size]; //Initialize board-state array to return
@@ -91,7 +87,7 @@ public class DataManager {
       	}
 	  }
 
-	  return returnArray;
+	  loadArray = returnArray;
   }
   
   public static void updateGameSettings(String[] settings) {
@@ -105,6 +101,6 @@ public class DataManager {
   }
   
   public static void autoSave(String[][] boardState) {
-	  //Might be needed for autosave feature, but probably won't be needed
+	  //Might be needed for auto-save feature, but probably won't be needed
   }
 }
