@@ -19,7 +19,10 @@ public class DataManager {
 	private static File gameSaveData = new File("settings_data.json");
 	
 	@SuppressWarnings("unchecked")
-	public static void save(String[][] shapes) {
+	public static String save(String[][] shapes) {
+
+		// when saving a file we need to see if the file already exists or not and the status of save
+		String status="";
 		//Takes array from getBoard()
 		int size = shapes.length; //Get the size of the nxn board
 		
@@ -48,14 +51,18 @@ public class DataManager {
 			file.flush();
 			file.close();
 			//Catch exception (not important):
+			status="sucess";
 		} catch (IOException e) {
 			e.printStackTrace();
+			status="failed";
 		}
+		return status;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static void load() {
+	public static String load() {
 		JSONParser parser = new JSONParser(); //Create a JSONParser
+		String status="";
 		//Try to read data file:
 		try {
 			FileReader reader = new FileReader(boardSaveData); //Open file
@@ -64,13 +71,13 @@ public class DataManager {
 			//Iterate over JSON object:
 			blockList.forEach(shape -> parseGameData((JSONObject) shape)); //There's only one JSONObject, see parse function
 			//Catch exceptions (not important):
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found!");
-		} catch (IOException e) {
+
+			status="sucess";
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
+			status="failed";
 		}
+		return status;
 	}
 
   private static String[][] parseGameData(JSONObject obj){
