@@ -9,8 +9,12 @@ Some Notes Regarding Iteration 3
 -The load feature only has one save as of now but we're planning to use
  to add a gui to show all the sessions later on in the course.
 -The included code in minor release can be run using this command.
+ On Windows
  "javac -cp ".;json-simple-1.1.jar" *.java"
  "java -cp ".;json-simple-1.1.jar" GUI"
+ On Linux
+ "javac -cp ".:json-simple-1.1.jar" *.java"
+ "java -cp ".:json-simple-1.1.jar" GUI"
 -We are using json to save and load our board data since it's the most well
  know data structure to pass data.
 -When the game starts, you will be presented with a black block which is the starting point
