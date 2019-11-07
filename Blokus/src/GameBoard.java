@@ -42,21 +42,31 @@ public class GameBoard extends JPanel {
     }
 
 
-    public String getBoard() {
-        String boardState = "";
+    public String[][] getBoard() {
+        String[][][] boardState = new String[GRID_SIZE][GRID_SIZE][3];
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
                 Color color = button[i][j].getColor();
                 if (color.getRGB()==Color.red.getRGB()) {
-                    boardState += " r ";
+                    boardState[i][j][0] = "r";
+                    boardState[i][j][1] = String.valueOf(i);
+                    boardState[i][j][2] = String.valueOf(j);
                 } else if (color.getRGB()==Color.green.getRGB()) {
-                    boardState += " g ";
+                    boardState[i][j][0] = "g";
+                    boardState[i][j][1] = String.valueOf(i);
+                    boardState[i][j][2] = String.valueOf(j);
                 } else if (color.getRGB()==Color.blue.getRGB()) {
-                    boardState += " b ";
+                    boardState[i][j][0] = "b";
+                    boardState[i][j][1] = String.valueOf(i);
+                    boardState[i][j][2] = String.valueOf(j);
                 } else if (color.getRGB()==Color.yellow.getRGB()) {
-                    boardState += " y ";
+                    boardState[i][j][0] = "y";
+                    boardState[i][j][1] = String.valueOf(i);
+                    boardState[i][j][2] = String.valueOf(j);
                 }else{
-                    boardState += " 0 ";
+                    boardState[i][j][0] = "0";
+                    boardState[i][j][1] = String.valueOf(i);
+                    boardState[i][j][2] = String.valueOf(j);
                 }
             }
 			boardState += "\n";
