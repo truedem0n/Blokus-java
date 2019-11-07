@@ -4,11 +4,6 @@
  *
  */
 
-/*
-* string = "row[0][0] row[0][1] ... , row[1][0] row[1][1] ..."
-*  where row[n][m] can either be 'r' or '0', r=colour and 0=not taken
-*/
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileReader;
@@ -20,55 +15,39 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class DataManager {
-	private static final String FILE_NAME = "save_data.json";
-	private static File gameData = new File(FILE_NAME);
+	private static File boardSaveData = new File("session_data.json");
+	private static File gameSaveData = new File("settings_data.json");
 	
 	@SuppressWarnings("unchecked")
 	public static void save(String[][] shapes) {
 		//Takes array from getBoard()
-
-    //Create JSON objects:
-    /*
-		JSONObject blockDetails = new JSONObject();
-		blockDetails.put("shape_b", "(0, 0)");
+		int size = shapes.length; //Get the size of the nxn board
 		
-		JSONObject blockObject = new JSONObject();
-		blockObject.put("block_one", blockDetails);
-    */
-    int size = shapes.length;
-    
-    /*
-    JSONObject arraySize = new JSONObject();
-    arraySize.put("Size", String.valueOf(size));
-    */
-    
-    JSONObject shapeArray = new JSONObject();
-    for(int i = 0; i < size; i++){
-      for(int j = 0; j < size; j++){
-        shapeArray.put((i+", "+j), (shapes[i][j]));
-      }
-    }
-    shapeArray.put("Size", String.valueOf(size));
+		//Convert each index into json map:
+		JSONObject boardObj = new JSONObject(); //Create JSONObject to represent board state
+		for(int i = 0; i < size; i++){
+			for(int j = 0; j < size; j++){
+				boardObj.put((i+", "+j), (shapes[i][j]));
+			}
+		}
+		boardObj.put("Size", String.valueOf(size)); //Store the size of the board as well, needed for load
 
-    JSONObject saveObj = new JSONObject();
-    saveObj.put("Data", shapeArray);
+		//Nest the previous JSONObject into an outer JSONObject (for easy finding):
+		JSONObject saveObj = new JSONObject(); //Create outer JSONObject
+		saveObj.put("Data", boardObj); //Add previous JSONObject to outer Object
 		
-    //Add JSON objects to a JSON array:
-    /*
-		JSONArray blockList = new JSONArray();
-		blockList.add(blockObject);
-		*/
-    JSONArray saveData = new JSONArray();
-    saveData.add(saveObj);
+		//Add outer JSONObject to a JSONArray (the JSONArray gets stored in the file):
+		JSONArray saveData = new JSONArray(); //Create JSONArray
+		saveData.add(saveObj); //Add outer JSONObject to JSONArray
 
+		//Try to write JSONArray to file:
 		try {
-			FileWriter file = new FileWriter(gameData);
-			//Write the JSON array to file:
-			//file.write(blockList.toJSONString());
-			file.write(saveData.toJSONString());
+			FileWriter file = new FileWriter(boardSaveData); //Create FileWriter
+			file.write(saveData.toJSONString()); //Write the JSON array to file
+			//Take care of file-resource management:
 			file.flush();
 			file.close();
-			System.out.println("Done!");
+			//Catch exception (not important):
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -76,17 +55,15 @@ public class DataManager {
 	
 	@SuppressWarnings("unchecked")
 	public static void load() {
-		JSONParser parser = new JSONParser();
+		JSONParser parser = new JSONParser(); //Create a JSONParser
+		//Try to read data file:
 		try {
-			FileReader reader = new FileReader(gameData);
-			Object obj = parser.parse(reader);
-			
-			JSONArray blockList = (JSONArray) obj;
-			System.out.println(blockList);
-
+			FileReader reader = new FileReader(boardSaveData); //Open file
+			Object obj = parser.parse(reader); //Gather JSON data into Object
+			JSONArray blockList = (JSONArray) obj; //Convert Object into JSONObject
 			//Iterate over JSON object:
-			blockList.forEach(shape -> parseShape((JSONObject) shape));
-
+			blockList.forEach(shape -> parseGameData((JSONObject) shape)); //There's only one JSONObject, see parse function
+			//Catch exceptions (not important):
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found!");
 		} catch (IOException e) {
@@ -96,27 +73,31 @@ public class DataManager {
 		}
 	}
 
-  private static String[][] parseShape(JSONObject obj){
-	  JSONObject loadObj = (JSONObject) obj.get("Data");
-	  
-	  int size = Integer.parseInt((String) loadObj.get("Size"));
-	  System.out.println("Size :"+String.valueOf(size));
-	  String[][] returnArray = new String[size][size];
+  private static String[][] parseGameData(JSONObject obj){
+	  JSONObject loadObj = (JSONObject) obj.get("Data"); //Grab the outer JSONObject
+	  int size = Integer.parseInt((String) loadObj.get("Size")); //Grab the value of size that was stored in save()
+	  String[][] returnArray = new String[size][size]; //Initialize board-state array to return
+	  //Grab the corresponding JSON map from the JSONObject for each index of the return array:
 	  for(int i = 0; i < size; i++){
       	for(int j = 0; j < size; j++){
-        	//returnArray[i][j] = (String) loadObj.get(String.valueOf(i)+", "+String.valueOf(j));
-    	  	System.out.println(String.valueOf(i)+", "+String.valueOf(j)+" : "+(String) loadObj.get(String.valueOf(i)+", "+String.valueOf(j)));
+        	returnArray[i][j] = (String) loadObj.get(String.valueOf(i)+", "+String.valueOf(j));
       	}
 	  }
 
 	  return returnArray;
   }
-	
-	public static void test() {
-		if(gameData.exists()) {
-			System.out.println("Path" + gameData.getAbsolutePath());
-		} else {
-			System.out.println("Rip");
-		}
-	}
+  
+  public static void updateGameSettings(String[] settings) {
+	  //Will update the save file for game settings
+  }
+  
+  public static String[] getGameSettings() {
+	  //Will get saved game settings
+	  String[] returnArray = new String[3];
+	  return returnArray;
+  }
+  
+  public static void autoSave(String[][] boardState) {
+	  //Might be needed for autosave feature, but probably won't be needed
+  }
 }
