@@ -1,41 +1,26 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
 
 public class shapesList extends JPanel {
-	
-	
-	enum Turn{
-		FIRST,
-		SECOND,
-		THIRD,
-		FOURTH
-	};
-	enum TurnAI{
-		FIRST,
-		SECOND,
-		THIRD,
-	};
-	
-	
+
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	int currentSelectedShapePanel = 0;
+
+
 	private AudioInputStream audioInputStream;
 	private Clip clip;
 	private Color color;
+	private JPanel[] shapesPanelContainer = new JPanel[21];
 	private shapeButton[][][] SHAPE_LIST = new shapeButton[21][7][7];
 	private MouseEvent event;
 	private int[][] actions = {{0, 0}};
@@ -68,22 +53,14 @@ public class shapesList extends JPanel {
 			{{-1, 0}, {1, 0}, {0, 0}, {0, 1}, {0, -1}},
 			{{-1, 0}, {0, -1}, {0, 0}, {1, 0}, {2, 0}}
 	};
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
 	 * shapeList Constructor
 	 */
-	public shapesList(Color color) {
+	shapesList(Color color) {
 		this.color=color;
-		
 		setLayout(null);
-		
-		
 		// loading the wav file
 		try {
 			audioInputStream = AudioSystem.getAudioInputStream(new File("src/sounds/selected.wav").getAbsoluteFile());
@@ -93,7 +70,6 @@ public class shapesList extends JPanel {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		// creating shape panel
 		JPanel SHAPES_LIST = new JPanel();
 		SHAPES_LIST.setBounds(0, 0, 170, 265);
@@ -121,17 +97,17 @@ public class shapesList extends JPanel {
 			separator.setPreferredSize(new Dimension(175, 5));
 			separator.setBounds(-1, 0, 175, 10);
 
-			JPanel sp1 = new JPanel();
-			sp1.setLayout(new FlowLayout());
-			sp1.setBackground(Color.WHITE);
-			sp1.setPreferredSize(new Dimension(170, 170));
+			shapesPanelContainer[i - 1] = new JPanel();
+			shapesPanelContainer[i - 1].setLayout(new FlowLayout());
+			shapesPanelContainer[i - 1].setBackground(Color.WHITE);
+			shapesPanelContainer[i - 1].setPreferredSize(new Dimension(170, 170));
 
 			ssp1 = new JPanel();
 			ssp1.setLayout(new GridLayout(7, 7));
 			ssp1.setBackground(Color.WHITE);
 			ssp1.setPreferredSize(new Dimension(150, 150));
 
-			// sp1.add(separator);
+			// shapesPanelContainer.add(separator);
 			for (int x = 0; x <= 6; x++) {
 				for (int y = 0; y <= 6; y++) {
 					shapeButton button = new shapeButton(i - 1);
@@ -149,30 +125,34 @@ public class shapesList extends JPanel {
 //									}
 //								catch(Exception s) {
 //									s.printStackTrace();
-//									
+//
 //								}
-								actions = shapes[((shapeButton) e.getSource()).getIndex()];
+								shapeButton thisButton = ((shapeButton) e.getSource());
+								actions = shapes[thisButton.getIndex()];
+								currentSelectedShapePanel = thisButton.getIndex();
 								playingAtBoard.setActions(actions);
+								System.out.println(currentSelectedShapePanel);
 							}
 							// same as mouseClicked just to show drag and drop functionality
 							@Override
 							public void mousePressed(MouseEvent e) {
 								event=e;
-//								try {
-//									clip.setFramePosition(0);
-//									clip.start();
-//								}
-//								catch(Exception s) {
-//									s.printStackTrace();
-//
-//								}
-								actions = shapes[((shapeButton) e.getSource()).getIndex()];
+								try {
+									clip.setFramePosition(0);
+									clip.start();
+								} catch (Exception s) {
+									s.printStackTrace();
+
+								}
+								shapeButton thisButton = ((shapeButton) e.getSource());
+								actions = shapes[thisButton.getIndex()];
+								currentSelectedShapePanel = thisButton.getIndex();
 								playingAtBoard.setActions(actions);
 							}
 						});
 					}
 					if (x == 6 && y == 0) {
-						ImageIcon img = new ImageIcon(GUI.class.getResource("images/flipVertical.png"));	
+						ImageIcon img = new ImageIcon(GUI.class.getResource("images/flipVertical.png"));
 						Image dimg = img.getImage().getScaledInstance(15, 15,Image.SCALE_SMOOTH);
 						JLabel label = new JLabel(new ImageIcon(dimg));
 						label.setBounds(-10, -10, 14, 14);
@@ -180,27 +160,28 @@ public class shapesList extends JPanel {
 						button.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mouseClicked(MouseEvent e) {
-//								try {
-//									clip.setFramePosition(0);
-//									clip.start();
-//									}
-//								catch(Exception s) {
-//									s.printStackTrace();
-//									
-//								}
-								actions = shapes[((shapeButton) e.getSource()).getIndex()];
+								try {
+									clip.setFramePosition(0);
+									clip.start();
+								} catch (Exception s) {
+									s.printStackTrace();
+
+								}
+								shapeButton thisButton = ((shapeButton) e.getSource());
+								actions = shapes[thisButton.getIndex()];
+								currentSelectedShapePanel = thisButton.getIndex();
 								flipV(actions);
 								hideShape(e);
 								drawShapes();
 								ssp1.repaint();
 								ssp1.revalidate();
 								playingAtBoard.setActions(actions);
-								
+
 							}
 						});
 					}
 					if (x == 6 && y == 6) {
-						ImageIcon img = new ImageIcon(GUI.class.getResource("images/flipHorizontal.png"));	
+						ImageIcon img = new ImageIcon(GUI.class.getResource("images/flipHorizontal.png"));
 						Image dimg = img.getImage().getScaledInstance(15, 15,Image.SCALE_SMOOTH);
 						JLabel label = new JLabel(new ImageIcon(dimg));
 						label.setBounds(-10, -10, 15, 15);
@@ -208,15 +189,16 @@ public class shapesList extends JPanel {
 						button.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mouseClicked(MouseEvent e) {
-//								try {
-//									clip.setFramePosition(0);
-//									clip.start();
-//									}
-//								catch(Exception s) {
-//									s.printStackTrace();
-//									
-//								}
-								actions = shapes[((shapeButton) e.getSource()).getIndex()];
+								try {
+									clip.setFramePosition(0);
+									clip.start();
+								} catch (Exception s) {
+									s.printStackTrace();
+
+								}
+								shapeButton thisButton = ((shapeButton) e.getSource());
+								actions = shapes[thisButton.getIndex()];
+								currentSelectedShapePanel = thisButton.getIndex();
 								flipH(actions);
 								hideShape(e);
 								drawShapes();
@@ -230,7 +212,7 @@ public class shapesList extends JPanel {
 						//Setting up rotateCW
 						ImageIcon img = new ImageIcon(GUI.class.getResource("images/rotateClockWise.png"));
 						Image dimg = img.getImage().getScaledInstance(17, 17,Image.SCALE_SMOOTH);
-						
+
 						JLabel label = new JLabel(new ImageIcon(dimg));
 						label.setBounds(-10, -10, 15, 15);
 						button.add(label);
@@ -238,16 +220,16 @@ public class shapesList extends JPanel {
 						button.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mouseClicked(MouseEvent e) {
-//								try {
-//									clip.setFramePosition(0);
-//									clip.start();
-//									}
-//								catch(Exception s) {
-//									s.printStackTrace();
-//									
-//								}
+								try {
+									clip.setFramePosition(0);
+									clip.start();
+								} catch (Exception s) {
+									s.printStackTrace();
+
+								}
 								shapeButton thisButton = ((shapeButton) e.getSource());
 								actions = shapes[thisButton.getIndex()];
+								currentSelectedShapePanel = thisButton.getIndex();
 								rotateCoordinatesCW();
 								hideShape(e);
 								drawShapes();
@@ -266,16 +248,16 @@ public class shapesList extends JPanel {
 						button.addMouseListener(new MouseAdapter() {
 							@Override
 							public void mouseClicked(MouseEvent e) {
-//								try {
-//									clip.setFramePosition(0);
-//									clip.start();
-//									}
-//								catch(Exception s) {
-//									s.printStackTrace();
-//									
-//								}
+								try {
+									clip.setFramePosition(0);
+									clip.start();
+								} catch (Exception s) {
+									s.printStackTrace();
+
+								}
 								shapeButton thisButton = ((shapeButton) e.getSource());
 								actions = shapes[thisButton.getIndex()];
+								currentSelectedShapePanel = thisButton.getIndex();
 								rotateCoordinatesCCW();
 								hideShape(e);
 								drawShapes();
@@ -288,26 +270,32 @@ public class shapesList extends JPanel {
 					button.setFocusable(false);
 					button.setBackground(color);
 					SHAPE_LIST[i - 1][x][y] = button;
-					
+
 					ssp1.add(button);
 				}
 			}
-			
+
 			// ssp1.add(t1);
 			if (i != 0)
-				sp1.add(separator);
+				shapesPanelContainer[i - 1].add(separator);
 
-			sp1.add(ssp1);
-			panel.add(sp1);
-
+			shapesPanelContainer[i - 1].add(ssp1);
+			panel.add(shapesPanelContainer[i - 1]);
 		}
-		drawShapes();	
+		drawShapes();
 		SHAPES_LIST.add(contentPane);
-
 	}
-	
 
-			// flip horizontally
+	private void hideShapePanel() {
+		shapesPanelContainer[currentSelectedShapePanel].setVisible(false);
+	}
+
+	public void removePanel() {
+		hideShapePanel();
+	}
+
+
+	// flip horizontally
 			private void flipH(int[][] actions) {
 				for (int i = 0; i < actions.length; i++)
 					actions[i][0] = -actions[i][0];
@@ -436,10 +424,24 @@ public class shapesList extends JPanel {
 					SHAPE_LIST[index][j][k].setVisible(false);
 				}
 		}
-		//Sets the reference to the board being played at
+
+	//Sets the reference to the board being played at
 		public void setPlayingAtBoard(GameBoard playingAtBoard) {
 			this.playingAtBoard = playingAtBoard;
 		}
+
+	enum Turn {
+		FIRST,
+		SECOND,
+		THIRD,
+		FOURTH
+	}
+
+	enum TurnAI {
+		FIRST,
+		SECOND,
+		THIRD,
+	}
 		
 		// draw the shapes shapes according to the current action
 		private void drawShapes() {
