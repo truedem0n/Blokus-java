@@ -1,12 +1,12 @@
-import javax.swing.JPanel;
+import javax.swing.*;
 
-public class shapeButton extends JPanel {
+class shapeButton extends JPanel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int index;
+	private final int index;
 	
 	
 	// Shape constructor sets the index of shape button in shape list

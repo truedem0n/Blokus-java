@@ -1,37 +1,31 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseWheelListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-public class Game extends JPanel {
+@SuppressWarnings("EmptyMethod")
+class Game extends JPanel {
     /**
      *
      */
     private static final long serialVersionUID = 1L;
-    private int GRID_SIZE = 20, seconds;
-    private Player players;
-    private shapesList shapelist;
-    private JLabel lblTimeLeft;
+    private final Player players;
+    private final JLabel lblTimeLeft;
+    private final GameBoard GAME_BOARD;
     private Timer timer;
-    private GameBoard GAME_BOARD;
+    private int seconds;
 
     /**
      * Create the panel.
      *
      * @param frame
      */
-    public Game(GUI frame, String[][][] savedArray) {
+    Game(GUI frame, String[][][] savedArray) {
         setBackground(new Color(63, 71, 204));
         frame.setBounds(0, 0, 709, 608);
         frame.setLocationRelativeTo(null);
         setBounds(0, 0, 709, 608);
         setLayout(null);
 
-        players = new Player(Color.red);
+        players = new Player();
         players.setBounds(10, 114, 169, 259);
         add(players);
 
@@ -62,19 +56,18 @@ public class Game extends JPanel {
 
         JLabel lblTurn = new JLabel("Turn");
         lblTurn.setForeground(Color.white);
-        lblTurn.setBounds(76, 89, 31, 14);
+        lblTurn.setBounds(76, 89, 50, 14);
         add(lblTurn);
 
+        int GRID_SIZE = 20;
         GAME_BOARD = new GameBoard(GRID_SIZE, players, savedArray);
-        GAME_BOARD.addMouseWheelListener(new MouseWheelListener() {
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                GAME_BOARD.clearCurrentAction();
-                players.scrollActionHide();
-                players.rotateClockWise();
-                players.scrollActionDraw();
-                GAME_BOARD.drawCurrentAction();
+        GAME_BOARD.addMouseWheelListener(e -> {
+            GAME_BOARD.clearCurrentAction();
+            players.scrollActionHide();
+            players.rotateClockWise();
+            players.scrollActionDraw();
+            GAME_BOARD.drawCurrentAction();
 
-            }
         });
         GAME_BOARD.setBounds(189, 89, 508, 508);
         add(GAME_BOARD);
@@ -84,15 +77,12 @@ public class Game extends JPanel {
         lblTimeLeft.setHorizontalAlignment(SwingConstants.RIGHT);
         lblTimeLeft.setForeground(Color.white);
         seconds = 0;
-        timer = new Timer(1000, new ActionListener() {
+        timer = new Timer(1000, e -> {
+            if (seconds > 600)
+                timer.stop();
+            seconds += 1;
+            lblTimeLeft.setText("Time left:" + (String.format("%02d", (600 - seconds) / 60)) + ":" + (String.format("%02d", (600 - seconds) % 60)));
 
-            public void actionPerformed(ActionEvent e) {
-                if (seconds > 600)
-                    timer.stop();
-                seconds += 1;
-                lblTimeLeft.setText("Time left:" + (String.format("%02d", (600 - seconds) / 60)) + ":" + (String.format("%02d", (600 - seconds) % 60)));
-
-            }
         });
         timer.setRepeats(true);
         timer.start();
@@ -111,14 +101,13 @@ public class Game extends JPanel {
         menuBar.add(mnOptions);
 
         JMenuItem mntmOption = new JMenuItem("Save   ");
-        mntmOption.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	if(new DataManager().save(GAME_BOARD.getBoard()).equals("sucess")){
-                    JOptionPane.showMessageDialog(new JFrame(),"Successfully saved");
-                }else{
-                    JOptionPane.showMessageDialog(new JFrame(),"Failed to save");
-                }
+        mntmOption.addActionListener(e -> {
+
+            if (new DataManager().save(GAME_BOARD.getBoard()).equals("sucess")) {
+
+                JOptionPane.showMessageDialog(new JFrame(), "Successfully saved");
+            } else {
+                JOptionPane.showMessageDialog(new JFrame(), "Failed to save");
             }
         });
         mntmOption.setFont(new Font("Century Gothic", Font.PLAIN, 14));
@@ -126,7 +115,9 @@ public class Game extends JPanel {
 
     }
 
-    private void settingsLoader() {
-
-    }
+// --Commented out by Inspection START (11/10/2019 1:04 PM):
+//    private void settingsLoader() {
+//
+//    }
+// --Commented out by Inspection STOP (11/10/2019 1:04 PM)
 }

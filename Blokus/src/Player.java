@@ -1,18 +1,30 @@
 import java.awt.*;
 
-public class Player extends shapesList {
-	private Color color;
-	private shapesList shapes;
+class Player extends shapesList {
+	private final Color color;
+	private boolean hasTakenCorner = false;
 
 	/**
 	 * Create the panel.
 	 */
-	Player(Color color) {
-		super(color);
-		this.color=color;
+	Player() {
+		super(Color.ORANGE);
+		this.color = Color.ORANGE;
 		this.setLayout(null);
-		shapes=new shapesList(Color.black);
+		shapesList shapes = new shapesList(Color.black);
 		shapes.setBounds(0, 0, 169, 259);
 		add(shapes);
+	}
+
+	Color getColor() {
+		return color;
+	}
+
+	public boolean hasTakenCorner() {
+		return hasTakenCorner;
+	}
+
+	public void setHasTakenCorner(boolean hasTakenCorner) {
+		this.hasTakenCorner = hasTakenCorner;
 	}
 }

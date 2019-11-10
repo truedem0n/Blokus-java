@@ -7,26 +7,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 
-public class shapesList extends JPanel {
+class shapesList extends JPanel {
 
 
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	int currentSelectedShapePanel = 0;
-
-
-	private AudioInputStream audioInputStream;
-	private Clip clip;
-	private Color color;
-	private JPanel[] shapesPanelContainer = new JPanel[21];
-	private shapeButton[][][] SHAPE_LIST = new shapeButton[21][7][7];
-	private MouseEvent event;
-	private int[][] actions = {{0, 0}};
-	private GameBoard playingAtBoard;
-	private JPanel ssp1;
-	private int[][][] shapes = {
+	private final JPanel[] shapesPanelContainer = new JPanel[21];
+	private final shapeButton[][][] SHAPE_LIST = new shapeButton[21][7][7];
+	private final int[][][] shapes = {
 			{{0, 0}},
 
 			{{0, 0}, {1, 0}},
@@ -53,17 +43,22 @@ public class shapesList extends JPanel {
 			{{-1, 0}, {1, 0}, {0, 0}, {0, 1}, {0, -1}},
 			{{-1, 0}, {0, -1}, {0, 0}, {1, 0}, {2, 0}}
 	};
+	private int currentSelectedShapePanel = 0;
+	private MouseEvent event;
+	private int[][] actions = {{0, 0}};
+	private GameBoard playingAtBoard;
+	private JPanel ssp1;
+	private Clip clip;
 
 	/**
 	 * Create the panel.
 	 * shapeList Constructor
 	 */
 	shapesList(Color color) {
-		this.color=color;
 		setLayout(null);
 		// loading the wav file
 		try {
-			audioInputStream = AudioSystem.getAudioInputStream(new File("src/sounds/selected.wav").getAbsoluteFile());
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sounds/selected.wav").getAbsoluteFile());
 			clip=AudioSystem.getClip();
 			clip.open(audioInputStream);
 			}
@@ -276,8 +271,7 @@ public class shapesList extends JPanel {
 			}
 
 			// ssp1.add(t1);
-			if (i != 0)
-				shapesPanelContainer[i - 1].add(separator);
+			shapesPanelContainer[i - 1].add(separator);
 
 			shapesPanelContainer[i - 1].add(ssp1);
 			panel.add(shapesPanelContainer[i - 1]);
@@ -430,20 +424,7 @@ public class shapesList extends JPanel {
 			this.playingAtBoard = playingAtBoard;
 		}
 
-	enum Turn {
-		FIRST,
-		SECOND,
-		THIRD,
-		FOURTH
-	}
-
-	enum TurnAI {
-		FIRST,
-		SECOND,
-		THIRD,
-	}
-		
-		// draw the shapes shapes according to the current action
+	// draw the shapes shapes according to the current action
 		private void drawShapes() {
 			for (int i = 0; i < SHAPE_LIST.length; i++)
 				for (int j = 0; j < SHAPE_LIST.length; j++)
@@ -463,7 +444,7 @@ public class shapesList extends JPanel {
 		public void scrollActionHide() {
 			try {
 				hideShape(event);
-			}catch(Exception e) {
+			} catch (Exception ignored) {
 				
 			}
 		}
@@ -480,8 +461,10 @@ public class shapesList extends JPanel {
 			hideShape(event);
 			drawShapes();
 		}
-		
-	public int[][] getAction() {
-		return this.actions;
-	}
+
+// --Commented out by Inspection START (11/10/2019 1:09 PM):
+//	public int[][] getAction() {
+//		return this.actions;
+//	}
+// --Commented out by Inspection STOP (11/10/2019 1:09 PM)
 }

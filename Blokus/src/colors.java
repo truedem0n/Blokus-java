@@ -1,19 +1,16 @@
-import javax.swing.JPanel;
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JComboBox;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Dictionary;
 
-public class colors extends JPanel {
+class colors extends JPanel {
 	/**
 	 *  All the declarations
 	 */
 	private static final long serialVersionUID = 1L;
 	private Game game;
-	private String colors[] = { "Red","Green","Blue","Yellow"}; 
+
 	/**
 	 * Create the panel.
 	 * @param close_panel 
@@ -21,7 +18,7 @@ public class colors extends JPanel {
 	 * @param frame 
 	 * @param gAME_SETTINGS 
 	 */
-	public colors(JPanel close_panel, JPanel loginPage, GUI frame, Dictionary<Object,Object> gAME_SETTINGS) {
+	public colors(JPanel close_panel, JPanel loginPage, GUI frame, Dictionary gAME_SETTINGS) {
 		
 		setBackground(new Color(63, 71, 204));
 		setBounds(342, 0, 345, 478);
@@ -84,21 +81,22 @@ public class colors extends JPanel {
 		lblPlayer_3.setForeground(Color.WHITE);
 		lblPlayer_3.setBounds(61, 229, 97, 14);
 		add(lblPlayer_3);
-		
-		
-		JComboBox<String> player1_comboBox = new JComboBox<String>(colors);
+
+
+		String[] colors = {"Red", "Green", "Blue", "Yellow"};
+		JComboBox<String> player1_comboBox = new JComboBox<>(colors);
 		player1_comboBox.setBounds(134, 137, 143, 22);
 		add(player1_comboBox);
-		
-		JComboBox<String> player2_comboBox = new JComboBox<String>(colors);
+
+		JComboBox<String> player2_comboBox = new JComboBox<>(colors);
 		player2_comboBox.setBounds(134, 166, 143, 22);
 		add(player2_comboBox);
-		
-		JComboBox<String> player3_comboBox = new JComboBox<String>(colors);
+
+		JComboBox<String> player3_comboBox = new JComboBox<>(colors);
 		player3_comboBox.setBounds(134, 196, 143, 22);
 		add(player3_comboBox);
-		
-		JComboBox<String> player4_comboBox = new JComboBox<String>(colors);
+
+		JComboBox<String> player4_comboBox = new JComboBox<>(colors);
 		player4_comboBox.setBounds(134, 225, 143, 22);
 		add(player4_comboBox);
 	}
