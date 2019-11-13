@@ -3,7 +3,7 @@
 <p> This is a team project in collaboration with <br>
       <b>Team members</b><br>
       Ricky Hineman<br>
-      Farhan Rashid<br>
+      Farhan Rafid<br>
       Devin Leriche<br>
       Dylan Ellsworth<br>
       Atul Mehla<br>
