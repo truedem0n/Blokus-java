@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Dictionary;
+import java.util.Map;
 
 class GPC extends JPanel {
 	/**
@@ -35,7 +35,7 @@ class GPC extends JPanel {
      */
 
 
-    GPC(JPanel close_panel2, JPanel loginPage, GUI frame, Dictionary GAME_SETTINGS) {
+	GPC(JPanel close_panel2, JPanel loginPage, GUI frame, Map<String, String> GAME_SETTINGS) {
 
 		this.close_panel=close_panel2;
 		setBackground(new Color(63, 71, 204));
@@ -85,9 +85,16 @@ class GPC extends JPanel {
                 // the  sub class
                 if ((Integer.parseInt(String.valueOf(playerNumber_comboBox.getSelectedItem())) + Integer.parseInt(String.valueOf(cpuNumber_comboBox.getSelectedItem()))) > 1
                         && (Integer.parseInt(String.valueOf(playerNumber_comboBox.getSelectedItem())) + Integer.parseInt(String.valueOf(cpuNumber_comboBox.getSelectedItem()))) < 5) {
-                    GAME_SETTINGS.put("gridSize",gridSize_comboBox.getSelectedIndex());
-                    GAME_SETTINGS.put("playerNumber",playerNumber_comboBox.getSelectedItem());
-                    GAME_SETTINGS.put("AI", cpuNumber_comboBox.getSelectedItem());
+					if (gridSize_comboBox.getSelectedIndex() == 0) {
+						GAME_SETTINGS.put("gridSize", "16");
+					} else if (gridSize_comboBox.getSelectedIndex() == 1) {
+						GAME_SETTINGS.put("gridSize", "20");
+					} else if (gridSize_comboBox.getSelectedIndex() == 2) {
+						GAME_SETTINGS.put("gridSize", "24");
+					}
+
+					GAME_SETTINGS.put("players", (String) playerNumber_comboBox.getSelectedItem());
+					GAME_SETTINGS.put("AI", (String) cpuNumber_comboBox.getSelectedItem());
 
                     tmd=new TMD(close_panel,loginPage,frame,GAME_SETTINGS);
                     gpc.removeAll();

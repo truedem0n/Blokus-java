@@ -6,8 +6,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.ArrayList;
 
 class GameBoard extends JPanel {
 
@@ -17,22 +16,42 @@ class GameBoard extends JPanel {
     private static final long serialVersionUID = 1L;
     private int[][] actions = {};
     private MouseEvent event;
-    private final Player players;
+    //private final Player players;
     private final int GRID_SIZE;
+    private final TurnManager turnHandler;
     private final customButton[][] button;
-    private final Dictionary<String, String> map;
+    private Color currentPlayingPlayerColor = Color.white;
+    // private final Dictionary<String, String> map;
 
     /**
      * Create the panel.
      * call the constructor
      */
-    public GameBoard(int gridSize, Player players, String[][][] savedArray) {
+    public GameBoard(int gridSize, TurnManager turnHandler, String[][][] savedArray) {
         this.GRID_SIZE = gridSize;
         button = new customButton[GRID_SIZE][GRID_SIZE];
-        map = new Hashtable<>();
-        this.players = players;
-        players.setPlayingAtBoard(this);
+        this.turnHandler = turnHandler;
+        this.turnHandler.setPlayingAtBoard(this);
         setUpBoard(savedArray);
+    }
+
+    public ArrayList<int[]> getLegalActionAi() {
+        ArrayList<int[]> legalPlaces = new ArrayList<>();
+
+        for (int x = 0; x < this.GRID_SIZE; x++) {
+            for (int y = 0; y < this.GRID_SIZE; y++) {
+                if (isShapeInsideGrid(x, y)) {
+
+                    if (((notPlaceableNWSE(x, y) && (isDiagonallyPlaceable(x, y)) && isPlaceable(x, y)) ||
+                            (isOnGridCorner(x, y) && notPlaceableNWSE(x, y) && !turnHandler.getCurrentPlayer().hasTakenCorner()) && isPlaceable(x, y))) {
+                        int[] currentPosInArray = {x, y};
+                        legalPlaces.add(currentPosInArray);
+                        button[x][y].setBackground(Color.gray);
+                    }
+                }
+            }
+        }
+        return legalPlaces;
     }
 
     public String[][][] getBoard() {
@@ -86,12 +105,12 @@ class GameBoard extends JPanel {
                         }
                         if (SwingUtilities.isMiddleMouseButton(e)) {
                             clearShapeOnGrid();
-                            players.rightClickFlipV();
+                            turnHandler.getCurrentPlayer().rightClickFlipV();
                             drawShapeOnGrid();
                         }
                         if (SwingUtilities.isRightMouseButton(e)) {
                             clearShapeOnGrid();
-                            players.rightClickFlipH();
+                            turnHandler.getCurrentPlayer().rightClickFlipH();
                             drawShapeOnGrid();
                         }
                     }
@@ -151,27 +170,40 @@ class GameBoard extends JPanel {
         customButton thisButton = ((customButton) e.getSource());
         int x = thisButton.getPos()[0];
         int y = thisButton.getPos()[1];
+
         try {
             if (isShapeInsideGrid(x, y)) {
-                if ((notPlaceableNWSE(x, y, actions) && (isDiagonallyPlaceable(x, y, actions))) || (isOnGridCorner(x, y, actions) && notPlaceableNWSE(x, y, actions) && !players.hasTakenCorner()))
+                if (((notPlaceableNWSE(x, y) && (isDiagonallyPlaceable(x, y))) ||
+                        (isOnGridCorner(x, y) && notPlaceableNWSE(x, y) && !turnHandler.getCurrentPlayer().hasTakenCorner()) && isPlaceable(x, y))) {
+
                     for (int i = 0; i < actions.length; i++) {
-                        if (!button[x + actions[i][0]][y + actions[i][1]].isTaken()
-                                && isPlaceable(x, y, actions)) {
 //                            clip.setFramePosition(0);
 //                            clip.start();
-                            //thisButton.setBackground(Color.red);
-                            button[x + actions[i][0]][y + actions[i][1]].setBackground(players.getColor());
-                            button[x + actions[i][0]][y + actions[i][1]].setTaken(true);
-                            thisButton.setTaken(true);
-                            for (int[] action : actions) {
-                                map.put(x + action[0] + "_" + y + action[1], "true");
-                                button[x + action[0]][y + action[1]].setTaken(true);
-                            }
-                            actions = new int[0][0];
-                            players.removePanel();
+                        //thisButton.setBackground(Color.red);
+                        button[x + actions[i][0]][y + actions[i][1]].setBackground(turnHandler.getCurrentPlayer().getColor());
+                        button[x + actions[i][0]][y + actions[i][1]].setTaken(true);
+                        thisButton.setTaken(true);
+                        for (int[] action : actions) {
+                            button[x + action[0]][y + action[1]].setTaken(true);
                         }
+
+                        /*
+                         * Set current action to empty array after a shape is placed
+                         * remove the placed shape from shapelist
+                         * the player has placed the shape on a corner
+                         * set turn to the next player
+                         * getColor is the hacky way to fix panel not being updated when
+                         * next player is set
+                         */
+
+                        turnHandler.getCurrentPlayer().removePanel();
+                        turnHandler.getCurrentPlayer().setHasTakenCorner(true);
+                        turnHandler.nextPlayer();
+                        currentPlayingPlayerColor = turnHandler.getCurrentPlayer().getColor();
+                        actions = new int[0][0];
                     }
-                players.setHasTakenCorner(true);
+                }
+
             }
         } catch (Exception s) {
             s.printStackTrace();
@@ -191,8 +223,8 @@ class GameBoard extends JPanel {
             for (int[] action : actions) {
                 if (isShapeInsideGrid(x, y)) {
                     if (!button[x + action[0]][y + action[1]].isTaken()
-                            && isPlaceable(x, y, actions)) {
-                        button[x + action[0]][y + action[1]].setBackground(players.getColor());
+                            && isPlaceable(x, y)) {
+                        button[x + action[0]][y + action[1]].setBackground(turnHandler.getCurrentPlayer().getColor());
                     } else {
                         button[x][y].setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                     }
@@ -213,7 +245,7 @@ class GameBoard extends JPanel {
         try {
             for (int[] action : actions) {
                 if (isShapeInsideGrid(x, y)) {
-                    System.out.println((x + action[0]) + "," + y + action[1]);
+                    // System.out.println((x + action[0]) + "," + y + action[1]);
                     if (!button[x + action[0]][y + action[1]].isTaken())
                         button[x + action[0]][y + action[1]].setBackground(Color.white);
                 }
@@ -224,8 +256,8 @@ class GameBoard extends JPanel {
         }
     }
 
-    // isPlaceable checks if a place is yet taken by a shape or not
-    private boolean isPlaceable(int x, int y, int[][] actions) {
+    // isPlaceable(x,y) checks if a place is yet taken by a shape or not
+    private boolean isPlaceable(int x, int y) {
         try {
             for (int[] action : actions) {
                 if (((x + action[0]) >= 0 &&
@@ -246,15 +278,16 @@ class GameBoard extends JPanel {
     // this method checks if from a given location on the board
     // if one step North/West/South/East has any block or not
     // if yes return  false otherwise true
-    private boolean notPlaceableNWSE(int x, int y, int[][] actions) {
-        System.out.println("notPlaceableNWSE");
+    private boolean notPlaceableNWSE(int x, int y) {
         int[][] cardinalActions = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
         for (int[] action : actions) {
             for (int[] cardinalAction : cardinalActions) {
+                if (((x + action[0] + cardinalAction[0] >= 0) && (x + action[0] + cardinalAction[0] < this.GRID_SIZE)) &&
+                        ((y + action[1] + cardinalAction[1] >= 0) && (y + action[1] + cardinalAction[1] < this.GRID_SIZE)))
                 // if check to make sure does not go below zero and above the grid size in both x and y directions
-                if ((x + action[0] + cardinalAction[0] > 0 && x + action[0] + cardinalAction[0] < this.GRID_SIZE)
-                        && (y + action[1] + cardinalAction[1] > 0 && y + action[1] + cardinalAction[1] < this.GRID_SIZE)) {
-                    if (button[x + action[0] + cardinalAction[0]][y + action[1] + cardinalAction[1]].isTaken()) {
+                {
+                    if (button[x + action[0] + cardinalAction[0]][y + action[1] + cardinalAction[1]].isTaken() &&
+                            (button[x + action[0] + cardinalAction[0]][y + action[1] + cardinalAction[1]].getColor().toString().equals(currentPlayingPlayerColor.toString()))) {
                         return false;
                     }
                 }
@@ -279,7 +312,7 @@ class GameBoard extends JPanel {
         return returnValue;
     }
 
-    private boolean isOnGridCorner(int x, int y, int[][] actions) {
+    private boolean isOnGridCorner(int x, int y) {
         boolean isShapeOnGridCorner = false;
         for (int[] action : actions) {
             if (isShapeInsideGrid(x, y)) {
@@ -298,14 +331,16 @@ class GameBoard extends JPanel {
     }
 
     // this function checks if there is a shape of same color on the corner of a shape
-    private boolean isDiagonallyPlaceable(int x, int y, int[][] actions) {
-        int[][] cardinalActions = {{1, 1}, {-1, -1}, {-1, 1}, {1, -1}};
+    private boolean isDiagonallyPlaceable(int x, int y) {
+        int[][] diagonalActions = {{1, 1}, {-1, -1}, {-1, 1}, {1, -1}};
         for (int[] action : actions) {
-            for (int[] cardinalAction : cardinalActions) {
+            for (int[] diagonalAction : diagonalActions) {
                 // if check to make sure does not go below zero and above the grid size in both x and y directions
-                if ((x + action[0] + cardinalAction[0] >= 0 && x + action[0] + cardinalAction[0] < this.GRID_SIZE)
-                        && (y + action[1] + cardinalAction[1] >= 0 && y + action[1] + cardinalAction[1] < this.GRID_SIZE)) {
-                    if (button[x + action[0] + cardinalAction[0]][y + action[1] + cardinalAction[1]].isTaken()) {
+                if ((((x + action[0] + diagonalAction[0]) >= 0 && (x + action[0] + diagonalAction[0]) < this.GRID_SIZE)) &&
+                        (((y + action[1] + diagonalAction[1]) >= 0 && (y + action[1] + diagonalAction[1]) < this.GRID_SIZE))) {
+                    if (button[x + action[0] + diagonalAction[0]][y + action[1] + diagonalAction[1]].isTaken() &&
+                            (button[x + action[0] + diagonalAction[0]][y + action[1] + diagonalAction[1]].getColor().toString().equals(currentPlayingPlayerColor.toString()))) {
+                        //System.out.println((x + action[0] + diagonalAction[0] )+","+(y + action[1] + diagonalAction[1] )+"  ");
                         return true;
                     }
                 }

@@ -17,7 +17,6 @@ class customButton extends JPanel {
 	private boolean taken = false;
 
 	public customButton(int x, int y) {
-		// super(name);
 		this.x = x;
 		this.y = y;
 	}

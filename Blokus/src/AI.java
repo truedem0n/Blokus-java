@@ -1,16 +1,22 @@
 import java.awt.*;
 
-class Player extends shapesList {
+public class AI extends shapesList {
     private final Color color;
     private boolean hasTakenCorner = false, stillPlaying = true;
 
-
     /**
      * Create the panel.
+     * shapeList Constructor
+     *
+     * @param color
      */
-    Player(Color color) {
+    AI(Color color) {
         super(color);
         this.color = color;
+    }
+
+    public void doAction() {
+        System.out.println("Printing from  AI");
     }
 
     public Color getColor() {
@@ -23,13 +29,5 @@ class Player extends shapesList {
 
     public void setHasTakenCorner(boolean hasTakenCorner) {
         this.hasTakenCorner = hasTakenCorner;
-    }
-
-    public boolean isStillPlaying() {
-        return stillPlaying;
-    }
-
-    public void setStillPlaying(boolean stillPlaying) {
-        this.stillPlaying = stillPlaying;
     }
 }

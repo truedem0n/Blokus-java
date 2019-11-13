@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Dictionary;
+import java.util.Map;
 
 class TMD extends JPanel {
 	
@@ -23,7 +23,7 @@ class TMD extends JPanel {
 	 * @param frame 
 	 * @param gAME_SETTINGS 
 	 */
-	public TMD(JPanel close_panel, JPanel loginPage, GUI frame, Dictionary gAME_SETTINGS) {
+	public TMD(JPanel close_panel, JPanel loginPage, GUI frame, Map<String, String> gAME_SETTINGS) {
 		tmd=this;
 		setBackground(new Color(63, 71, 204));
 		setBounds(342, 0, 345, 478);
@@ -36,13 +36,13 @@ class TMD extends JPanel {
 		
 		
 		ActionListener timeLimit_comboBoxListener=e->{
-			if(timeLimit_comboBox.getSelectedItem()=="NO") {
-				minutes_comboBox.setEnabled(false);
-			}else {
+			if (timeLimit_comboBox.getSelectedItem() == "YES") {
 				minutes_comboBox.setEnabled(true);
+			}else {
+				minutes_comboBox.setEnabled(false);
 			}
 		};
-		String[] tl = {"YES", "NO"};
+		String[] tl = {"NO", "YES"};
 		timeLimit_comboBox = new JComboBox<>(tl);
 		timeLimit_comboBox.setBounds(134, 148, 143, 22);
 		timeLimit_comboBox.addActionListener(timeLimit_comboBoxListener);
@@ -50,6 +50,7 @@ class TMD extends JPanel {
 
 		String[] m1 = {"10", "15", "20"};
 		minutes_comboBox = new JComboBox<>(m1);
+		minutes_comboBox.setEnabled(false);
 		minutes_comboBox.setBounds(134, 176, 143, 22);
 		add(minutes_comboBox);
 		
@@ -73,9 +74,14 @@ class TMD extends JPanel {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				gAME_SETTINGS.put("timeLimit", timeLimit_comboBox.getSelectedItem());
-				gAME_SETTINGS.put("minutes", minutes_comboBox.getSelectedItem());
-				gAME_SETTINGS.put("difficulty", difficulty_comboBox.getSelectedItem());
+				gAME_SETTINGS.put("timeLimit", (String.valueOf(timeLimit_comboBox.getSelectedIndex())));
+				if (timeLimit_comboBox.getSelectedIndex() == 1) {
+					gAME_SETTINGS.put("minutes", (String) minutes_comboBox.getSelectedItem());
+				} else {
+					gAME_SETTINGS.put("minutes", "0");
+				}
+
+				gAME_SETTINGS.put("difficulty", String.valueOf(difficulty_comboBox.getSelectedIndex()));
 				color =new colors(close_panel,loginPage,frame,gAME_SETTINGS);
 				tmd.removeAll();
 				color.setBounds(0,0,tmd.getWidth(),tmd.getHeight());

@@ -4,8 +4,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.Map;
 
 class GUI extends JFrame {
 
@@ -26,7 +26,7 @@ class GUI extends JFrame {
 	private static GUI frame;
 	private final JPanel containerPanel;
 	private final JPanel welcome_panel;
-	private final Dictionary<String, String> GAME_SETTINGS;
+    private final Map<String, String> GAME_SETTINGS;
 	private int xy,xx;
 	private JPanel close_panel;
 
@@ -36,7 +36,7 @@ class GUI extends JFrame {
 	 */
 	public GUI() {
 		//hashtable that will be used for load a game configuration or save a game configuration
-		GAME_SETTINGS = new Hashtable<>();
+        GAME_SETTINGS = new Hashtable<String, String>();
 
 		// antialiasing for font smoothing
 		System.setProperty("awt.useSystemAAFontSettings","on");
@@ -146,7 +146,7 @@ class GUI extends JFrame {
 				// sample arrary
 				String [][][] data=new DataManager().load();
 				frame.setVisible(false);
-				Game game=new Game(frame,data);
+                Game game = new Game(frame, data, GAME_SETTINGS);
 				frame.setVisible(true);
 				containerPanel.removeAll();
 				containerPanel.add(game);

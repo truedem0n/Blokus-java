@@ -82,7 +82,7 @@ class DataManager {
 	@SuppressWarnings("unchecked")
 	public String[][][] load() {
 		JSONParser parser = new JSONParser(); //Create a JSONParser
-		@SuppressWarnings("unused") String status = "";
+        @SuppressWarnings("unused") String bstatus = "";
 
 		//Try to read data file:
 		try {
