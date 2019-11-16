@@ -29,6 +29,47 @@ class Game extends JPanel {
      */
     Game(GUI frame, String[][][] savedArray, Map<String, String> gAME_SETTINGS) {
 
+
+        /*
+		  This is the close button Image
+		 */
+        ImageIcon closeButtonImg = new ImageIcon(GUI.class.getResource("images/closeButton.png"));
+        Image scaledCloseButtonImg = closeButtonImg.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+        // adding the  logo to the panel via jlabel
+        JPanel close_panel = new JPanel();
+        JLabel close_panelLabel = new JLabel(new ImageIcon(scaledCloseButtonImg));
+        close_panel.setLayout(null);
+        close_panel.setBounds(735 - 50, 0, 50, 50);
+        close_panelLabel.setBounds(0, 0, 50, 50);
+        close_panel.add(close_panelLabel);
+        close_panel.addMouseListener(new MouseAdapter() {
+            private JPanel getPanel() {
+                JPanel panel = new JPanel();
+                JLabel label = new JLabel("Save game before exiting?");
+                ImageIcon image = null;
+                label.setIcon(image);
+                panel.add(label);
+                return panel;
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if ((JOptionPane.showConfirmDialog(null,
+                        getPanel(), "Blokus", JOptionPane.YES_NO_CANCEL_OPTION)) == 0) {
+                    if (new DataManager().save(GAME_BOARD.getBoard()).equals("sucess")) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Successfully saved");
+                    } else {
+                        JOptionPane.showMessageDialog(new JFrame(), "Failed to save");
+                    }
+                }
+
+                System.exit(0);
+            }
+        });
+        add(close_panel);
+
+
         setUpGameVariables(gAME_SETTINGS);
         setUpPlayers(gAME_SETTINGS);
 
@@ -78,6 +119,11 @@ class Game extends JPanel {
         surrender.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                JOptionPane.showMessageDialog(null, turnHandler.getSurrenderingTextForCurrentPlayer());
+                shapesList currentPlayer = turnHandler.getCurrentPlayer();
+                currentPlayer.setStillPlaying(false);
+                turnHandler.nextPlayer();
+                GAME_BOARD.setSurrenderForCurrentPlayer();
 
             }
         });
@@ -91,6 +137,17 @@ class Game extends JPanel {
         lblSurrender.setForeground(Color.WHITE);
         lblSurrender.setFont(new Font("Century Gothic", Font.PLAIN, 15));
         lblSurrender.setBounds(36, 11, 130, 18);
+        lblSurrender.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JOptionPane.showMessageDialog(null, turnHandler.getSurrenderingTextForCurrentPlayer());
+                shapesList currentPlayer = turnHandler.getCurrentPlayer();
+                currentPlayer.setStillPlaying(false);
+                turnHandler.nextPlayer();
+                GAME_BOARD.setSurrenderForCurrentPlayer();
+
+            }
+        });
         surrender.add(lblSurrender);
 
         JLabel lblBlokus = new JLabel(" Blokus");

@@ -473,19 +473,25 @@ class shapesList extends JPanel {
         System.out.println("Printing from ShapeList");
     }
 
-    // To be overriden in children classes
+    // Methods to be overriden in children classes
     public boolean hasTakenCorner() {
         return false;
     }
 
-    // To be overriden in children classes
     public Color getColor() {
         return Color.white;
     }
 
     public void setHasTakenCorner(boolean b) {
-
     }
+
+    public boolean isStillPlaying() {
+        return false;
+    }
+
+    public void setStillPlaying(boolean stillPlaying) {
+    }
+
 
 // --Commented out by Inspection START (11/10/2019 1:09 PM):
 //	public int[][] getAction() {

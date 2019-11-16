@@ -19,25 +19,68 @@ class GPC extends JPanel {
 	private static final long serialVersionUID = 1L;
     private final GPC gpc;
 	private TMD tmd;
-    private final JPanel close_panel;
     private final JComboBox<?> gridSize_comboBox;
     private final JComboBox<?> playerNumber_comboBox;
     private final JComboBox<?> cpuNumber_comboBox;
+	private GUI gui;
 
 
     /**
      * Create the panel.
-     *
-     * @param close_panel2
-     * @param loginPage
-     * @param frame
-     * @param GAME_SETTINGS class constructor
-     */
+	 * @param loginPage
+	 * @param GAME_SETTINGS class constructor
+	 * @param gui
+	 */
 
 
-	GPC(JPanel close_panel2, JPanel loginPage, GUI frame, Map<String, String> GAME_SETTINGS) {
+	GPC(JPanel loginPage, Map<String, String> GAME_SETTINGS, GUI gui) {
 
-		this.close_panel=close_panel2;
+		this.gui = gui;
+
+		/*
+		  This is the back button Image
+		 */
+		ImageIcon closeButtonImg = new ImageIcon(GUI.class.getResource("images/closeButton.png"));
+		Image scaledCloseButtonImg = closeButtonImg.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+		// adding the logo to the panel via jlabel
+		JPanel close_panel = new JPanel();
+		JLabel close_panelLabel = new JLabel(new ImageIcon(scaledCloseButtonImg));
+		close_panel.setLayout(null);
+		close_panel.setBounds(345 - 50, 0, 50, 50);
+		close_panelLabel.setBounds(0, 0, 50, 50);
+		close_panel.add(close_panelLabel);
+		close_panel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+		});
+		add(close_panel);
+
+
+		/*
+		  This is the back button Image
+		 */
+		ImageIcon backButtonImg = new ImageIcon(GUI.class.getResource("images/backButton.png"));
+		Image scaledBackButtonImg = backButtonImg.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+
+		// adding the  logo to the panel via jlabel
+		JPanel backButtonPanel = new JPanel();
+		JLabel backButtonLabel = new JLabel(new ImageIcon(scaledBackButtonImg));
+		backButtonPanel.setLayout(null);
+		backButtonLabel.setBounds(0, 0, 40, 40);
+		backButtonPanel.add(backButtonLabel);
+		backButtonPanel.setBounds(10, 10, 40, 40);
+		backButtonPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				gui.setWindow(0);
+			}
+		});
+		add(backButtonPanel);
+
+
 		setBackground(new Color(63, 71, 204));
 		setBounds(342, 0, 345, 478);
 		setLayout(null);
@@ -95,14 +138,7 @@ class GPC extends JPanel {
 
 					GAME_SETTINGS.put("players", (String) playerNumber_comboBox.getSelectedItem());
 					GAME_SETTINGS.put("AI", (String) cpuNumber_comboBox.getSelectedItem());
-
-                    tmd=new TMD(close_panel,loginPage,frame,GAME_SETTINGS);
-                    gpc.removeAll();
-                    tmd.setBounds(0,0,gpc.getWidth(),gpc.getHeight());
-                    tmd.add(close_panel);
-                    gpc.add(tmd);
-                    gpc.revalidate();
-                    gpc.repaint();
+					gui.setWindow(2);
                 } else {
                     JOptionPane.showMessageDialog(new JFrame(), "Please make valid selections.");
                 }

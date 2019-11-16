@@ -9,27 +9,67 @@ class colors extends JPanel {
      * All the declarations
      */
     private static final long serialVersionUID = 1L;
+    private final Map<String, String> gAME_SETTINGS;
     String selectedColorsForPlayers = "", selectedColorsForAI = "";
     private Game game;
     private JLabel[] playerLabels;
     private JComboBox<String>[] playerColorSelections;
     private boolean hasAI = false;
 
+
     /**
      * Create the panel.
-     *
-     * @param close_panel
-     * @param loginPage
+     *  @param loginPage
      * @param frame
      * @param gAME_SETTINGS
      */
-    public colors(JPanel close_panel, JPanel loginPage, GUI frame, Map<String, String> gAME_SETTINGS) {
+    public colors(JPanel loginPage, GUI frame, Map<String, String> gAME_SETTINGS) {
 
-        setUpPlayers(Integer.parseInt(gAME_SETTINGS.get("players")));
-        if (Integer.parseInt(gAME_SETTINGS.get("AI")) > 0) {
-            hasAI = true;
-        }
-        //setUPColors(gAME_SETTINGS);
+        /*
+		  This is the close button Image
+		 */
+        ImageIcon closeButtonImg = new ImageIcon(GUI.class.getResource("images/closeButton.png"));
+        Image scaledCloseButtonImg = closeButtonImg.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+        // adding the  logo to the panel via jlabel
+        JPanel close_panel = new JPanel();
+        JLabel close_panelLabel = new JLabel(new ImageIcon(scaledCloseButtonImg));
+        close_panel.setLayout(null);
+        close_panel.setBounds(345 - 50, 0, 50, 50);
+        close_panelLabel.setBounds(0, 0, 50, 50);
+        close_panel.add(close_panelLabel);
+        close_panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.exit(0);
+            }
+        });
+        add(close_panel);
+
+
+        /*
+		  This is the back button Image
+		 */
+        ImageIcon backButtonImg = new ImageIcon(GUI.class.getResource("images/backButton.png"));
+        Image scaledBackButtonImg = backButtonImg.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+
+        // adding the blokus logo to the panel via jlabel
+        JPanel backButtonPanel = new JPanel();
+        JLabel backButtonLabel = new JLabel(new ImageIcon(scaledBackButtonImg));
+        backButtonPanel.setLayout(null);
+        backButtonLabel.setBounds(0, 0, 40, 40);
+        backButtonPanel.add(backButtonLabel);
+        backButtonPanel.setBounds(10, 10, 40, 40);
+        backButtonPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                frame.setWindow(2);
+            }
+        });
+        add(backButtonPanel);
+
+
+        this.gAME_SETTINGS = gAME_SETTINGS;
 
         setBackground(new Color(63, 71, 204));
         setBounds(342, 0, 345, 478);
@@ -51,10 +91,9 @@ class colors extends JPanel {
                     frame.setVisible(true);
                     loginPage.removeAll();
                     loginPage.add(game);
-                    close_panel.setBounds(700, 2, 28, 36);
-                    game.add(close_panel);
                     loginPage.revalidate();
                     loginPage.repaint();
+
                 } else {
                     JOptionPane.showMessageDialog(new JFrame(), "Please make a valid color selection.");
                 }
@@ -85,6 +124,13 @@ class colors extends JPanel {
         randomize_panel.add(lblRandomize);
 
 
+    }
+
+    public void setUpPlayersVariables() {
+        setUpPlayers(Integer.parseInt(gAME_SETTINGS.get("players")));
+        if (Integer.parseInt(gAME_SETTINGS.get("AI")) > 0) {
+            hasAI = true;
+        }
     }
 
     /**

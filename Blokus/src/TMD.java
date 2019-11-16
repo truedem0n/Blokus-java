@@ -14,16 +14,62 @@ class TMD extends JPanel {
 	private final TMD tmd;
 	private final JComboBox<String> difficulty_comboBox;
 	private colors color;
+	private GUI gui;
 	private JComboBox<String> timeLimit_comboBox;
 	private JComboBox<String> minutes_comboBox;
 	/**
 	 * Create the panel.
-	 * @param close_panel 
-	 * @param loginPage 
-	 * @param frame 
-	 * @param gAME_SETTINGS 
+	 * @param loginPage
+	 * @param gAME_SETTINGS
+	 * @param gui
 	 */
-	public TMD(JPanel close_panel, JPanel loginPage, GUI frame, Map<String, String> gAME_SETTINGS) {
+	public TMD(JPanel loginPage, Map<String, String> gAME_SETTINGS, GUI gui) {
+
+		this.gui = gui;
+
+	    /*
+		  This is the back button Image
+		 */
+		ImageIcon closeButtonImg = new ImageIcon(GUI.class.getResource("images/closeButton.png"));
+		Image scaledCloseButtonImg = closeButtonImg.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+		// adding the blokus logo to the panel via jlabel
+		JPanel close_panel = new JPanel();
+		JLabel close_panelLabel = new JLabel(new ImageIcon(scaledCloseButtonImg));
+		close_panel.setLayout(null);
+		close_panel.setBounds(345 - 50, 0, 50, 50);
+		close_panelLabel.setBounds(0, 0, 50, 50);
+		close_panel.add(close_panelLabel);
+		close_panel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+		});
+		add(close_panel);
+
+
+        /*
+		  This is the back button Image
+		 */
+		ImageIcon backButtonImg = new ImageIcon(GUI.class.getResource("images/backButton.png"));
+		Image scaledBackButtonImg = backButtonImg.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+
+		// adding the blokus logo to the panel via jlabel
+		JPanel backButtonPanel = new JPanel();
+		JLabel backButtonLabel = new JLabel(new ImageIcon(scaledBackButtonImg));
+		backButtonPanel.setLayout(null);
+		backButtonLabel.setBounds(0, 0, 40, 40);
+		backButtonPanel.add(backButtonLabel);
+		backButtonPanel.setBounds(10, 10, 40, 40);
+		backButtonPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				gui.setWindow(1);
+			}
+		});
+		add(backButtonPanel);
+
 		tmd=this;
 		setBackground(new Color(63, 71, 204));
 		setBounds(342, 0, 345, 478);
@@ -82,13 +128,8 @@ class TMD extends JPanel {
 				}
 
 				gAME_SETTINGS.put("difficulty", String.valueOf(difficulty_comboBox.getSelectedIndex()));
-				color =new colors(close_panel,loginPage,frame,gAME_SETTINGS);
-				tmd.removeAll();
-				color.setBounds(0,0,tmd.getWidth(),tmd.getHeight());
-				color.add(close_panel);
-				tmd.add(color);
-				tmd.revalidate();
-				tmd.repaint();
+				((colors) gui.getWindowObjectAccordingToIndex(3)).setUpPlayersVariables();
+				gui.setWindow(3);
 			}
 		});
 		continue_panel.setLayout(null);

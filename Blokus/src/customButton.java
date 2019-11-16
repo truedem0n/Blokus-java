@@ -19,6 +19,7 @@ class customButton extends JPanel {
 	public customButton(int x, int y) {
 		this.x = x;
 		this.y = y;
+		//add(new JLabel(x+","+y));
 	}
 
 	public int[] getPos() {

@@ -30,4 +30,13 @@ public class AI extends shapesList {
     public void setHasTakenCorner(boolean hasTakenCorner) {
         this.hasTakenCorner = hasTakenCorner;
     }
+
+    public boolean isStillPlaying() {
+        return stillPlaying;
+    }
+
+    public void setStillPlaying(boolean stillPlaying) {
+        this.stillPlaying = stillPlaying;
+    }
+
 }

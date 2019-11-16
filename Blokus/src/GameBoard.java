@@ -156,6 +156,7 @@ class GameBoard extends JPanel {
         clearShapeOnGrid();
     }
 
+
     public void drawCurrentAction() {
         drawShapeOnGrid();
     }
@@ -173,6 +174,7 @@ class GameBoard extends JPanel {
 
         try {
             if (isShapeInsideGrid(x, y)) {
+                System.out.println(((isDiagonallyPlaceable(x, y))));
                 if (((notPlaceableNWSE(x, y) && (isDiagonallyPlaceable(x, y))) ||
                         (isOnGridCorner(x, y) && notPlaceableNWSE(x, y) && !turnHandler.getCurrentPlayer().hasTakenCorner()) && isPlaceable(x, y))) {
 
@@ -236,6 +238,7 @@ class GameBoard extends JPanel {
         }
     }
 
+
     //This function clears the color of a shape when it is drawn out of the block
     private void clearShapeOnGrid() {
         MouseEvent e = event;
@@ -273,6 +276,11 @@ class GameBoard extends JPanel {
             return false;
         }
         return true;
+    }
+
+    public void setSurrenderForCurrentPlayer() {
+        currentPlayingPlayerColor = turnHandler.getCurrentPlayer().getColor();
+        actions = new int[0][0];
     }
 
     // this method checks if from a given location on the board
