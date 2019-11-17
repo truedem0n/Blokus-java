@@ -1,3 +1,6 @@
+/**
+ * @author: Atul Mehla
+ */
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -6,10 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-
 class shapesList extends JPanel {
-
-
     /**
      *
      */
@@ -113,25 +113,6 @@ class shapesList extends JPanel {
                             @Override
                             public void mouseClicked(MouseEvent e) {
                                 event = e;
-//								try {
-//									clip.setFramePosition(0);
-//									clip.start();
-//									}
-//								catch(Exception s) {
-//									s.printStackTrace();
-//
-//								}
-                                shapeButton thisButton = ((shapeButton) e.getSource());
-                                actions = shapes[thisButton.getIndex()];
-                                currentSelectedShapePanel = thisButton.getIndex();
-                                playingAtBoard.setActions(actions);
-                                //System.out.println(currentSelectedShapePanel);
-                            }
-
-                            // same as mouseClicked just to show drag and drop functionality
-                            @Override
-                            public void mousePressed(MouseEvent e) {
-                                event = e;
                                 try {
                                     clip.setFramePosition(0);
                                     clip.start();
@@ -143,6 +124,7 @@ class shapesList extends JPanel {
                                 actions = shapes[thisButton.getIndex()];
                                 currentSelectedShapePanel = thisButton.getIndex();
                                 playingAtBoard.setActions(actions);
+                                //System.out.println(currentSelectedShapePanel);
                             }
                         });
                     }

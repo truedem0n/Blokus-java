@@ -1,3 +1,6 @@
+/**
+ * @author: Atul Mehla
+ */
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -6,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.Hashtable;
 import java.util.Map;
-
 class GUI extends JFrame {
 
     /**
@@ -126,7 +128,7 @@ class GUI extends JFrame {
         Image scaledCloseButtonImg = closeButtonImg.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
         // adding the blokus logo to the panel via jlabel
-        JPanel close_panel = new JPanel();
+        JButton close_panel = new JButton();
         JLabel close_panelLabel = new JLabel(new ImageIcon(scaledCloseButtonImg));
         close_panel.setLayout(null);
         close_panel.setBounds(345 - 50, 0, 50, 50);
@@ -149,7 +151,7 @@ class GUI extends JFrame {
         containerPanel.add(activeRWindow[0]);
 
 
-        activeRWindow[1] = new GPC(containerPanel, GAME_SETTINGS, this);
+        activeRWindow[1] = new GPC(GAME_SETTINGS, this);
         activeRWindow[1].setVisible(false);
         activeRWindow[1].setBackground(new Color(63, 71, 204));
         activeRWindow[1].setBounds(342, 0, 345, 478);
@@ -157,7 +159,7 @@ class GUI extends JFrame {
         containerPanel.add(activeRWindow[1]);
 
 
-        activeRWindow[2] = new TMD(containerPanel, GAME_SETTINGS, this);
+        activeRWindow[2] = new TMD(GAME_SETTINGS, this);
         activeRWindow[2].setVisible(false);
         activeRWindow[2].setBackground(new Color(63, 71, 204));
         activeRWindow[2].setBounds(342, 0, 345, 478);
@@ -167,11 +169,12 @@ class GUI extends JFrame {
         activeRWindow[3] = new colors(containerPanel, this, GAME_SETTINGS);
         activeRWindow[3].setBackground(new Color(63, 71, 204));
         activeRWindow[3].setBounds(342, 0, 345, 478);
+        activeRWindow[3].setVisible(false);
         containerPanel.add(activeRWindow[3]);
         activeRWindow[3].setLayout(null);
 
 
-        JPanel play_panel = new JPanel();
+        JButton play_panel = new JButton();
         play_panel.setBounds(101, 190, 140, 42);
         activeRWindow[0].add(play_panel);
         play_panel.addMouseListener(new MouseAdapter() {
@@ -202,7 +205,7 @@ class GUI extends JFrame {
         lblPlay.setFont(new Font("Century Gothic", Font.BOLD, 20));
         play_panel.add(lblPlay);
 
-        JPanel load_panel = new JPanel();
+        JButton load_panel = new JButton();
         load_panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent s) {
@@ -233,7 +236,7 @@ class GUI extends JFrame {
         lblLoad.setForeground(Color.WHITE);
         load_panel.add(lblLoad);
 
-        JPanel exit_panel = new JPanel();
+        JButton exit_panel = new JButton();
         exit_panel.setBounds(101, 314, 140, 42);
         activeRWindow[0].add(exit_panel);
         exit_panel.addMouseListener(new MouseAdapter() {
@@ -263,6 +266,7 @@ class GUI extends JFrame {
                         UIManager.getCrossPlatformLookAndFeelClassName());
                 frame = new GUI();
                 frame.setVisible(true);
+                frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             } catch (Exception e) {
                 e.printStackTrace();
             }

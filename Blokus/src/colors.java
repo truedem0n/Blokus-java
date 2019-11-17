@@ -1,9 +1,12 @@
+/**
+ * @author: Atul Mehla
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
-
 class colors extends JPanel {
     /**
      * All the declarations
@@ -25,57 +28,14 @@ class colors extends JPanel {
      */
     public colors(JPanel loginPage, GUI frame, Map<String, String> gAME_SETTINGS) {
 
-        /*
-		  This is the close button Image
-		 */
-        ImageIcon closeButtonImg = new ImageIcon(GUI.class.getResource("images/closeButton.png"));
-        Image scaledCloseButtonImg = closeButtonImg.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-
-        // adding the  logo to the panel via jlabel
-        JPanel close_panel = new JPanel();
-        JLabel close_panelLabel = new JLabel(new ImageIcon(scaledCloseButtonImg));
-        close_panel.setLayout(null);
-        close_panel.setBounds(345 - 50, 0, 50, 50);
-        close_panelLabel.setBounds(0, 0, 50, 50);
-        close_panel.add(close_panelLabel);
-        close_panel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.exit(0);
-            }
-        });
-        add(close_panel);
-
-
-        /*
-		  This is the back button Image
-		 */
-        ImageIcon backButtonImg = new ImageIcon(GUI.class.getResource("images/backButton.png"));
-        Image scaledBackButtonImg = backButtonImg.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-
-        // adding the blokus logo to the panel via jlabel
-        JPanel backButtonPanel = new JPanel();
-        JLabel backButtonLabel = new JLabel(new ImageIcon(scaledBackButtonImg));
-        backButtonPanel.setLayout(null);
-        backButtonLabel.setBounds(0, 0, 40, 40);
-        backButtonPanel.add(backButtonLabel);
-        backButtonPanel.setBounds(10, 10, 40, 40);
-        backButtonPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                frame.setWindow(2);
-            }
-        });
-        add(backButtonPanel);
-
-
+        setUpCloseAndBackButton(frame);
         this.gAME_SETTINGS = gAME_SETTINGS;
 
         setBackground(new Color(63, 71, 204));
         setBounds(342, 0, 345, 478);
         setLayout(null);
 
-        JPanel continue_panel = new JPanel();
+        JButton continue_panel = new JButton();
         continue_panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -111,7 +71,7 @@ class colors extends JPanel {
         label.setBounds(66, 11, 140, 25);
         continue_panel.add(label);
 
-        JPanel randomize_panel = new JPanel();
+        JButton randomize_panel = new JButton();
         randomize_panel.setLayout(null);
         randomize_panel.setBackground(Color.ORANGE);
         randomize_panel.setBounds(59, 371, 216, 49);
@@ -124,6 +84,51 @@ class colors extends JPanel {
         randomize_panel.add(lblRandomize);
 
 
+    }
+
+    private void setUpCloseAndBackButton(GUI frame) {
+        /*
+		  This is the close button Image
+		 */
+        ImageIcon closeButtonImg = new ImageIcon(GUI.class.getResource("images/closeButton.png"));
+        Image scaledCloseButtonImg = closeButtonImg.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+        // adding the  logo to the panel via jlabel
+        JButton close_panel = new JButton();
+        JLabel close_panelLabel = new JLabel(new ImageIcon(scaledCloseButtonImg));
+        close_panel.setLayout(null);
+        close_panel.setBounds(345 - 50, 0, 50, 50);
+        close_panelLabel.setBounds(0, 0, 50, 50);
+        close_panel.add(close_panelLabel);
+        close_panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.exit(0);
+            }
+        });
+        add(close_panel);
+
+
+        /*
+		  This is the back button Image
+		 */
+        ImageIcon backButtonImg = new ImageIcon(GUI.class.getResource("images/backButton.png"));
+        Image scaledBackButtonImg = backButtonImg.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+
+        // adding the blokus logo to the panel via jlabel
+        JButton backButtonPanel = new JButton();
+        JLabel backButtonLabel = new JLabel(new ImageIcon(scaledBackButtonImg));
+        backButtonPanel.setLayout(null);
+        backButtonLabel.setBounds(0, 0, 40, 40);
+        backButtonPanel.add(backButtonLabel);
+        backButtonPanel.setBounds(10, 10, 40, 40);
+        backButtonPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                frame.setWindow(2);
+            }
+        });
+        add(backButtonPanel);
     }
 
     public void setUpPlayersVariables() {
@@ -146,41 +151,41 @@ class colors extends JPanel {
                 case 0:
                     playerLabels[i] = new JLabel("Player 1");
                     playerLabels[i].setForeground(Color.WHITE);
-                    playerLabels[i].setBounds(61, 141, 63, 14);
+                    playerLabels[i].setBounds(59, 152, 63, 14);
                     add(playerLabels[i]);
 
                     playerColorSelections[i] = new JComboBox<String>(colors);
-                    playerColorSelections[i].setBounds(134, 137, 143, 22);
+                    playerColorSelections[i].setBounds(132, 148, 143, 22);
                     add(playerColorSelections[i]);
                     break;
                 case 1:
                     playerLabels[i] = new JLabel("Player 2");
                     playerLabels[i].setForeground(Color.WHITE);
-                    playerLabels[i].setBounds(61, 170, 97, 14);
+                    playerLabels[i].setBounds(59, 180, 97, 14);
                     add(playerLabels[i]);
 
                     playerColorSelections[i] = new JComboBox<String>(colors);
-                    playerColorSelections[i].setBounds(134, 166, 143, 22);
+                    playerColorSelections[i].setBounds(132, 176, 143, 22);
                     add(playerColorSelections[i]);
                     break;
                 case 2:
                     playerLabels[i] = new JLabel("Player 3");
                     playerLabels[i].setForeground(Color.WHITE);
-                    playerLabels[i].setBounds(61, 200, 97, 14);
+                    playerLabels[i].setBounds(59, 211, 97, 14);
                     add(playerLabels[i]);
 
                     playerColorSelections[i] = new JComboBox<String>(colors);
-                    playerColorSelections[i].setBounds(134, 196, 143, 22);
+                    playerColorSelections[i].setBounds(132, 207, 143, 22);
                     add(playerColorSelections[i]);
                     break;
                 case 3:
                     playerLabels[i] = new JLabel("Player 4");
                     playerLabels[i].setForeground(Color.WHITE);
-                    playerLabels[i].setBounds(61, 229, 97, 14);
+                    playerLabels[i].setBounds(59, 240, 97, 14);
                     add(playerLabels[i]);
 
                     playerColorSelections[i] = new JComboBox<String>(colors);
-                    playerColorSelections[i].setBounds(134, 225, 143, 22);
+                    playerColorSelections[i].setBounds(132, 236, 143, 22);
                     add(playerColorSelections[i]);
                     break;
             }

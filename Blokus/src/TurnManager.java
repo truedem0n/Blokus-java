@@ -1,16 +1,20 @@
+/**
+ * @author: Atul Mehla
+ */
 import javax.swing.*;
-
 class TurnManager {
     shapesList[] currentlyPlayingPlayers;
     JLabel turnLabel;
     String[] playerLable;
     int currentPlayer = 0;
+    Game gui;
 
 
-    TurnManager(shapesList[] players, String[] playerLabels, JLabel lblTurn) {
+    TurnManager(shapesList[] players, String[] playerLabels, JLabel lblTurn, Game gui) {
         this.currentlyPlayingPlayers = players;
         this.turnLabel = lblTurn;
         this.playerLable = playerLabels;
+        this.gui = gui;
     }
 
     public String getSurrenderingTextForCurrentPlayer() {
@@ -35,6 +39,8 @@ class TurnManager {
             if (timesAdded >= currentlyPlayingPlayers.length) {
                 //GameOver
                 JOptionPane.showMessageDialog(null, "Game Over");
+                gui.gameOver();
+
                 break;
             } else if (!getCurrentPlayer().isStillPlaying()) {
                 this.currentPlayer++;

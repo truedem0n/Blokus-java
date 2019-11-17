@@ -1,5 +1,7 @@
+/**
+ * @author: Atul Mehla
+ */
 import java.awt.*;
-
 class Player extends shapesList {
     private final Color color;
     private boolean hasTakenCorner = false, stillPlaying = true;

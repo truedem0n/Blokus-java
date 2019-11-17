@@ -1,12 +1,13 @@
+/**
+ * @author: Atul Mehla
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
-
 class TMD extends JPanel {
-	
 	/**
 	 *   All the declarartions
 	 */
@@ -17,13 +18,13 @@ class TMD extends JPanel {
 	private GUI gui;
 	private JComboBox<String> timeLimit_comboBox;
 	private JComboBox<String> minutes_comboBox;
+
 	/**
 	 * Create the panel.
-	 * @param loginPage
 	 * @param gAME_SETTINGS
 	 * @param gui
 	 */
-	public TMD(JPanel loginPage, Map<String, String> gAME_SETTINGS, GUI gui) {
+	public TMD(Map<String, String> gAME_SETTINGS, GUI gui) {
 
 		this.gui = gui;
 
@@ -34,7 +35,7 @@ class TMD extends JPanel {
 		Image scaledCloseButtonImg = closeButtonImg.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
 		// adding the blokus logo to the panel via jlabel
-		JPanel close_panel = new JPanel();
+		JButton close_panel = new JButton();
 		JLabel close_panelLabel = new JLabel(new ImageIcon(scaledCloseButtonImg));
 		close_panel.setLayout(null);
 		close_panel.setBounds(345 - 50, 0, 50, 50);
@@ -56,7 +57,7 @@ class TMD extends JPanel {
 		Image scaledBackButtonImg = backButtonImg.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
 		// adding the blokus logo to the panel via jlabel
-		JPanel backButtonPanel = new JPanel();
+		JButton backButtonPanel = new JButton();
 		JLabel backButtonLabel = new JLabel(new ImageIcon(scaledBackButtonImg));
 		backButtonPanel.setLayout(null);
 		backButtonLabel.setBounds(0, 0, 40, 40);
@@ -74,14 +75,14 @@ class TMD extends JPanel {
 		setBackground(new Color(63, 71, 204));
 		setBounds(342, 0, 345, 478);
 		setLayout(null);
-		
+
 		JLabel lblTimeLimit = new JLabel("Time Limit:");
 		lblTimeLimit.setForeground(Color.white);
-		lblTimeLimit.setBounds(61, 152, 63, 14);
+		lblTimeLimit.setBounds(59, 152, 63, 14);
 		add(lblTimeLimit);
-		
-		
-		ActionListener timeLimit_comboBoxListener=e->{
+
+
+		ActionListener timeLimit_comboBoxListener= e->{
 			if (timeLimit_comboBox.getSelectedItem() == "YES") {
 				minutes_comboBox.setEnabled(true);
 			}else {
@@ -90,32 +91,32 @@ class TMD extends JPanel {
 		};
 		String[] tl = {"NO", "YES"};
 		timeLimit_comboBox = new JComboBox<>(tl);
-		timeLimit_comboBox.setBounds(134, 148, 143, 22);
+		timeLimit_comboBox.setBounds(132, 148, 143, 22);
 		timeLimit_comboBox.addActionListener(timeLimit_comboBoxListener);
 		add(timeLimit_comboBox);
 
 		String[] m1 = {"10", "15", "20"};
 		minutes_comboBox = new JComboBox<>(m1);
 		minutes_comboBox.setEnabled(false);
-		minutes_comboBox.setBounds(134, 176, 143, 22);
+		minutes_comboBox.setBounds(132, 176, 143, 22);
 		add(minutes_comboBox);
-		
+
 		JLabel lblMinutes = new JLabel("Minutes:");
 		lblMinutes.setForeground(Color.white);
-		lblMinutes.setBounds(61, 180, 97, 14);
+		lblMinutes.setBounds(59, 180, 97, 14);
 		add(lblMinutes);
-		
+
 		JLabel lblDifficulty = new JLabel("Difficulty: ");
 		lblDifficulty.setForeground(Color.white);
-		lblDifficulty.setBounds(61, 211, 97, 14);
+		lblDifficulty.setBounds(59, 211, 97, 14);
 		add(lblDifficulty);
 
 		String[] df = {"Easy", "Medium", "Hard"};
 		difficulty_comboBox = new JComboBox<>(df);
-		difficulty_comboBox.setBounds(134, 207, 143, 22);
+		difficulty_comboBox.setBounds(132, 207, 143, 22);
 		add(difficulty_comboBox);
-		
-		JPanel continue_panel = new JPanel();
+
+		JButton continue_panel = new JButton();
 		continue_panel.addMouseListener(new MouseAdapter() {
 			@SuppressWarnings("unchecked")
 			@Override
@@ -136,7 +137,7 @@ class TMD extends JPanel {
 		continue_panel.setBackground(Color.ORANGE);
 		continue_panel.setBounds(59, 305, 216, 49);
 		add(continue_panel);
-		
+
 		JLabel label_3 = new JLabel("Continue");
 		label_3.setForeground(Color.white);
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 20));

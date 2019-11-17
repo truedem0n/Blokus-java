@@ -1,3 +1,6 @@
+/**
+ * @author: Atul Mehla
+ */
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -7,9 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
-
 class GameBoard extends JPanel {
-
     /**
      * All the declarations
      */
@@ -129,6 +130,7 @@ class GameBoard extends JPanel {
                         clearShapeOnGrid();
                     }
                 });
+                button[j][i].setBorder(null);
                 add(button[j][i]);
 
                 // if a previous session is being loaded then this part of code would place
@@ -159,6 +161,33 @@ class GameBoard extends JPanel {
 
     public void drawCurrentAction() {
         drawShapeOnGrid();
+    }
+
+    public String[] getPlacedBlocks() {
+        String[] rgby = new String[4];
+        for (int i = 0; i < GRID_SIZE; i++) {
+            for (int j = 0; j < GRID_SIZE; j++) {
+                Color color = button[i][j].getColor();
+                if (color.getRGB() == Color.red.getRGB()) {
+                    if (rgby[0] == null)
+                        rgby[0] = "";
+                    rgby[0] += "r";
+                } else if (color.getRGB() == Color.green.getRGB()) {
+                    if (rgby[1] == null)
+                        rgby[1] = "";
+                    rgby[1] += "g";
+                } else if (color.getRGB() == Color.blue.getRGB()) {
+                    if (rgby[2] == null)
+                        rgby[2] = "";
+                    rgby[2] += "b";
+                } else if (color.getRGB() == Color.orange.getRGB()) {
+                    if (rgby[3] == null)
+                        rgby[3] = "";
+                    rgby[3] += "y";
+                }
+            }
+        }
+        return rgby;
     }
 
     private void placeShapeOnGrid() {

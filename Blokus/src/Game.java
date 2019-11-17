@@ -1,23 +1,29 @@
+/**
+ * @author: Atul Mehla
+ */
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
-
-@SuppressWarnings("EmptyMethod")
 class Game extends JPanel {
     /**
      *
      */
     private static final long serialVersionUID = 1L;
+    JLabel lblBlokus, lblTurn, lblTimeLeft;
     TurnManager turnHandler;
-    JLabel lblTurn;
-    private JLabel lblTimeLeft;
+    JButton close_panel;
     private GameBoard GAME_BOARD;
     private Timer timer;
+    ActionListener askBeforeClosing;
+    ActionListener dontAskBeforeClosing;
     private shapesList[] Players;
     private String[] playerLabels;
     private String[] playerScore;
+    GUI frame;
     private int seconds, GRID_SIZE = 16, numberOfAI, diffculty, minutes, numberOfPlayers, timeLimit, colorDistributionType;
 
 
@@ -29,21 +35,23 @@ class Game extends JPanel {
      */
     Game(GUI frame, String[][][] savedArray, Map<String, String> gAME_SETTINGS) {
 
+        this.frame = frame;
+        setUpActionListeners();
+        setUpGameVariables(gAME_SETTINGS);
+        setUpPlayers(gAME_SETTINGS);
+        setUpSwingComponents(savedArray);
 
-        /*
-		  This is the close button Image
-		 */
-        ImageIcon closeButtonImg = new ImageIcon(GUI.class.getResource("images/closeButton.png"));
-        Image scaledCloseButtonImg = closeButtonImg.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        //Set frame properties
+        setBackground(new Color(63, 71, 204));
+        frame.setBounds(0, 0, 735, 608);
+        frame.setLocationRelativeTo(null);
+        setBounds(0, 0, 736, 608);
+        setLayout(null);
 
-        // adding the  logo to the panel via jlabel
-        JPanel close_panel = new JPanel();
-        JLabel close_panelLabel = new JLabel(new ImageIcon(scaledCloseButtonImg));
-        close_panel.setLayout(null);
-        close_panel.setBounds(735 - 50, 0, 50, 50);
-        close_panelLabel.setBounds(0, 0, 50, 50);
-        close_panel.add(close_panelLabel);
-        close_panel.addMouseListener(new MouseAdapter() {
+    }
+
+    private void setUpActionListeners() {
+        askBeforeClosing = new ActionListener() {
             private JPanel getPanel() {
                 JPanel panel = new JPanel();
                 JLabel label = new JLabel("Save game before exiting?");
@@ -54,33 +62,40 @@ class Game extends JPanel {
             }
 
             @Override
-            public void mouseClicked(MouseEvent e) {
-                if ((JOptionPane.showConfirmDialog(null,
-                        getPanel(), "Blokus", JOptionPane.YES_NO_CANCEL_OPTION)) == 0) {
+            public void actionPerformed(ActionEvent e) {
+                int value = (JOptionPane.showConfirmDialog(null,
+                        getPanel(), "Blokus", JOptionPane.YES_NO_CANCEL_OPTION));
+                // Yes=0, No=1, Cancel=2
+                if (value == 0) {
                     if (new DataManager().save(GAME_BOARD.getBoard()).equals("sucess")) {
                         JOptionPane.showMessageDialog(new JFrame(), "Successfully saved");
                     } else {
                         JOptionPane.showMessageDialog(new JFrame(), "Failed to save");
                     }
+                    System.exit(0);
+                } else if (value == 1) {
+                    System.exit(0);
                 }
 
-                System.exit(0);
+
             }
-        });
-        add(close_panel);
+        };
+        dontAskBeforeClosing = e -> {
+            System.exit(0);
+        };
+    }
 
-
-        setUpGameVariables(gAME_SETTINGS);
-        setUpPlayers(gAME_SETTINGS);
-
-        setUpSwingComponents(savedArray);
-
-        //Set frame properties
-        setBackground(new Color(63, 71, 204));
-        frame.setBounds(0, 0, 735, 608);
-        frame.setLocationRelativeTo(null);
-        setBounds(0, 0, 736, 608);
-        setLayout(null);
+    public void gameOver() {
+        this.removeAll();
+        this.add(lblBlokus);
+        close_panel.removeActionListener(askBeforeClosing);
+        close_panel.addActionListener(dontAskBeforeClosing);
+        this.add(close_panel);
+        GameOver gameOver = new GameOver(GAME_BOARD.getPlacedBlocks(), frame);
+        gameOver.setLocation((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.2));
+        this.add(gameOver);
+        this.revalidate();
+        this.repaint();
 
     }
 
@@ -115,7 +130,25 @@ class Game extends JPanel {
     }
 
     private void setUpSwingComponents(String[][][] savedArray) {
-        JPanel surrender = new JPanel();
+        /*
+		  This is the close button Image
+		 */
+        ImageIcon closeButtonImg = new ImageIcon(GUI.class.getResource("images/closeButton.png"));
+        Image scaledCloseButtonImg = closeButtonImg.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+        // adding the  logo to the panel via jlabel
+        close_panel = new JButton();
+        JLabel close_panelLabel = new JLabel(new ImageIcon(scaledCloseButtonImg));
+        close_panel.setLayout(null);
+        close_panel.setBounds(735 - 50, 0, 50, 50);
+        close_panelLabel.setBounds(0, 0, 50, 50);
+        close_panel.add(close_panelLabel);
+        close_panel.addActionListener(askBeforeClosing);
+
+        add(close_panel);
+
+
+        JButton surrender = new JButton();
         surrender.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -137,20 +170,9 @@ class Game extends JPanel {
         lblSurrender.setForeground(Color.WHITE);
         lblSurrender.setFont(new Font("Century Gothic", Font.PLAIN, 15));
         lblSurrender.setBounds(36, 11, 130, 18);
-        lblSurrender.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, turnHandler.getSurrenderingTextForCurrentPlayer());
-                shapesList currentPlayer = turnHandler.getCurrentPlayer();
-                currentPlayer.setStillPlaying(false);
-                turnHandler.nextPlayer();
-                GAME_BOARD.setSurrenderForCurrentPlayer();
-
-            }
-        });
         surrender.add(lblSurrender);
 
-        JLabel lblBlokus = new JLabel(" Blokus");
+        lblBlokus = new JLabel(" Blokus");
         lblBlokus.setForeground(Color.white);
         lblBlokus.setFont(new Font("Century Gothic", Font.PLAIN, 25));
         lblBlokus.setBounds(0, 1, 148, 32);
@@ -162,7 +184,7 @@ class Game extends JPanel {
         lblTurn.setBounds(20, 89, 161, 14);
         add(lblTurn);
 
-        turnHandler = new TurnManager(Players, playerLabels, lblTurn);
+        turnHandler = new TurnManager(Players, playerLabels, lblTurn, this);
 
         GAME_BOARD = new GameBoard(GRID_SIZE, turnHandler, savedArray);
         GAME_BOARD.addMouseWheelListener(e -> {
