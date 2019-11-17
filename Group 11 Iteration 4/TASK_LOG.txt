@@ -1,34 +1,58 @@
 Iteration 4 Tasks and done by whom
+Iteration4 Tasks:
+[#]       [Activity]      [Responsible]                         [Review on]   [Status]         [Comments]
+---------------------------------------------------------------------------------------------------------
+ 1  | Future Networking | Dylan Ellsworth or Devin Leriche    | Not Done    | Not done       | 
+      Study        
+              
+ 2  | Design Pattern    | Dylan Ellsworth or Devin Leriche    | Not Done    | Not done       |
+      Study                       
+              
+ 3  | Unit Tests        | Farhan Rafid and Ricky Hineman      | Not Done    | Not done       |
+                                  
+                                  
+ 4  | Final Release     | Atul,Ricky,Devin, and Dylan         | Not Done    | partially done | final release tasks to be sub-divided amongst group memebers
 
-1. A page (at most) explaining how your design accounts for - or would need to be adjusted for - possible future networking of the game
-   Assigned to: Dylan Ellsworth or Devin Leriche
-   To be done by: No information 
-2. A page (at most) explaining the use of patterns in your design, or where you would use patterns if you had more time
-   Assigned to: Dylan Ellsworth or Devin Leriche
-   To be done by: No information 
-3. Unit Tests for 5 key domain classes, covering all methods
-   Assigned to: Farhan Rafid and Ricky Hineman
-   To be done by: No information 
-4. Final Release of your application.
-   Since this task is most weighted, it is subdivided between group members.
-   Documentation assigned to Dylan Ellsworth or Devin Leriche
-   Testing of the application assigned to Dylan Ellsworth or Devin Leriche.
-   As told by professor these features should be there in the application
-   So I have divided work between Ricky Hineman and me to implemented these features.
-   ability to play a 4 player human game 
-   [finished by Atul Mehla on 17th Nov]
-   ability to choose number of players 
-   [finished by Atul Mehla on 17th Nov]
-   ability to select colour options 
-   [finished by Atul Mehla on 17th Nov]
-   ability to select computer players 
-   [To be done by Ricky Hineman]
-   ability to save and load a game 
-   [To be done by Ricky Hineman]
-   then, if you have time:
-     working 2 and 3 player games 
-     [finished by Atul Mehla on 17th Nov]
-     hard level for computer player [No information]
+
+
+Final Release tasks:
+[#]       [Activity]             [Responsible]                         [Review on]   [Status]          [Comments]
+---------------------------------------------------------------------------------------------------------
+ 1  | Documentation              | Dylan Ellsworth or Devin Leriche    | Not Done    | Not done         | 
+              
+              
+ 2  | Finding bugs(UI bugs)      | Dylan Ellsworth or Devin Leriche    | Not Done    | Not done         |
+      in Game           
+              
+                                  
+ 4  | Final Release              | Ricky Hineman, and Atul Mehla       | not done    | partially done   | 
+      features
+
+
+Final Release featues:
+[#]       [Activity]                             [Responsible]                         [Review on]   [Status]                [Comments]
+---------------------------------------------------------------------------------------------------------
+ 1  | ability to play a 4 player human game     | Atul Mehla                          | Not Done    | finished on 17th Nov | 
+              
+              
+ 2  | ability to choose number of players       | Atul Mehla                          | Not Done    | finished on 17th Nov |                                   
+              
+ 3  | ability to select colour options          | Atul Mehla                          | not done    | finished on 17th Nov | 
+
+
+ 4  | ability to select computer players        | Atul Mehla                          | not done    | finished on 17th Nov | 
+      in game setup pages
+ 
+ 5  | ability to play with computer players     | Ricky Hineman                       | not done    | not done             | 
+      in-game
+
+ 6  | ability to save and load a game           | Ricky Hineman                       | not done    | not done             | 
+   
+ 7  | working 2 and 3 player games              | Atul Mehla                          | not done    | finished on 17th Nov | 
+
+
 
 
 Maintainer of this log: Atul Mehla
+This task log will be in sync with other members commits
+representing when the tasks were completed. 
