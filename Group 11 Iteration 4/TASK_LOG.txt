@@ -1,0 +1,34 @@
+Iteration 4 Tasks and done by whom
+
+1. A page (at most) explaining how your design accounts for - or would need to be adjusted for - possible future networking of the game
+   Assigned to: Dylan Ellsworth or Devin Leriche
+   To be done by: No information 
+2. A page (at most) explaining the use of patterns in your design, or where you would use patterns if you had more time
+   Assigned to: Dylan Ellsworth or Devin Leriche
+   To be done by: No information 
+3. Unit Tests for 5 key domain classes, covering all methods
+   Assigned to: Farhan Rafid and Ricky Hineman
+   To be done by: No information 
+4. Final Release of your application.
+   Since this task is most weighted, it is subdivided between group members.
+   Documentation assigned to Dylan Ellsworth or Devin Leriche
+   Testing of the application assigned to Dylan Ellsworth or Devin Leriche.
+   As told by professor these features should be there in the application
+   So I have divided work between Ricky Hineman and me to implemented these features.
+   ability to play a 4 player human game 
+   [finished by Atul Mehla on 17th Nov]
+   ability to choose number of players 
+   [finished by Atul Mehla on 17th Nov]
+   ability to select colour options 
+   [finished by Atul Mehla on 17th Nov]
+   ability to select computer players 
+   [To be done by Ricky Hineman]
+   ability to save and load a game 
+   [To be done by Ricky Hineman]
+   then, if you have time:
+     working 2 and 3 player games 
+     [finished by Atul Mehla on 17th Nov]
+     hard level for computer player [No information]
+
+
+Maintainer of this log: Atul Mehla
