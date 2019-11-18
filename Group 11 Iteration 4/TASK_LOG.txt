@@ -14,7 +14,6 @@ Iteration4 Tasks:
  4  | Final Release     | Atul,Ricky,Devin, and Dylan         | Not Done    | partially done | final release tasks to be sub-divided amongst group memebers
 
 
-
 Final Release tasks:
 [#]       [Activity]             [Responsible]                         [Review on]   [Status]          [Comments]
 ---------------------------------------------------------------------------------------------------------
@@ -27,6 +26,8 @@ Final Release tasks:
                                   
  4  | Final Release              | Ricky Hineman, and Atul Mehla       | not done    | partially done   | 
       features
+
+
 
 
 Final Release featues:

@@ -4,6 +4,9 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ *
+ */
 class customButton extends JButton {
     /**
      *
@@ -13,30 +16,49 @@ class customButton extends JButton {
     private final int x;
     private final int y;
 
-    public Color getColor() {
-        return this.getBackground();
-    }
-
-    private boolean taken = false;
-
+    /**
+     * @param x
+     * @param y
+     */
     public customButton(int x, int y) {
         this.x = x;
         this.y = y;
         //add(new JLabel(x+","+y));
     }
 
+    private boolean taken = false;
+
+    /**
+     * @return
+     */
+    public Color getColor() {
+        return this.getBackground();
+    }
+
+    /**
+     * @return
+     */
     public int[] getPos() {
         return new int[]{this.x, this.y};
     }
 
+    /**
+     * @return
+     */
     public boolean isTaken() {
         return this.taken;
     }
 
+    /**
+     * @param taken
+     */
     public void setTaken(boolean taken) {
         this.taken = taken;
     }
 
+    /**
+     * @param g
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

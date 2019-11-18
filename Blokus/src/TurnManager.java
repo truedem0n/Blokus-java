@@ -3,11 +3,11 @@
  */
 import javax.swing.*;
 class TurnManager {
-    shapesList[] currentlyPlayingPlayers;
-    JLabel turnLabel;
-    String[] playerLable;
-    int currentPlayer = 0;
-    Game gui;
+    private final shapesList[] currentlyPlayingPlayers;
+    private final JLabel turnLabel;
+    private final String[] playerLable;
+    private final Game gui;
+    private int currentPlayer = 0;
 
 
     TurnManager(shapesList[] players, String[] playerLabels, JLabel lblTurn, Game gui) {

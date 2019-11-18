@@ -124,7 +124,6 @@ class shapesList extends JPanel {
                                 actions = shapes[thisButton.getIndex()];
                                 currentSelectedShapePanel = thisButton.getIndex();
                                 playingAtBoard.setActions(actions);
-                                //System.out.println(currentSelectedShapePanel);
                             }
                         });
                     }
@@ -422,9 +421,11 @@ class shapesList extends JPanel {
                 }
     }
 
-    public void reDrawShapes() {
-        drawShapes();
-    }
+// --Commented out by Inspection START (11/17/2019 2:11 PM):
+//    public void reDrawShapes() {
+//        drawShapes();
+//    }
+// --Commented out by Inspection STOP (11/17/2019 2:11 PM)
 
     public void scrollActionHide() {
         try {
@@ -450,14 +451,15 @@ class shapesList extends JPanel {
         drawShapes();
     }
 
-    //left for AI
+    // --Commented out by Inspection START (11/17/2019 2:11 PM):
+//    //left for AI
     public void doAction() {
-        System.out.println("Printing from ShapeList");
     }
+// --Commented out by Inspection STOP (11/17/2019 2:11 PM)
 
     // Methods to be overriden in children classes
     public boolean hasTakenCorner() {
-        return false;
+        return true;
     }
 
     public Color getColor() {

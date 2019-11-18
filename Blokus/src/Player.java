@@ -2,6 +2,10 @@
  * @author: Atul Mehla
  */
 import java.awt.*;
+
+/**
+ * The type Player.
+ */
 class Player extends shapesList {
     private final Color color;
     private boolean hasTakenCorner = false, stillPlaying = true;
@@ -9,6 +13,8 @@ class Player extends shapesList {
 
     /**
      * Create the panel.
+     *
+     * @param color the color
      */
     Player(Color color) {
         super(color);
@@ -20,7 +26,7 @@ class Player extends shapesList {
     }
 
     public boolean hasTakenCorner() {
-        return hasTakenCorner;
+        return !hasTakenCorner;
     }
 
     public void setHasTakenCorner(boolean hasTakenCorner) {

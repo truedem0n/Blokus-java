@@ -9,6 +9,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.Hashtable;
 import java.util.Map;
+
+/**
+ * The type Gui.
+ */
 class GUI extends JFrame {
 
     /**
@@ -27,19 +31,16 @@ class GUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private static GUI frame;
     private final JPanel containerPanel;
-    private int currentActiveWindowIndex;
     private final Map<String, String> GAME_SETTINGS;
-    private JPanel[] activeRWindow = new JPanel[4];
+    private final JPanel[] activeRWindow = new JPanel[4];
     private int xy, xx;
 
     /**
      * Create the frame.
-     *
-     * @throws FontFormatException
      */
     GUI() {
         //hashtable that will be used for load a game configuration or save a game configuration
-        GAME_SETTINGS = new Hashtable<String, String>();
+        GAME_SETTINGS = new Hashtable<>();
 
         // antialiasing for font smoothing
         System.setProperty("awt.useSystemAAFontSettings", "on");
@@ -181,18 +182,6 @@ class GUI extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 setWindow(1);
-
-                // if play is create a gpc panel and add that to welcome_panel container
-                // also remove everything before adding
-                //welcome.removeAll();
-
-                //GPC gpc = new GPC(close_panel, containerPanel, frame, GAME_SETTINGS);
-                //gpc.setBounds(0, 0, welcome.getWidth(), welcome.getHeight());
-                //welcome.add(gpc);
-                //welcome.repaint();
-                //welcome.revalidate();
-
-
             }
         });
         play_panel.setForeground(Color.WHITE);
@@ -217,8 +206,6 @@ class GUI extends JFrame {
                 frame.setVisible(true);
                 containerPanel.removeAll();
                 containerPanel.add(game);
-                close_panel.setBounds(680, 2, 28, 36);
-                game.add(close_panel);
                 containerPanel.revalidate();
                 containerPanel.repaint();
             }
@@ -258,6 +245,8 @@ class GUI extends JFrame {
 
     /**
      * Launch the application.
+     *
+     * @param args the input arguments
      */
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -273,15 +262,25 @@ class GUI extends JFrame {
         });
     }
 
+    /**
+     * Gets window object according to index.
+     *
+     * @param x the x
+     * @return the window object according to index
+     */
     public JPanel getWindowObjectAccordingToIndex(int x) {
         return activeRWindow[x];
     }
 
+    /**
+     * Sets window.
+     *
+     * @param x the x
+     */
     public void setWindow(int x) {
-        currentActiveWindowIndex = x;
         for (int i = 0; i < activeRWindow.length; i++) {
             activeRWindow[i].setVisible(false);
-            if (currentActiveWindowIndex == i) {
+            if (x == i) {
                 activeRWindow[i].setVisible(true);
             }
         }

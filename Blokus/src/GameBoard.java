@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+
 class GameBoard extends JPanel {
     /**
      * All the declarations
@@ -36,6 +37,7 @@ class GameBoard extends JPanel {
         setUpBoard(savedArray);
     }
 
+    // --Commented out by Inspection START (11/17/2019 2:11 PM):
     public ArrayList<int[]> getLegalActionAi() {
         ArrayList<int[]> legalPlaces = new ArrayList<>();
 
@@ -44,7 +46,7 @@ class GameBoard extends JPanel {
                 if (isShapeInsideGrid(x, y)) {
 
                     if (((notPlaceableNWSE(x, y) && (isDiagonallyPlaceable(x, y)) && isPlaceable(x, y)) ||
-                            (isOnGridCorner(x, y) && notPlaceableNWSE(x, y) && !turnHandler.getCurrentPlayer().hasTakenCorner()) && isPlaceable(x, y))) {
+                            (isOnGridCorner(x, y) && notPlaceableNWSE(x, y) && turnHandler.getCurrentPlayer().hasTakenCorner()) && isPlaceable(x, y))) {
                         int[] currentPosInArray = {x, y};
                         legalPlaces.add(currentPosInArray);
                         button[x][y].setBackground(Color.gray);
@@ -54,6 +56,7 @@ class GameBoard extends JPanel {
         }
         return legalPlaces;
     }
+// --Commented out by Inspection STOP (11/17/2019 2:11 PM)
 
     public String[][][] getBoard() {
         String[][][] boardState = new String[GRID_SIZE][GRID_SIZE][1];
@@ -136,18 +139,23 @@ class GameBoard extends JPanel {
                 // if a previous session is being loaded then this part of code would place
                 // the specific color at the given coordinate
                 if (savedArray != null) {
-                    if (savedArray[j][i][0].equals("r")) {
-                        button[j][i].setBackground(Color.red);
-                        button[j][i].setTaken(true);
-                    } else if (savedArray[j][i][0].equals("y")) {
-                        button[j][i].setBackground(Color.orange);
-                        button[j][i].setTaken(true);
-                    } else if (savedArray[j][i][0].equals("b")) {
-                        button[j][i].setBackground(Color.blue);
-                        button[j][i].setTaken(true);
-                    } else if (savedArray[j][i][0].equals("g")) {
-                        button[j][i].setBackground(Color.green);
-                        button[j][i].setTaken(true);
+                    switch (savedArray[j][i][0]) {
+                        case "r":
+                            button[j][i].setBackground(Color.red);
+                            button[j][i].setTaken(true);
+                            break;
+                        case "y":
+                            button[j][i].setBackground(Color.orange);
+                            button[j][i].setTaken(true);
+                            break;
+                        case "b":
+                            button[j][i].setBackground(Color.blue);
+                            button[j][i].setTaken(true);
+                            break;
+                        case "g":
+                            button[j][i].setBackground(Color.green);
+                            button[j][i].setTaken(true);
+                            break;
                     }
                 }
             }
@@ -205,7 +213,7 @@ class GameBoard extends JPanel {
             if (isShapeInsideGrid(x, y)) {
                 System.out.println(((isDiagonallyPlaceable(x, y))));
                 if (((notPlaceableNWSE(x, y) && (isDiagonallyPlaceable(x, y))) ||
-                        (isOnGridCorner(x, y) && notPlaceableNWSE(x, y) && !turnHandler.getCurrentPlayer().hasTakenCorner()) && isPlaceable(x, y))) {
+                        (isOnGridCorner(x, y) && notPlaceableNWSE(x, y) && turnHandler.getCurrentPlayer().hasTakenCorner()) && isPlaceable(x, y))) {
 
                     for (int i = 0; i < actions.length; i++) {
 //                            clip.setFramePosition(0);

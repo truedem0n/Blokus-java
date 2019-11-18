@@ -4,20 +4,26 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Arrays;
 
-public class GameOver extends JPanel {
+/**
+ * The type Game over.
+ */
+class GameOver extends JPanel {
 
-    int[] playerScores = new int[4];
-    String winner = "";
-    int winnerIndex;
+    private final int[] playerScores = new int[4];
+    private String winner = "";
+    private int winnerIndex;
 
+    /**
+     * Instantiates a new Game over.
+     *
+     * @param placedBlocks the placed blocks
+     * @param frame        the frame
+     */
     GameOver(String[] placedBlocks, GUI frame) {
         calGameState(placedBlocks);
         findWinner();
-        System.out.println(Arrays.toString(playerScores));
+
         setBackground(new Color(63, 71, 204));
         setBounds(0, 0, 500, 500);
         setLayout(null);
@@ -25,8 +31,8 @@ public class GameOver extends JPanel {
         JLabel lblNewLabel = new JLabel("Game Over");
         lblNewLabel.setFont(new Font("Century Gothic", Font.PLAIN, 30));
         lblNewLabel.setForeground(new Color(255, 255, 255));
-        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel.setBounds(136, 43, 189, 64);
+        lblNewLabel.setHorizontalAlignment(SwingConstants.LEADING);
+        lblNewLabel.setBounds(130, 43, 189, 64);
         add(lblNewLabel);
 
         JLabel lblPlayerWins = new JLabel("This game is a draw.");
@@ -34,42 +40,41 @@ public class GameOver extends JPanel {
             lblPlayerWins.setText(String.format("%s wins the game with %d points.", winner, playerScores[winnerIndex]));
         lblPlayerWins.setForeground(new Color(255, 255, 255));
         lblPlayerWins.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        lblPlayerWins.setHorizontalAlignment(SwingConstants.CENTER);
-        lblPlayerWins.setBounds(121, 118, 250, 26);
+        lblPlayerWins.setHorizontalAlignment(SwingConstants.LEADING);
+        lblPlayerWins.setBounds(130, 118, 250, 26);
         add(lblPlayerWins);
 
         JLabel lblWouldLikeTo = new JLabel("Would like to play again?");
         lblWouldLikeTo.setForeground(new Color(255, 255, 255));
-        lblWouldLikeTo.setHorizontalAlignment(SwingConstants.CENTER);
+        lblWouldLikeTo.setHorizontalAlignment(SwingConstants.LEADING);
         lblWouldLikeTo.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        lblWouldLikeTo.setBounds(113, 155, 212, 24);
+        lblWouldLikeTo.setBounds(130, 155, 212, 24);
         add(lblWouldLikeTo);
 
         JButton btnNewButton = new JButton("Yes");
-        btnNewButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                GUI gui = new GUI();
-                frame.setVisible(false);
-                gui.setVisible(true);
-            }
+        btnNewButton.addActionListener(e -> {
+            GUI gui = new GUI();
+            frame.setVisible(false);
+            gui.setVisible(true);
         });
-        btnNewButton.setBounds(136, 190, 82, 36);
+        btnNewButton.setBounds(130, 190, 82, 36);
         btnNewButton.setBackground(new Color(255, 200, 0));
         add(btnNewButton);
 
         JButton btnNo = new JButton("No");
         btnNo.setBackground(new Color(255, 200, 0));
-        btnNo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        btnNo.addActionListener(e -> System.exit(0));
         btnNo.setBounds(243, 190, 82, 36);
         add(btnNo);
     }
 
+    /**
+     * @param arr
+     * @param t
+     * @return
+     */
     //taken from geeksforgeeks.org
-    public static int findIndex(int[] arr, int t) {
+    private static int findIndex(int[] arr, int t) {
 
         // if array is Null
         if (arr == null) {
@@ -101,6 +106,9 @@ public class GameOver extends JPanel {
         }
     }
 
+    /**
+     *
+     */
     private void findWinner() {
         int max = 0;
         for (int i : playerScores) {

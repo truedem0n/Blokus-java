@@ -7,38 +7,53 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
+
+/**
+ * The type Game.
+ */
 class Game extends JPanel {
     /**
      *
      */
     private static final long serialVersionUID = 1L;
-    JLabel lblBlokus, lblTurn, lblTimeLeft;
-    TurnManager turnHandler;
-    JButton close_panel;
+    // --Commented out by Inspection (11/17/2019 2:11 PM):private String[] playerScore;
+    private final GUI frame;
+    private JLabel lblBlokus;
+    private JLabel lblTimeLeft;
+    private TurnManager turnHandler;
     private GameBoard GAME_BOARD;
     private Timer timer;
-    ActionListener askBeforeClosing;
-    ActionListener dontAskBeforeClosing;
+    private JButton close_panel;
+    private ActionListener askBeforeClosing;
     private shapesList[] Players;
     private String[] playerLabels;
-    private String[] playerScore;
-    GUI frame;
-    private int seconds, GRID_SIZE = 16, numberOfAI, diffculty, minutes, numberOfPlayers, timeLimit, colorDistributionType;
+    private ActionListener dontAskBeforeClosing;
+    private int seconds;
+    private int GRID_SIZE = 16;
+    /**
+     *
+     */
+    private int numberOfAI;
+    private int minutes;
+    private int numberOfPlayers;
 
 
     /**
      * Create the panel.
      *
-     * @param frame
-     * @param gAME_SETTINGS
+     * @param frame         the frame
+     * @param savedArray    the saved array
+     * @param GAME_SETTINGS the game settings
      */
-    Game(GUI frame, String[][][] savedArray, Map<String, String> gAME_SETTINGS) {
+    Game(GUI frame, String[][][] savedArray, Map<String, String> GAME_SETTINGS) {
 
         this.frame = frame;
         setUpActionListeners();
-        setUpGameVariables(gAME_SETTINGS);
-        setUpPlayers(gAME_SETTINGS);
+        setUpGameVariables(GAME_SETTINGS);
+        setUpPlayers(GAME_SETTINGS);
         setUpSwingComponents(savedArray);
 
         //Set frame properties
@@ -50,13 +65,15 @@ class Game extends JPanel {
 
     }
 
+    /**
+     *
+     */
     private void setUpActionListeners() {
         askBeforeClosing = new ActionListener() {
             private JPanel getPanel() {
                 JPanel panel = new JPanel();
                 JLabel label = new JLabel("Save game before exiting?");
-                ImageIcon image = null;
-                label.setIcon(image);
+                label.setIcon(null);
                 panel.add(label);
                 return panel;
             }
@@ -80,11 +97,12 @@ class Game extends JPanel {
 
             }
         };
-        dontAskBeforeClosing = e -> {
-            System.exit(0);
-        };
+        dontAskBeforeClosing = e -> System.exit(0);
     }
 
+    /**
+     * Game over.
+     */
     public void gameOver() {
         this.removeAll();
         this.add(lblBlokus);
@@ -102,7 +120,6 @@ class Game extends JPanel {
     private void setUpGameVariables(Map<String, String> gAME_SETTINGS) {
 
         for (String key : gAME_SETTINGS.keySet()) {
-            System.out.println(key + "," + gAME_SETTINGS.get(key));
             switch (key) {
                 case "gridSize":
                     GRID_SIZE = Integer.parseInt(gAME_SETTINGS.get(key));
@@ -111,7 +128,7 @@ class Game extends JPanel {
                     numberOfAI = Integer.parseInt(gAME_SETTINGS.get(key));
                     break;
                 case "difficulty":
-                    diffculty = Integer.parseInt(gAME_SETTINGS.get(key));
+                    int difficulty = Integer.parseInt(gAME_SETTINGS.get(key));
                     break;
                 case "minutes":
                     minutes = Integer.parseInt(gAME_SETTINGS.get(key));
@@ -120,16 +137,25 @@ class Game extends JPanel {
                     numberOfPlayers = Integer.parseInt(gAME_SETTINGS.get(key));
                     break;
                 case "timeLimit":
-                    timeLimit = Integer.parseInt(gAME_SETTINGS.get(key));
+                    int timeLimit = Integer.parseInt(gAME_SETTINGS.get(key));
                     break;
                 case "colorDistributionType":
-                    colorDistributionType = Integer.parseInt(gAME_SETTINGS.get(key));
+                    int colorDistributionType = Integer.parseInt(gAME_SETTINGS.get(key));
                     break;
             }
         }
     }
 
     private void setUpSwingComponents(String[][][] savedArray) {
+        JButton thisButton = new JButton("Hint");
+        thisButton.addActionListener(e -> {
+            ArrayList<int[]> actions = GAME_BOARD.getLegalActionAi();
+            System.out.println(Arrays.deepToString(actions.toArray()));
+        });
+        thisButton.setBounds(218, 50, 30, 20);
+        add(thisButton);
+
+
         /*
 		  This is the close button Image
 		 */
@@ -178,8 +204,8 @@ class Game extends JPanel {
         lblBlokus.setBounds(0, 1, 148, 32);
         add(lblBlokus);
 
-        lblTurn = new JLabel("Turn: Player 1");
-        lblTurn.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel lblTurn = new JLabel("Turn: Player 1");
+        lblTurn.setHorizontalAlignment(SwingConstants.LEADING);
         lblTurn.setForeground(Color.white);
         lblTurn.setBounds(20, 89, 161, 14);
         add(lblTurn);
@@ -245,10 +271,8 @@ class Game extends JPanel {
 
     private Color[] getColorsArray(String colors, int totalPlayers) {
         Color[] playerColors = new Color[totalPlayers];
-        System.out.println(colors);
         for (int i = 0; i < totalPlayers; i++) {
             char currentColor = colors.charAt(i);
-            System.out.println(currentColor);
             switch (currentColor) {
                 case 'G':
                     playerColors[i] = Color.GREEN;
@@ -277,7 +301,7 @@ class Game extends JPanel {
                 Players[i] = new Player(playerColors[i]);
                 playerLabels[i] = "Turn: Player " + (i + 1);
             } else {
-                Players[i] = new AI(playerColors[i]);
+                Players[i] = new AI(playerColors[i], gAME_SETTINGS.get("difficulty"));
                 playerLabels[i] = "Turn: AI ";
                 //Players[i].setEnabled(false);
             }

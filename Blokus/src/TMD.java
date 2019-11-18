@@ -12,10 +12,8 @@ class TMD extends JPanel {
 	 *   All the declarartions
 	 */
 	private static final long serialVersionUID = 1L;
-	private final TMD tmd;
 	private final JComboBox<String> difficulty_comboBox;
-	private colors color;
-	private GUI gui;
+    // --Commented out by Inspection (11/17/2019 2:11 PM):private colors color;
 	private JComboBox<String> timeLimit_comboBox;
 	private JComboBox<String> minutes_comboBox;
 
@@ -26,9 +24,7 @@ class TMD extends JPanel {
 	 */
 	public TMD(Map<String, String> gAME_SETTINGS, GUI gui) {
 
-		this.gui = gui;
-
-	    /*
+		/*
 		  This is the back button Image
 		 */
 		ImageIcon closeButtonImg = new ImageIcon(GUI.class.getResource("images/closeButton.png"));
@@ -71,7 +67,7 @@ class TMD extends JPanel {
 		});
 		add(backButtonPanel);
 
-		tmd=this;
+        TMD tmd = this;
 		setBackground(new Color(63, 71, 204));
 		setBounds(342, 0, 345, 478);
 		setLayout(null);
@@ -118,7 +114,6 @@ class TMD extends JPanel {
 
 		JButton continue_panel = new JButton();
 		continue_panel.addMouseListener(new MouseAdapter() {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				gAME_SETTINGS.put("timeLimit", (String.valueOf(timeLimit_comboBox.getSelectedIndex())));

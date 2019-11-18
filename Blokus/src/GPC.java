@@ -19,12 +19,10 @@ class GPC extends JPanel {
 	 *  JCombo box is used for the dropdown
 	 */
 	private static final long serialVersionUID = 1L;
-	private final GPC gpc;
-	private TMD tmd;
+    // --Commented out by Inspection (11/17/2019 2:11 PM):private TMD tmd;
 	private final JComboBox<?> gridSize_comboBox;
 	private final JComboBox<?> playerNumber_comboBox;
 	private final JComboBox<?> cpuNumber_comboBox;
-	private GUI gui;
 
 
 	/**
@@ -35,8 +33,6 @@ class GPC extends JPanel {
 
 
 	GPC(Map<String, String> GAME_SETTINGS, GUI gui) {
-
-		this.gui = gui;
 
 		/*
 		  This is the back button Image
@@ -85,7 +81,7 @@ class GPC extends JPanel {
 		setBackground(new Color(63, 71, 204));
 		setBounds(342, 0, 345, 478);
 		setLayout(null);
-		gpc=this;
+        GPC gpc = this;
 
 
 		JLabel lblNewLabel = new JLabel("Grid size:");
@@ -119,7 +115,6 @@ class GPC extends JPanel {
 
 		JButton continue_panel = new JButton();
 		continue_panel.addMouseListener(new MouseAdapter() {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void mouseClicked(MouseEvent e) {
 

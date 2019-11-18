@@ -7,13 +7,16 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
+import java.util.Objects;
+
 class colors extends JPanel {
     /**
      * All the declarations
      */
     private static final long serialVersionUID = 1L;
     private final Map<String, String> gAME_SETTINGS;
-    String selectedColorsForPlayers = "", selectedColorsForAI = "";
+    private String selectedColorsForPlayers = "";
+    private String selectedColorsForAI = "";
     private Game game;
     private JLabel[] playerLabels;
     private JComboBox<String>[] playerColorSelections;
@@ -125,7 +128,19 @@ class colors extends JPanel {
         backButtonPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //Go back to TMD Panel
                 frame.setWindow(2);
+                for (JComboBox<String> i : playerColorSelections) {
+                    i.setVisible(false);
+                }
+                for (JLabel i : playerLabels) {
+                    i.setVisible(false);
+                }
+                selectedColorsForAI = "";
+                selectedColorsForPlayers = "";
+                playerColorSelections = null;
+                playerLabels = null;
+                hasAI = false;
             }
         });
         add(backButtonPanel);
@@ -145,6 +160,7 @@ class colors extends JPanel {
     private void setUpPlayers(int players) {
         String[] colors = {"Red", "Green", "Blue", "Yellow"};
         playerLabels = new JLabel[players];
+        //noinspection unchecked
         playerColorSelections = new JComboBox[players];
         for (int i = 0; i < players; i++) {
             switch (i) {
@@ -154,7 +170,7 @@ class colors extends JPanel {
                     playerLabels[i].setBounds(59, 152, 63, 14);
                     add(playerLabels[i]);
 
-                    playerColorSelections[i] = new JComboBox<String>(colors);
+                    playerColorSelections[i] = new JComboBox<>(colors);
                     playerColorSelections[i].setBounds(132, 148, 143, 22);
                     add(playerColorSelections[i]);
                     break;
@@ -164,7 +180,7 @@ class colors extends JPanel {
                     playerLabels[i].setBounds(59, 180, 97, 14);
                     add(playerLabels[i]);
 
-                    playerColorSelections[i] = new JComboBox<String>(colors);
+                    playerColorSelections[i] = new JComboBox<>(colors);
                     playerColorSelections[i].setBounds(132, 176, 143, 22);
                     add(playerColorSelections[i]);
                     break;
@@ -174,7 +190,7 @@ class colors extends JPanel {
                     playerLabels[i].setBounds(59, 211, 97, 14);
                     add(playerLabels[i]);
 
-                    playerColorSelections[i] = new JComboBox<String>(colors);
+                    playerColorSelections[i] = new JComboBox<>(colors);
                     playerColorSelections[i].setBounds(132, 207, 143, 22);
                     add(playerColorSelections[i]);
                     break;
@@ -184,7 +200,7 @@ class colors extends JPanel {
                     playerLabels[i].setBounds(59, 240, 97, 14);
                     add(playerLabels[i]);
 
-                    playerColorSelections[i] = new JComboBox<String>(colors);
+                    playerColorSelections[i] = new JComboBox<>(colors);
                     playerColorSelections[i].setBounds(132, 236, 143, 22);
                     add(playerColorSelections[i]);
                     break;
@@ -195,8 +211,9 @@ class colors extends JPanel {
     private boolean validSelections() {
         selectedColorsForPlayers = "";
         for (JComboBox<String> i : playerColorSelections) {
-            if (selectedColorsForPlayers.contains(((String) i.getSelectedItem()).substring(0, 1)))
+            if (selectedColorsForPlayers.contains(((String) Objects.requireNonNull(i.getSelectedItem())).substring(0, 1)))
                 return false;
+            //StringBuilder.append();
             selectedColorsForPlayers += ((String) i.getSelectedItem()).charAt(0);
         }
 
