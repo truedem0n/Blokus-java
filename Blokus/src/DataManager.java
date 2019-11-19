@@ -13,12 +13,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 class DataManager {
 	private static final File boardSaveData = new File("session_data.json");
 	private static File gameSaveData = new File("settings_data.json");
 	private static final String[][][] data = new String[20][20][1];
-	private static final HashMap<String, String> settingsMap = new HashMap<String, String>();
+    private static final Map<String, String> settingsMap = new HashMap<String, String>();
 
 	private static void parseGameData(JSONObject obj) {
 		//System.out.println((JSONObject) obj.get("Data"));
@@ -103,7 +104,7 @@ class DataManager {
 
 	//Updates file for Game Settings
 	@SuppressWarnings("unchecked")
-	public static void updateGameSettings(HashMap<String, String> settings) {
+    public static void updateGameSettings(Map<String, String> settings) {
 		JSONObject settingsObj = new JSONObject(); //Create JSONObject for all map values
 		settings.forEach((key, value) -> settingsObj.put(key, value)); //Iterate over map and add each pair to JSONObject
 		
@@ -130,7 +131,7 @@ class DataManager {
 
 	//Will get saved game settings
 	@SuppressWarnings("unchecked")
-	public static HashMap<String, String> getGameSettings() {
+    public static Map<String, String> getGameSettings() {
 		JSONParser parser = new JSONParser(); //Create a JSONParser
 		
 		//Try to read settings file:
