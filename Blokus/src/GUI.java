@@ -200,7 +200,7 @@ class GUI extends JFrame {
             public void mouseClicked(MouseEvent s) {
 
                 // sample arrary
-                String[][][] data = new DataManager().load();
+                String[][][] data = DataManager.load();
                 frame.setVisible(false);
                 Game game = new Game(frame, data, GAME_SETTINGS);
                 frame.setVisible(true);

@@ -40,7 +40,7 @@ class DataManager {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String save(String[][][] shapes) {
+    public static String save(String[][][] shapes) {
 
 		// when saving a file we need to see if the file already exists or not and the status of save
 		String status;
@@ -82,7 +82,7 @@ class DataManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public String[][][] load() {
+    public static String[][][] load() {
 		JSONParser parser = new JSONParser(); //Create a JSONParser
         @SuppressWarnings("unused") String bstatus = "";
 
