@@ -102,6 +102,7 @@ class shapesList extends JPanel {
                         button.addMouseListener(new MouseAdapter() {
                             @Override
                             public void mouseClicked(MouseEvent e) {
+                                AudioManager.playSelected();
                                 event = e;
                                 shapeButton thisButton = ((shapeButton) e.getSource());
                                 actions = shapes[thisButton.getIndex()];
@@ -245,6 +246,10 @@ class shapesList extends JPanel {
 
     public void rotateClockWise() {
         rotateCoordinatesCW();
+    }
+
+    public void flipForAI() {
+        flipV(actions);
     }
 
     //rotate clockwise

@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * The type Ai.
@@ -46,7 +47,7 @@ public class AI extends shapesList {
                     return true;
                 }
             }
-            rightClickFlipV();
+            flipForAI();
         }
         return false;
     }
@@ -69,21 +70,18 @@ public class AI extends shapesList {
     private boolean doEasyAction() {
         GameBoard gameBoard = getPlayingAtBoard();
         for (int i = 0; i < availableShapes.size(); i++) {
-//            System.out.println(availableShapes.size());
             int shapeIndex = availableShapes.remove(getRandom(0, availableShapes.size()));
             int[][] shapeCoordinates = getShapeFromIndex(shapeIndex);
             gameBoard.setActions(shapeCoordinates);
             gameBoard.setCurrentPlayingPlayerColor(this.getColor());
             int[][] legalPlacesOnBoard = convertArrayListTo2dIntArray(gameBoard.getLegalActionAi());
-//            System.out.println(Arrays.deepToString(legalPlacesOnBoard));
-            if (legalPlacesOnBoard.length > 0 && legalPlacesOnBoard[0].length == 0) {
-                System.out.println("working");
+            System.out.println(Arrays.deepToString(legalPlacesOnBoard));
+            if (legalPlacesOnBoard.length == 0) {
                 if (getLegalActionsByRotatingAndFlippingTheShape(gameBoard))
                     legalPlacesOnBoard = convertArrayListTo2dIntArray(gameBoard.getLegalActionAi());
             }
             if (legalPlacesOnBoard.length > 0 && legalPlacesOnBoard[0].length > 0) {
                 int randomSHapeIndex = getRandom(0, gameBoard.getLegalActionAi().size());
-//                System.out.println(Arrays.toString(gameBoard.getLegalActionAi().get(randomSHapeIndex)));
                 int[] randomLegalPlace = gameBoard.getLegalActionAi().get(randomSHapeIndex);
                 if (legalPlacesOnBoard.length > 0) {
                     gameBoard.placeShapeOnGridByAI(randomLegalPlace[0], randomLegalPlace[1]);

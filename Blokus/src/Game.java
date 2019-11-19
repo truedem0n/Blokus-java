@@ -1,6 +1,7 @@
 /**
  * @author: Atul Mehla
  */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -39,6 +40,7 @@ class Game extends JPanel {
     private int numberOfAI;
     private int minutes;
     private int numberOfPlayers;
+    private Map<String, String> GAME_SETTINGS;
 
 
     /**
@@ -49,8 +51,9 @@ class Game extends JPanel {
      * @param GAME_SETTINGS the game settings
      */
     Game(GUI frame, String[][][] savedArray, Map<String, String> GAME_SETTINGS) {
-
         this.frame = frame;
+        this.GAME_SETTINGS = GAME_SETTINGS;
+
         setUpActionListeners();
         setUpGameVariables(GAME_SETTINGS);
         setUpPlayers(GAME_SETTINGS);
@@ -256,13 +259,14 @@ class Game extends JPanel {
 
         JMenuItem mntmOption = new JMenuItem("Save   ");
         mntmOption.addActionListener(e -> {
-
-            if (new DataManager().save(GAME_BOARD.getBoard()).equals("sucess")) {
-
+//            if (DataManager.save(GAME_BOARD.getBoard()).equals("sucess") && DataManager.updateGameSettings((HashMap<String, String>) GAME_SETTINGS)) {
+            DataManager.save(GAME_BOARD.getBoard()).equals("sucess");
+            DataManager.updateGameSettings(GAME_SETTINGS);
+            DataManager.getGameSettings().forEach((key, value) -> System.out.println(key + "," + value));
                 JOptionPane.showMessageDialog(new JFrame(), "Successfully saved");
-            } else {
-                JOptionPane.showMessageDialog(new JFrame(), "Failed to save");
-            }
+//            } else {
+//                JOptionPane.showMessageDialog(new JFrame(), "Failed to save");
+//            }
         });
         mntmOption.setFont(new Font("Century Gothic", Font.PLAIN, 14));
         mnOptions.add(mntmOption);

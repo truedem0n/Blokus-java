@@ -2,14 +2,10 @@
  * @author: Atul Mehla
  */
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.ArrayList;
 
 class GameBoard extends JPanel {
@@ -84,19 +80,11 @@ class GameBoard extends JPanel {
 
     // This function sets up the board.
     private void setUpBoard(String[][][] savedArray) {
-        // loading the audio files
-        try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sounds/placed.wav").getAbsoluteFile());
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
                 button[j][i] = new customButton(j, i);
                 button[j][i].setBackground(Color.white);
-                button[j][i].setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
+                button[j][i].setBorder(BorderFactory.createMatteBorder(5, 10, 10, 10, Color.black));
 
                 button[j][i].addMouseListener(new MouseAdapter() {
                     // Placing a shape when mouse left is clicked
@@ -210,8 +198,6 @@ class GameBoard extends JPanel {
     }
 
     public void placeShapeOnGridByAI(int x, int y) {
-        //System.out.println(currentPlayingPlayerColor);
-        //currentPlayingPlayerColor=turnHandler.getCurrentPlayer().getColor();
         for (int[] action : actions) {
             button[x + action[0]][y + action[1]].setBackground(currentPlayingPlayerColor);
             button[x + action[0]][y + action[1]].setTaken(true);
@@ -228,9 +214,7 @@ class GameBoard extends JPanel {
                         (isOnGridCorner(x, y) && notPlaceableNWSE(x, y) && turnHandler.getCurrentPlayer().hasTakenCorner()) && isPlaceable(x, y))) {
 
                     for (int i = 0; i < actions.length; i++) {
-//                            clip.setFramePosition(0);
-//                            clip.start();
-                        //thisButton.setBackground(Color.red);
+                        AudioManager.playPlaced();
                         button[x + actions[i][0]][y + actions[i][1]].setBackground(turnHandler.getCurrentPlayer().getColor());
                         button[x + actions[i][0]][y + actions[i][1]].setTaken(true);
                         for (int[] action : actions) {
@@ -393,7 +377,6 @@ class GameBoard extends JPanel {
                         (((y + action[1] + diagonalAction[1]) >= 0 && (y + action[1] + diagonalAction[1]) < this.GRID_SIZE))) {
                     if (button[x + action[0] + diagonalAction[0]][y + action[1] + diagonalAction[1]].isTaken() &&
                             (button[x + action[0] + diagonalAction[0]][y + action[1] + diagonalAction[1]].getColor().toString().equals(currentPlayingPlayerColor.toString()))) {
-                        //System.out.println((x + action[0] + diagonalAction[0] )+","+(y + action[1] + diagonalAction[1] )+"  ");
                         return true;
                     }
                 }
