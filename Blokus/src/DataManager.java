@@ -12,12 +12,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 
-@SuppressWarnings("EmptyMethod")
 class DataManager {
 	private static final File boardSaveData = new File("session_data.json");
-	// --Commented out by Inspection (11/10/2019 1:03 PM):private static File gameSaveData = new File("settings_data.json");
+	private static File gameSaveData = new File("settings_data.json");
 	private static final String[][][] data = new String[20][20][1];
+	private static final HashMap<String, String> settingsMap = new HashMap<String, String>();
 
 	private static void parseGameData(JSONObject obj) {
 		//System.out.println((JSONObject) obj.get("Data"));
@@ -100,19 +101,61 @@ class DataManager {
 		return data;
 	}
 
-// --Commented out by Inspection START (11/10/2019 1:08 PM):
-//  public static void updateGameSettings(String[] settings) {
-//	  //Will update the save file for game settings
-//  }
-// --Commented out by Inspection STOP (11/10/2019 1:08 PM)
+	//Updates file for Game Settings
+	@SuppressWarnings("unchecked")
+	public static void updateGameSettings(HashMap<String, String> settings) {
+		JSONObject settingsObj = new JSONObject(); //Create JSONObject for all map values
+		settings.forEach((key, value) -> settingsObj.put(key, value)); //Iterate over map and add each pair to JSONObject
+		
+		//Nest the previous JSONObject into an outer JSONObject (for easy finding):
+		JSONObject saveObj = new JSONObject(); //Create outer JSONObject
+		saveObj.put("Data", settingsObj); //Add previous JSONObject to outer Object
+		
+		//Add JSONObject to a JSONArray (the JSONArray gets stored in the file):
+		JSONArray saveData = new JSONArray(); //Create JSONArray
+		saveData.add(saveObj); //Add outer JSONObject to JSONArray
+		
+		//Try to write JSONArray to file:
+		try {
+			FileWriter file = new FileWriter(gameSaveData);
+			file.write(saveData.toJSONString()); //Write the JSON array to file
+			//Take care of file-resource management:
+			file.flush();
+			file.close();
+			//Catch Exception:
+		} catch (IOException e) {
+			System.out.println("Save failed!");
+		}
+	}
 
-// --Commented out by Inspection START (11/10/2019 1:08 PM):
-//  @SuppressWarnings("unused")
-//  public String[] getGameSettings() {
-//	  //Will get saved game settings
-//	  return new String[3];
-//  }
-// --Commented out by Inspection STOP (11/10/2019 1:08 PM)
+	//Will get saved game settings
+	@SuppressWarnings("unchecked")
+	public static HashMap<String, String> getGameSettings() {
+		JSONParser parser = new JSONParser(); //Create a JSONParser
+		
+		//Try to read settings file:
+		try {
+			FileReader reader = new FileReader(gameSaveData); //Open file
+			Object obj = parser.parse(reader); //Gather JSON data into Object
+			JSONArray settingsList = (JSONArray) obj; //Convert Object into JSONObject
+			//Iterate over JSON object:
+			settingsList.forEach(shape -> parseSettingData((JSONObject) shape)); //There's only one JSONObject, see parse function
+			//Catch exceptions (not important):
+			
+		} catch (Exception e) {
+			System.out.println("Load failed!");
+		}
+		return settingsMap;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static void parseSettingData(JSONObject obj) {
+		//System.out.println((JSONObject) obj.get("Data"));
+		JSONObject loadObj = (JSONObject) obj.get("Data"); //Grab the outer JSONObject
+		
+		//Grab the corresponding JSON map from the JSONObject for each index of the return array:
+		loadObj.forEach((key, value) -> settingsMap.put((String) key, (String) value));
+	}
 
 // --Commented out by Inspection START (11/10/2019 1:03 PM):
 //  @SuppressWarnings("unused")
