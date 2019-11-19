@@ -31,7 +31,7 @@ class GUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private static GUI frame;
     private final JPanel containerPanel;
-    private final Map<String, String> GAME_SETTINGS;
+    private Map<String, String> GAME_SETTINGS;
     private final JPanel[] activeRWindow = new JPanel[4];
     private int xy, xx;
 
@@ -201,6 +201,7 @@ class GUI extends JFrame {
 
                 // sample arrary
                 String[][][] data = DataManager.load();
+                GAME_SETTINGS=DataManager.getGameSettings();
                 frame.setVisible(false);
                 Game game = new Game(frame, data, GAME_SETTINGS);
                 frame.setVisible(true);

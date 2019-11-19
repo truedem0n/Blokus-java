@@ -349,6 +349,10 @@ class GameBoard extends JPanel {
         return returnValue;
     }
 
+    public int getGRID_SIZE(){
+        return GRID_SIZE;
+    }
+
     private boolean isOnGridCorner(int x, int y) {
         boolean isShapeOnGridCorner = false;
         for (int[] action : actions) {

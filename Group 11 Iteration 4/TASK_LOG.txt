@@ -44,10 +44,10 @@ Final Release featues:
  4  | ability to select computer players        | Atul Mehla                          | not done    | finished on 17th Nov | 
       in game setup pages
  
- 5  | ability to play with computer players     | Ricky Hineman                       | not done    | not done             | 
+ 5  | ability to play with computer players     | Atul Mehla                          | not done    | not done             | 
       in-game
 
- 6  | ability to save and load a game           | Ricky Hineman                       | not done    | not done             | 
+ 6  | ability to save and load a game           | Ricky Hineman, Atul Mehla           | not done    | not done             | 
    
  7  | working 2 and 3 player games              | Atul Mehla                          | not done    | finished on 17th Nov | 
 

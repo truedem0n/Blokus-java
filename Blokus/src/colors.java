@@ -74,17 +74,18 @@ class colors extends JPanel {
         label.setBounds(66, 11, 140, 25);
         continue_panel.add(label);
 
-        JButton randomize_panel = new JButton();
-        randomize_panel.setLayout(null);
-        randomize_panel.setBackground(Color.ORANGE);
-        randomize_panel.setBounds(59, 371, 216, 49);
-        add(randomize_panel);
-
-        JLabel lblRandomize = new JLabel("Randomize");
-        lblRandomize.setForeground(Color.white);
-        lblRandomize.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        lblRandomize.setBounds(58, 11, 148, 25);
-        randomize_panel.add(lblRandomize);
+        // Left for future implementations
+//        JButton randomize_panel = new JButton();
+//        randomize_panel.setLayout(null);
+//        randomize_panel.setBackground(Color.ORANGE);
+//        randomize_panel.setBounds(59, 371, 216, 49);
+//        add(randomize_panel);
+//
+//        JLabel lblRandomize = new JLabel("Randomize");
+//        lblRandomize.setForeground(Color.white);
+//        lblRandomize.setFont(new Font("Tahoma", Font.PLAIN, 20));
+//        lblRandomize.setBounds(58, 11, 148, 25);
+//        randomize_panel.add(lblRandomize);
 
 
     }
