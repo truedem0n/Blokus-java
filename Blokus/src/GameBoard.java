@@ -1,6 +1,7 @@
 /**
  * @author: Atul Mehla
  */
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -40,16 +41,14 @@ class GameBoard extends JPanel {
     // --Commented out by Inspection START (11/17/2019 2:11 PM):
     public ArrayList<int[]> getLegalActionAi() {
         ArrayList<int[]> legalPlaces = new ArrayList<>();
-
         for (int x = 0; x < this.GRID_SIZE; x++) {
             for (int y = 0; y < this.GRID_SIZE; y++) {
                 if (isShapeInsideGrid(x, y)) {
-
                     if (((notPlaceableNWSE(x, y) && (isDiagonallyPlaceable(x, y)) && isPlaceable(x, y)) ||
                             (isOnGridCorner(x, y) && notPlaceableNWSE(x, y) && turnHandler.getCurrentPlayer().hasTakenCorner()) && isPlaceable(x, y))) {
                         int[] currentPosInArray = {x, y};
                         legalPlaces.add(currentPosInArray);
-                        button[x][y].setBackground(Color.gray);
+                        //button[x][y].setBackground(Color.GRAY);
                     }
                 }
             }
@@ -105,7 +104,10 @@ class GameBoard extends JPanel {
                     public void mouseClicked(MouseEvent e) {
                         event = e;
                         if (SwingUtilities.isLeftMouseButton(e)) {
-                            placeShapeOnGrid();
+                            customButton thisButton = ((customButton) e.getSource());
+                            int x = thisButton.getPos()[0];
+                            int y = thisButton.getPos()[1];
+                            placeShapeOnGrid(x, y);
                         }
                         if (SwingUtilities.isMiddleMouseButton(e)) {
                             clearShapeOnGrid();
@@ -198,20 +200,30 @@ class GameBoard extends JPanel {
         return rgby;
     }
 
-    private void placeShapeOnGrid() {
-        MouseEvent e = event;
-        try {
-            getBoard();
-        } catch (Exception s) {
-            s.printStackTrace();
-        }
-        customButton thisButton = ((customButton) e.getSource());
-        int x = thisButton.getPos()[0];
-        int y = thisButton.getPos()[1];
+    public void setCurrentPlayingPlayerColor(Color color) {
+        currentPlayingPlayerColor = color;
+    }
 
+    public void surrenderAI() {
+        actions = new int[0][0];
+        turnHandler.nextPlayer();
+    }
+
+    public void placeShapeOnGridByAI(int x, int y) {
+        //System.out.println(currentPlayingPlayerColor);
+        //currentPlayingPlayerColor=turnHandler.getCurrentPlayer().getColor();
+        for (int[] action : actions) {
+            button[x + action[0]][y + action[1]].setBackground(currentPlayingPlayerColor);
+            button[x + action[0]][y + action[1]].setTaken(true);
+        }
+        turnHandler.nextPlayer();
+        actions = new int[0][0];
+    }
+
+    private void placeShapeOnGrid(int x, int y) {
+        currentPlayingPlayerColor = turnHandler.getCurrentPlayer().getColor();
         try {
             if (isShapeInsideGrid(x, y)) {
-                System.out.println(((isDiagonallyPlaceable(x, y))));
                 if (((notPlaceableNWSE(x, y) && (isDiagonallyPlaceable(x, y))) ||
                         (isOnGridCorner(x, y) && notPlaceableNWSE(x, y) && turnHandler.getCurrentPlayer().hasTakenCorner()) && isPlaceable(x, y))) {
 
@@ -221,7 +233,6 @@ class GameBoard extends JPanel {
                         //thisButton.setBackground(Color.red);
                         button[x + actions[i][0]][y + actions[i][1]].setBackground(turnHandler.getCurrentPlayer().getColor());
                         button[x + actions[i][0]][y + actions[i][1]].setTaken(true);
-                        thisButton.setTaken(true);
                         for (int[] action : actions) {
                             button[x + action[0]][y + action[1]].setTaken(true);
                         }
@@ -234,9 +245,6 @@ class GameBoard extends JPanel {
                          * getColor is the hacky way to fix panel not being updated when
                          * next player is set
                          */
-
-                        turnHandler.getCurrentPlayer().removePanel();
-                        turnHandler.getCurrentPlayer().setHasTakenCorner(true);
                         turnHandler.nextPlayer();
                         currentPlayingPlayerColor = turnHandler.getCurrentPlayer().getColor();
                         actions = new int[0][0];

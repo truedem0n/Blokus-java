@@ -1,14 +1,11 @@
 /**
  * @author: Atul Mehla
  */
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 class shapesList extends JPanel {
     /**
      *
@@ -48,7 +45,7 @@ class shapesList extends JPanel {
     private int[][] actions = {{0, 0}};
     private GameBoard playingAtBoard;
     private JPanel ssp1;
-    private Clip clip;
+
 
     /**
      * Create the panel.
@@ -56,14 +53,7 @@ class shapesList extends JPanel {
      */
     shapesList(Color color) {
         setLayout(null);
-        // loading the wav file
-        try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sounds/selected.wav").getAbsoluteFile());
-            clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         // creating shape panel
         JPanel SHAPES_LIST = new JPanel();
         SHAPES_LIST.setBounds(0, 0, 220, 433);
@@ -113,13 +103,6 @@ class shapesList extends JPanel {
                             @Override
                             public void mouseClicked(MouseEvent e) {
                                 event = e;
-                                try {
-                                    clip.setFramePosition(0);
-                                    clip.start();
-                                } catch (Exception s) {
-                                    s.printStackTrace();
-
-                                }
                                 shapeButton thisButton = ((shapeButton) e.getSource());
                                 actions = shapes[thisButton.getIndex()];
                                 currentSelectedShapePanel = thisButton.getIndex();
@@ -136,13 +119,6 @@ class shapesList extends JPanel {
                         button.addMouseListener(new MouseAdapter() {
                             @Override
                             public void mouseClicked(MouseEvent e) {
-                                try {
-                                    clip.setFramePosition(0);
-                                    clip.start();
-                                } catch (Exception s) {
-                                    s.printStackTrace();
-
-                                }
                                 shapeButton thisButton = ((shapeButton) e.getSource());
                                 actions = shapes[thisButton.getIndex()];
                                 currentSelectedShapePanel = thisButton.getIndex();
@@ -165,13 +141,6 @@ class shapesList extends JPanel {
                         button.addMouseListener(new MouseAdapter() {
                             @Override
                             public void mouseClicked(MouseEvent e) {
-                                try {
-                                    clip.setFramePosition(0);
-                                    clip.start();
-                                } catch (Exception s) {
-                                    s.printStackTrace();
-
-                                }
                                 shapeButton thisButton = ((shapeButton) e.getSource());
                                 actions = shapes[thisButton.getIndex()];
                                 currentSelectedShapePanel = thisButton.getIndex();
@@ -196,13 +165,6 @@ class shapesList extends JPanel {
                         button.addMouseListener(new MouseAdapter() {
                             @Override
                             public void mouseClicked(MouseEvent e) {
-                                try {
-                                    clip.setFramePosition(0);
-                                    clip.start();
-                                } catch (Exception s) {
-                                    s.printStackTrace();
-
-                                }
                                 shapeButton thisButton = ((shapeButton) e.getSource());
                                 actions = shapes[thisButton.getIndex()];
                                 currentSelectedShapePanel = thisButton.getIndex();
@@ -224,13 +186,6 @@ class shapesList extends JPanel {
                         button.addMouseListener(new MouseAdapter() {
                             @Override
                             public void mouseClicked(MouseEvent e) {
-                                try {
-                                    clip.setFramePosition(0);
-                                    clip.start();
-                                } catch (Exception s) {
-                                    s.printStackTrace();
-
-                                }
                                 shapeButton thisButton = ((shapeButton) e.getSource());
                                 actions = shapes[thisButton.getIndex()];
                                 currentSelectedShapePanel = thisButton.getIndex();
@@ -265,10 +220,16 @@ class shapesList extends JPanel {
         shapesPanelContainer[currentSelectedShapePanel].setVisible(false);
     }
 
+
     public void removePanel() {
         hideShapePanel();
     }
 
+    public int[][] getShapeFromIndex(int i) {
+        currentSelectedShapePanel = i;
+        actions = this.shapes[i];
+        return this.shapes[i];
+    }
 
     // flip horizontally
     private void flipH(int[][] actions) {
@@ -405,6 +366,10 @@ class shapesList extends JPanel {
         this.playingAtBoard = playingAtBoard;
     }
 
+    public GameBoard getPlayingAtBoard() {
+        return playingAtBoard;
+    }
+
     // draw the shapes shapes according to the current action
     private void drawShapes() {
         for (int i = 0; i < SHAPE_LIST.length; i++)
@@ -453,7 +418,7 @@ class shapesList extends JPanel {
 
     // --Commented out by Inspection START (11/17/2019 2:11 PM):
 //    //left for AI
-    public void doAction() {
+    public void doAction() throws InterruptedException {
     }
 // --Commented out by Inspection STOP (11/17/2019 2:11 PM)
 

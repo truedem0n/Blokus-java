@@ -1,7 +1,9 @@
 /**
  * @author: Atul Mehla
  */
+
 import javax.swing.*;
+
 class TurnManager {
     private final shapesList[] currentlyPlayingPlayers;
     private final JLabel turnLabel;
@@ -33,20 +35,28 @@ class TurnManager {
     }
 
     public void nextPlayer() {
+        getCurrentPlayer().removePanel();
+        getCurrentPlayer().setHasTakenCorner(true);
         this.currentPlayer++;
         int timesAdded = 0;
         while (true) {
             if (timesAdded >= currentlyPlayingPlayers.length) {
                 //GameOver
-                JOptionPane.showMessageDialog(null, "Game Over");
+                JOptionPane.showMessageDialog(null, "All players surrendered. Game Over");
                 gui.gameOver();
-
                 break;
             } else if (!getCurrentPlayer().isStillPlaying()) {
                 this.currentPlayer++;
                 timesAdded++;
             } else {
                 break;
+            }
+        }
+        if (getCurrentPlayer().getClass() == AI.class && getCurrentPlayer().isStillPlaying()) {
+            try {
+                getCurrentPlayer().doAction();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         this.turnLabel.setText(playerLable[this.currentPlayer % currentlyPlayingPlayers.length]);
