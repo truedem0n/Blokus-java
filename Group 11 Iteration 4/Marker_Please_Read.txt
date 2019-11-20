@@ -27,5 +27,6 @@ So when you click on a shape, some sound should be played.
  On Linux
  "javac -cp ".:json-simple-1.1.jar" *.java"
  "java -cp ".:json-simple-1.1.jar" GUI"
+ 
 -We are using json to save and load our board data since it's the most well
  know data structure to pass data.
