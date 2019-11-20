@@ -24,6 +24,41 @@ class customButton extends JButton {
     public customButton(int x, int y) {
         this.x = x;
         this.y = y;
+        setLayout(null);
+    }
+
+    public String getColorName() {
+        Color color = this.getBackground();
+        if (Color.red.toString().equals(color.toString()))
+            return "Red";
+        else if (Color.green.toString().equals(color.toString()))
+            return "Green";
+        else if (Color.blue.toString().equals(color.toString()))
+            return "Blue";
+        else if (Color.orange.toString().equals(color.toString()))
+            return "Yellow";
+        return "";
+    }
+
+    public void setButtonColorTextActive() {
+        String c = getColorName();
+        if (!c.equals("")) {
+            c = c.substring(0, 1);
+            c = "  " + c;
+            JLabel label = new JLabel(c);
+            label.setFont(new Font("Tahoma", Font.BOLD, 15));
+            label.setBounds(0, 0, getWidth(), getHeight());
+            label.setHorizontalAlignment(SwingConstants.LEADING);
+            add(label);
+        }
+        revalidate();
+        repaint();
+    }
+
+    public void setButtonColorTextInActive() {
+        removeAll();
+        revalidate();
+        repaint();
     }
 
     private boolean taken = false;

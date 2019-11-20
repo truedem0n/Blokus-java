@@ -1,1 +1,18 @@
-[{"Data":{"Blue":"9,6,17,15,18,2,5,13,8,19,0,7,3,10,12,20,","minutes":"0","players":"1","AI":"3","turn":"Yellow","notPlaying":"Red,","AIColors":"GBY","timeLimit":"0","difficulty":"0","Red":"20,19,18,","playerColors":"R","gridSize":"24","Yellow":"8,12,20,3,1,13,15,2,19,6,18,5,4,14,16,","Green":"4,20,5,17,13,9,16,12,8,6,10,18,2,3,7,0,"}}]
+[
+  {
+    "Data": {
+      "timeLimit": "0",
+      "difficulty": "0",
+      "Red": "20,",
+      "playerColors": "R",
+      "gridSize": "16",
+      "minutes": "0",
+      "players": "1",
+      "AI": "1",
+      "turn": "Red",
+      "notPlaying": "",
+      "AIColors": "G",
+      "Green": "0,"
+    }
+  }
+]

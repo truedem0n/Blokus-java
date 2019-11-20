@@ -21,6 +21,7 @@ class Game extends JPanel {
     private static final long serialVersionUID = 1L;
     // --Commented out by Inspection (11/17/2019 2:11 PM):private String[] playerScore;
     private final GUI frame;
+    private boolean colorDefMode = false;
     private JLabel lblBlokus;
     private JLabel lblTimeLeft;
     private TurnManager turnHandler;
@@ -284,6 +285,22 @@ class Game extends JPanel {
         });
         mntmOption.setFont(new Font("Century Gothic", Font.PLAIN, 14));
         mnOptions.add(mntmOption);
+
+
+        JMenuItem mntmOptionColorDef = new JMenuItem("Color mode");
+        mntmOptionColorDef.addActionListener(e -> {
+            colorDefMode = !colorDefMode;
+            if (colorDefMode) {
+                GAME_BOARD.colorDefMode();
+                GAME_BOARD.setToggleColorDefMode(true);
+            } else {
+                GAME_BOARD.remColorDefMode();
+                GAME_BOARD.setToggleColorDefMode(false);
+            }
+        });
+        mntmOptionColorDef.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+        mnOptions.add(mntmOptionColorDef);
+
     }
 
     private Color[] getColorsArray(String colors, int totalPlayers) {
@@ -316,7 +333,7 @@ class Game extends JPanel {
         for (int i = 0; i < Players.length; i++) {
             if (i < numberOfPlayers) {
                 Players[i] = new Player(playerColors[i]);
-                if (GAME_SETTINGS.get(Players[i].getColorName()) != null )
+                if (GAME_SETTINGS.get(Players[i].getColorName()) != null)
                     Players[i].removePanelsBasedOnString(GAME_SETTINGS.get(Players[i].getColorName()));
                 playerLabels[i] = "Turn: Player " + Players[i].getColorName();
             } else {

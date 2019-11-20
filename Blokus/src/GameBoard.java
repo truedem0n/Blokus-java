@@ -15,12 +15,11 @@ class GameBoard extends JPanel {
     private static final long serialVersionUID = 1L;
     private int[][] actions = {};
     private MouseEvent event;
-    //private final Player players;
+    private boolean toggleColorDefMode = false;
     private final int GRID_SIZE;
     private final TurnManager turnHandler;
     private final customButton[][] button;
     private Color currentPlayingPlayerColor = Color.white;
-    // private final Dictionary<String, String> map;
 
     /**
      * Create the panel.
@@ -34,7 +33,6 @@ class GameBoard extends JPanel {
         setUpBoard(savedArray);
     }
 
-    // --Commented out by Inspection START (11/17/2019 2:11 PM):
     public ArrayList<int[]> getLegalActionAi() {
         ArrayList<int[]> legalPlaces = new ArrayList<>();
         for (int x = 0; x < this.GRID_SIZE; x++) {
@@ -51,7 +49,22 @@ class GameBoard extends JPanel {
         }
         return legalPlaces;
     }
-// --Commented out by Inspection STOP (11/17/2019 2:11 PM)
+
+    public void colorDefMode() {
+        for (customButton[] i : button) {
+            for (customButton b : i) {
+                b.setButtonColorTextActive();
+            }
+        }
+    }
+
+    public void remColorDefMode() {
+        for (customButton[] i : button) {
+            for (customButton b : i) {
+                b.setButtonColorTextInActive();
+            }
+        }
+    }
 
     public String[][] getBoard() {
         String[][] boardState = new String[GRID_SIZE][GRID_SIZE];
@@ -72,6 +85,10 @@ class GameBoard extends JPanel {
             }
         }
         return boardState;
+    }
+
+    public void setToggleColorDefMode(boolean toggleColorDefMode) {
+        this.toggleColorDefMode = toggleColorDefMode;
     }
 
     public void setActions(int[][] actions) {
@@ -147,6 +164,14 @@ class GameBoard extends JPanel {
         }
     }
 
+    private void setColorDefTextForShape(int x, int y) {
+        button[x][y].setButtonColorTextActive();
+    }
+
+    private void setClearTextForShape(int x, int y) {
+        button[x][y].setButtonColorTextInActive();
+    }
+
     public void clearCurrentAction() {
         clearShapeOnGrid();
     }
@@ -196,6 +221,9 @@ class GameBoard extends JPanel {
         for (int[] action : actions) {
             button[x + action[0]][y + action[1]].setBackground(currentPlayingPlayerColor);
             button[x + action[0]][y + action[1]].setTaken(true);
+            if (toggleColorDefMode) {
+                setColorDefTextForShape(x + action[0], y + action[1]);
+            }
         }
         turnHandler.nextPlayer();
         actions = new int[0][0];
@@ -208,26 +236,24 @@ class GameBoard extends JPanel {
                 if (((notPlaceableNWSE(x, y) && (isDiagonallyPlaceable(x, y))) ||
                         (isOnGridCorner(x, y) && notPlaceableNWSE(x, y) && turnHandler.getCurrentPlayer().hasTakenCorner()) && isPlaceable(x, y))) {
                     turnHandler.getCurrentPlayer().addPlacedShapeIndex();
-                    for (int i = 0; i < actions.length; i++) {
-                        AudioManager.playPlaced();
-                        button[x + actions[i][0]][y + actions[i][1]].setBackground(turnHandler.getCurrentPlayer().getColor());
-                        button[x + actions[i][0]][y + actions[i][1]].setTaken(true);
-                        for (int[] action : actions) {
-                            button[x + action[0]][y + action[1]].setTaken(true);
-                        }
-
-                        /*
-                         * Set current action to empty array after a shape is placed
-                         * remove the placed shape from shapelist
-                         * the player has placed the shape on a corner
-                         * set turn to the next player
-                         * getColor is the hacky way to fix panel not being updated when
-                         * next player is set
-                         */
-                        turnHandler.nextPlayer();
-                        currentPlayingPlayerColor = turnHandler.getCurrentPlayer().getColor();
-                        actions = new int[0][0];
+                    AudioManager.playPlaced();
+                    for (int[] action : actions) {
+                        button[x + action[0]][y + action[1]].setBackground(turnHandler.getCurrentPlayer().getColor());
+                        button[x + action[0]][y + action[1]].setTaken(true);
                     }
+
+                    /*
+                     * Set current action to empty array after a shape is placed
+                     * remove the placed shape from shapelist
+                     * the player has placed the shape on a corner
+                     * set turn to the next player
+                     * getColor is the hacky way to fix panel not being updated when
+                     * next player is set
+                     */
+                    turnHandler.nextPlayer();
+                    currentPlayingPlayerColor = turnHandler.getCurrentPlayer().getColor();
+                    actions = new int[0][0];
+
                 }
 
             }
@@ -251,6 +277,8 @@ class GameBoard extends JPanel {
                     if (!button[x + action[0]][y + action[1]].isTaken()
                             && isPlaceable(x, y)) {
                         button[x + action[0]][y + action[1]].setBackground(turnHandler.getCurrentPlayer().getColor());
+                        if (toggleColorDefMode)
+                            setColorDefTextForShape(x + action[0], y + action[1]);
                     } else {
                         button[x][y].setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                     }
@@ -272,8 +300,11 @@ class GameBoard extends JPanel {
         try {
             for (int[] action : actions) {
                 if (isShapeInsideGrid(x, y)) {
-                    if (!button[x + action[0]][y + action[1]].isTaken())
+                    if (!button[x + action[0]][y + action[1]].isTaken()) {
                         button[x + action[0]][y + action[1]].setBackground(Color.white);
+                        if (toggleColorDefMode)
+                            setClearTextForShape(x + action[0], y + action[1]);
+                    }
                 }
             }
         } catch (Exception s) {
@@ -343,7 +374,7 @@ class GameBoard extends JPanel {
         return returnValue;
     }
 
-    public int getGRID_SIZE(){
+    public int getGRID_SIZE() {
         return GRID_SIZE;
     }
 
