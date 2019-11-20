@@ -31,6 +31,7 @@ public class AI extends shapesList {
     }
 
     public void removePanelsBasedOnString(String s) {
+    	if(!s.equals("")) {
         String[] splitS = s.split(",");
         for (String es : splitS) {
             for (int i = 0; i < availableShapes.size(); i++) {
@@ -39,6 +40,7 @@ public class AI extends shapesList {
                     availableShapes.remove(i);
                 }
             }
+        }
         }
     }
 
