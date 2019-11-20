@@ -14,7 +14,7 @@ class AudioManager {
             clip.setFramePosition(0);
             clip.start();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Could not find the audio files");
         }
     }
 
@@ -26,7 +26,7 @@ class AudioManager {
             clip.setFramePosition(0);
             clip.start();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Could not find the audio files");
         }
     }
 }

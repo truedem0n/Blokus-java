@@ -49,7 +49,7 @@ class Game extends JPanel {
      * @param savedArray    the saved array
      * @param GAME_SETTINGS the game settings
      */
-    Game(GUI frame, String[][][] savedArray, Map<String, String> GAME_SETTINGS) {
+    Game(GUI frame, String[][] savedArray, Map<String, String> GAME_SETTINGS) {
         this.frame = frame;
         this.GAME_SETTINGS = GAME_SETTINGS;
 
@@ -147,7 +147,7 @@ class Game extends JPanel {
         }
     }
 
-    private void setUpSwingComponents(String[][][] savedArray) {
+    private void setUpSwingComponents(String[][] savedArray) {
         /*
 		  This is the close button Image
 		 */

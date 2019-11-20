@@ -200,7 +200,8 @@ class GUI extends JFrame {
             public void mouseClicked(MouseEvent s) {
 
                 // sample arrary
-                String[][][] data = DataManager.load();
+                try {
+                    String[][] data = DataManager.load();
                 GAME_SETTINGS=DataManager.getGameSettings();
                 frame.setVisible(false);
                 Game game = new Game(frame, data, GAME_SETTINGS);
@@ -208,7 +209,13 @@ class GUI extends JFrame {
                 containerPanel.removeAll();
                 containerPanel.add(game);
                 containerPanel.revalidate();
-                containerPanel.repaint();
+                    containerPanel.repaint();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(new JFrame(), "No saved session. Exiting");
+                    System.exit(0);
+                }
+                
             }
 
         });

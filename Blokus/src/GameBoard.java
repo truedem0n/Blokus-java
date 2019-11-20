@@ -26,7 +26,7 @@ class GameBoard extends JPanel {
      * Create the panel.
      * call the constructor
      */
-    public GameBoard(int gridSize, TurnManager turnHandler, String[][][] savedArray) {
+    public GameBoard(int gridSize, TurnManager turnHandler, String[][] savedArray) {
         this.GRID_SIZE = gridSize;
         button = new customButton[GRID_SIZE][GRID_SIZE];
         this.turnHandler = turnHandler;
@@ -53,21 +53,21 @@ class GameBoard extends JPanel {
     }
 // --Commented out by Inspection STOP (11/17/2019 2:11 PM)
 
-    public String[][][] getBoard() {
-        String[][][] boardState = new String[GRID_SIZE][GRID_SIZE][1];
+    public String[][] getBoard() {
+        String[][] boardState = new String[GRID_SIZE][GRID_SIZE];
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
                 Color color = button[i][j].getColor();
                 if (color.getRGB() == Color.red.getRGB()) {
-                    boardState[i][j][0] = "r";
+                    boardState[i][j] = "r";
                 } else if (color.getRGB() == Color.green.getRGB()) {
-                    boardState[i][j][0] = "g";
+                    boardState[i][j] = "g";
                 } else if (color.getRGB() == Color.blue.getRGB()) {
-                    boardState[i][j][0] = "b";
+                    boardState[i][j] = "b";
                 } else if (color.getRGB() == Color.orange.getRGB()) {
-                    boardState[i][j][0] = "y";
+                    boardState[i][j] = "y";
                 } else {
-                    boardState[i][j][0] = "0";
+                    boardState[i][j] = "0";
                 }
             }
         }
@@ -79,7 +79,7 @@ class GameBoard extends JPanel {
     }
 
     // This function sets up the board.
-    private void setUpBoard(String[][][] savedArray) {
+    private void setUpBoard(String[][] savedArray) {
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
                 button[j][i] = new customButton(j, i);
@@ -129,23 +129,18 @@ class GameBoard extends JPanel {
                 // if a previous session is being loaded then this part of code would place
                 // the specific color at the given coordinate
                 if (savedArray != null) {
-                    switch (savedArray[j][i][0]) {
-                        case "r":
-                            button[j][i].setBackground(Color.red);
-                            button[j][i].setTaken(true);
-                            break;
-                        case "y":
-                            button[j][i].setBackground(Color.orange);
-                            button[j][i].setTaken(true);
-                            break;
-                        case "b":
-                            button[j][i].setBackground(Color.blue);
-                            button[j][i].setTaken(true);
-                            break;
-                        case "g":
-                            button[j][i].setBackground(Color.green);
-                            button[j][i].setTaken(true);
-                            break;
+                    if ("r".equals(savedArray[j][i])) {
+                        button[j][i].setBackground(Color.red);
+                        button[j][i].setTaken(true);
+                    } else if ("y".equals(savedArray[j][i])) {
+                        button[j][i].setBackground(Color.orange);
+                        button[j][i].setTaken(true);
+                    } else if ("b".equals(savedArray[j][i])) {
+                        button[j][i].setBackground(Color.blue);
+                        button[j][i].setTaken(true);
+                    } else if ("g".equals(savedArray[j][i])) {
+                        button[j][i].setBackground(Color.green);
+                        button[j][i].setTaken(true);
                     }
                 }
             }
