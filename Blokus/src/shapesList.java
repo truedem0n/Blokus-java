@@ -54,6 +54,8 @@ class shapesList extends JPanel {
     shapesList(Color color) {
         setLayout(null);
 
+        ImageManager.setUpImages();
+
         // creating shape panel
         JPanel SHAPES_LIST = new JPanel();
         SHAPES_LIST.setBounds(0, 0, 220, 433);
@@ -112,9 +114,7 @@ class shapesList extends JPanel {
                         });
                     }
                     if (x == 6 && y == 0) {
-                        ImageIcon img = new ImageIcon(GUI.class.getResource("images/flipVertical.png"));
-                        Image dimg = img.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
-                        JLabel label = new JLabel(new ImageIcon(dimg));
+                        JLabel label = new JLabel(ImageManager.getFlipVerticalPNG());
                         label.setBounds(-10, -10, 14, 14);
                         button.add(label);
                         button.addMouseListener(new MouseAdapter() {
@@ -134,9 +134,7 @@ class shapesList extends JPanel {
                         });
                     }
                     if (x == 6 && y == 6) {
-                        ImageIcon img = new ImageIcon(GUI.class.getResource("images/flipHorizontal.png"));
-                        Image dimg = img.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
-                        JLabel label = new JLabel(new ImageIcon(dimg));
+                        JLabel label = new JLabel(ImageManager.getFlipHorizontalPNG());
                         label.setBounds(-10, -10, 15, 15);
                         button.add(label);
                         button.addMouseListener(new MouseAdapter() {
@@ -156,10 +154,7 @@ class shapesList extends JPanel {
                     }
                     if (x == 6 && y == 4) {
                         //Setting up rotateCW
-                        ImageIcon img = new ImageIcon(GUI.class.getResource("images/rotateClockWise.png"));
-                        Image dimg = img.getImage().getScaledInstance(17, 17, Image.SCALE_SMOOTH);
-
-                        JLabel label = new JLabel(new ImageIcon(dimg));
+                        JLabel label = new JLabel(ImageManager.getRotateClockWisePNG());
                         label.setBounds(-10, -10, 15, 15);
                         button.add(label);
                         button.setBackground(Color.white);
@@ -178,9 +173,7 @@ class shapesList extends JPanel {
                     }
                     if (x == 6 && y == 2) {
                         //Setting up rotateCW
-                        ImageIcon img = new ImageIcon(GUI.class.getResource("images/rotateAntiClockWise.png"));
-                        Image dimg = img.getImage().getScaledInstance(17, 17, Image.SCALE_SMOOTH);
-                        JLabel label = new JLabel(new ImageIcon(dimg));
+                        JLabel label = new JLabel(ImageManager.getRotateAntiClockWisePNG());
                         label.setBounds(-10, -10, 15, 15);
                         button.add(label);
                         button.setBackground(Color.white);
