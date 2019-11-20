@@ -34,6 +34,10 @@ class TurnManager {
         }
     }
 
+    public void setTurn(int x) {
+
+    }
+
     public void nextPlayer() {
         getCurrentPlayer().removePanel();
         getCurrentPlayer().setHasTakenCorner(true);
