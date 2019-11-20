@@ -87,13 +87,15 @@ class Game extends JPanel {
                 // Yes=0, No=1, Cancel=2
                 if (value == 0) {
                     DataManager.save(GAME_BOARD.getBoard());
+                    String whoIsNotPlaying = "";
                     for (shapesList players : Players) {
                         GAME_SETTINGS.put(players.getColorName(), players.getPlacedShapesIndexes());
+                        if (!players.isStillPlaying())
+                            whoIsNotPlaying += players.getColorName() + ",";
                     }
+                    GAME_SETTINGS.put("notPlaying", whoIsNotPlaying);
                     GAME_SETTINGS.put("turn", turnHandler.getCurrentPlayer().getColorName());
                     DataManager.updateGameSettings(GAME_SETTINGS);
-                    JOptionPane.showMessageDialog(new JFrame(), "Successfully saved");
-                    GAME_SETTINGS.get("turn");
                     System.exit(0);
                 } else if (value == 1) {
                     System.exit(0);
@@ -202,8 +204,22 @@ class Game extends JPanel {
         add(lblTurn);
 
         turnHandler = new TurnManager(Players, playerLabels, lblTurn, this);
+        String notPlaying = GAME_SETTINGS.get("notPlaying");
+        if (notPlaying != null && !notPlaying.equals("")) {
+            String[] notPlayingColors = notPlaying.split(",");
+            for (shapesList p : Players) {
+                for (String r : notPlayingColors) {
+                    if (p.getColorName().equals(r)) {
+                        p.setStillPlaying(false);
+                    }
+                }
+            }
+        }
         for (shapesList p : Players) {
-            if (GAME_SETTINGS.get("turn") != null && !GAME_SETTINGS.get("turn").equals(p.getColorName()) && p.getClass() == Player.class) {
+            if (GAME_SETTINGS.get("turn") != null &&
+                    !GAME_SETTINGS.get("turn").equals(p.getColorName()) &&
+                    p.getClass() == Player.class &&
+                    turnHandler.getCurrentPlayer().getColorName().equals(p.getColorName())) {
                 turnHandler.nextPlayer();
             } else {
                 break;
@@ -255,9 +271,13 @@ class Game extends JPanel {
         JMenuItem mntmOption = new JMenuItem("Save   ");
         mntmOption.addActionListener(e -> {
             DataManager.save(GAME_BOARD.getBoard());
+            String whoIsNotPlaying = "";
             for (shapesList players : Players) {
                 GAME_SETTINGS.put(players.getColorName(), players.getPlacedShapesIndexes());
+                if (!players.isStillPlaying())
+                    whoIsNotPlaying += players.getColorName() + ",";
             }
+            GAME_SETTINGS.put("notPlaying", whoIsNotPlaying);
             GAME_SETTINGS.put("turn", turnHandler.getCurrentPlayer().getColorName());
             DataManager.updateGameSettings(GAME_SETTINGS);
             JOptionPane.showMessageDialog(new JFrame(), "Successfully saved");

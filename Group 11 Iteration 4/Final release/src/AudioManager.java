@@ -5,8 +5,10 @@ import java.net.URL;
 
 class AudioManager {
     private static Clip clip;
-    private static URL placedSound = AudioManager.class.getResource("sounds/placed.wav"), selectedSound = AudioManager.class.getResource("sounds/selected.wav");
+    private static final URL placedSound = AudioManager.class.getResource("sounds/placed.wav");
+    private static final URL selectedSound = AudioManager.class.getResource("sounds/selected.wav");
 
+    @SuppressWarnings("DuplicatedCode")
     public static void playPlaced() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(placedSound);
@@ -20,6 +22,7 @@ class AudioManager {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     public static void playSelected() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(selectedSound);
