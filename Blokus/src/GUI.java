@@ -199,7 +199,6 @@ class GUI extends JFrame {
         load_panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent s) {
-
                 // sample arrary
                 try {
                     String[][] data = DataManager.load();
