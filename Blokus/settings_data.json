@@ -1,18 +1,19 @@
 [
   {
     "Data": {
+      "Blue": "3,17,",
+      "minutes": "0",
+      "players": "1",
+      "AI": "3",
+      "turn": "Red",
+      "AIColors": "GBY",
       "timeLimit": "0",
       "difficulty": "0",
       "Red": "20,19,",
-      "playerColors": "RG",
+      "playerColors": "R",
       "gridSize": "24",
-      "Blue": "11,",
-      "minutes": "0",
-      "players": "2",
-      "AI": "1",
-      "turn": "Green",
-      "AIColors": "B",
-      "Green": "18,"
+      "Yellow": "7,9,",
+      "Green": "10,6,"
     }
   }
 ]

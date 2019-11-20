@@ -1,6 +1,7 @@
 /*
   @author: Atul Mehla
  */
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -202,20 +203,24 @@ class GUI extends JFrame {
                 // sample arrary
                 try {
                     String[][] data = DataManager.load();
-                GAME_SETTINGS=DataManager.getGameSettings();
-                frame.setVisible(false);
-                Game game = new Game(frame, data, GAME_SETTINGS);
-                frame.setVisible(true);
-                containerPanel.removeAll();
-                containerPanel.add(game);
-                containerPanel.revalidate();
+                    GAME_SETTINGS = DataManager.getGameSettings();
+                    if (data == null || GAME_SETTINGS == null) {
+                        JOptionPane.showMessageDialog(new JFrame(), "No saved session. Exiting");
+                        System.exit(0);
+                    }
+                    frame.setVisible(false);
+                    Game game = new Game(frame, data, GAME_SETTINGS);
+                    frame.setVisible(true);
+                    containerPanel.removeAll();
+                    containerPanel.add(game);
+                    containerPanel.revalidate();
                     containerPanel.repaint();
                 } catch (Exception e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(new JFrame(), "No saved session. Exiting");
                     System.exit(0);
                 }
-                
+
             }
 
         });
