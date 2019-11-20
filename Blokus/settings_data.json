@@ -1,1 +1,20 @@
-[{"Data":{"timeLimit":"0","difficulty":"0","Red":"","playerColors":"R","gridSize":"16","minutes":"0","players":"1","AI":"1","turn":"Red","AIColors":"G","Green":""}}]
+[
+  {
+    "Data": {
+      "Blue": "",
+      "minutes": "0",
+      "players": "3",
+      "AI": "1",
+      "turn": "Green",
+      "notPlaying": "Red,Blue,",
+      "AIColors": "Y",
+      "timeLimit": "0",
+      "difficulty": "0",
+      "Red": "18,17,16,",
+      "playerColors": "RGB",
+      "gridSize": "16",
+      "Yellow": "15,1,14,",
+      "Green": "18,17,16,"
+    }
+  }
+]
