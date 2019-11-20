@@ -51,9 +51,10 @@ class Player extends shapesList {
     }
 
     public void removePanelsBasedOnString(String s) {
+    	if(!s.equals("")) {
         String[] splitS = s.split(",");
         for (String es : splitS) {
             hideShapePanelFromIndex(Integer.parseInt(es));
-        }
+        }}
     }
 }
