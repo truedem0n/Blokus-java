@@ -1,5 +1,5 @@
-/**
- * @author: Atul Mehla
+/*
+  @author: Atul Mehla
  */
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

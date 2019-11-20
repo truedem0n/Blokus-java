@@ -1,5 +1,5 @@
-/**
- * @author: Atul Mehla
+/*
+  @author: Atul Mehla
  */
 import javax.swing.*;
 import java.awt.*;
@@ -81,7 +81,8 @@ class GPC extends JPanel {
 		setBackground(new Color(63, 71, 204));
 		setBounds(342, 0, 345, 478);
 		setLayout(null);
-        GPC gpc = this;
+		//noinspection unused
+		GPC gpc = this;
 
 
 		JLabel lblNewLabel = new JLabel("Grid size:");

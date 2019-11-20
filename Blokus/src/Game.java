@@ -1,5 +1,5 @@
-/**
- * @author: Atul Mehla
+/*
+  @author: Atul Mehla
  */
 
 import javax.swing.*;
@@ -8,13 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 
 /**
  * The type Game.
  */
+@SuppressWarnings("DuplicatedCode")
 class Game extends JPanel {
     /**
      *
@@ -40,7 +39,7 @@ class Game extends JPanel {
     private int numberOfAI;
     private int minutes;
     private int numberOfPlayers;
-    private Map<String, String> GAME_SETTINGS;
+    private final Map<String, String> GAME_SETTINGS;
 
 
     /**
@@ -87,11 +86,13 @@ class Game extends JPanel {
                         getPanel(), "Blokus", JOptionPane.YES_NO_CANCEL_OPTION));
                 // Yes=0, No=1, Cancel=2
                 if (value == 0) {
-                    if (new DataManager().save(GAME_BOARD.getBoard()).equals("sucess")) {
-                        JOptionPane.showMessageDialog(new JFrame(), "Successfully saved");
-                    } else {
-                        JOptionPane.showMessageDialog(new JFrame(), "Failed to save");
+                    DataManager.save(GAME_BOARD.getBoard());
+                    for (shapesList players : Players) {
+                        GAME_SETTINGS.put(players.getColorName(), players.getPlacedShapesIndexes());
                     }
+                    GAME_SETTINGS.put("turn", turnHandler.getCurrentPlayer().getColorName());
+                    DataManager.updateGameSettings(GAME_SETTINGS);
+                    JOptionPane.showMessageDialog(new JFrame(), "Successfully saved");
                     System.exit(0);
                 } else if (value == 1) {
                     System.exit(0);
@@ -131,6 +132,9 @@ class Game extends JPanel {
                     numberOfAI = Integer.parseInt(gAME_SETTINGS.get(key));
                     break;
                 case "difficulty":
+                case "colorDistributionType":
+                case "timeLimit":
+                    //noinspection unused
                     int difficulty = Integer.parseInt(gAME_SETTINGS.get(key));
                     break;
                 case "minutes":
@@ -139,26 +143,11 @@ class Game extends JPanel {
                 case "players":
                     numberOfPlayers = Integer.parseInt(gAME_SETTINGS.get(key));
                     break;
-                case "timeLimit":
-                    int timeLimit = Integer.parseInt(gAME_SETTINGS.get(key));
-                    break;
-                case "colorDistributionType":
-                    int colorDistributionType = Integer.parseInt(gAME_SETTINGS.get(key));
-                    break;
             }
         }
     }
 
     private void setUpSwingComponents(String[][][] savedArray) {
-        JButton thisButton = new JButton("Hint");
-        thisButton.addActionListener(e -> {
-            ArrayList<int[]> actions = GAME_BOARD.getLegalActionAi();
-            System.out.println(Arrays.deepToString(actions.toArray()));
-        });
-        thisButton.setBounds(218, 50, 30, 20);
-        add(thisButton);
-
-
         /*
 		  This is the close button Image
 		 */
@@ -214,6 +203,11 @@ class Game extends JPanel {
         add(lblTurn);
 
         turnHandler = new TurnManager(Players, playerLabels, lblTurn, this);
+        for (shapesList p : Players) {
+            if (GAME_SETTINGS.get("turn") != null && !GAME_SETTINGS.get("turn").equals(p.getColorName()) && p.getClass() == Player.class)
+                turnHandler.nextPlayer();
+
+        }
 
         GAME_BOARD = new GameBoard(GRID_SIZE, turnHandler, savedArray);
         GAME_BOARD.addMouseWheelListener(e -> {
@@ -259,18 +253,16 @@ class Game extends JPanel {
 
         JMenuItem mntmOption = new JMenuItem("Save   ");
         mntmOption.addActionListener(e -> {
-//            if (DataManager.save(GAME_BOARD.getBoard()).equals("sucess") && DataManager.updateGameSettings((HashMap<String, String>) GAME_SETTINGS)) {
-            DataManager.save(GAME_BOARD.getBoard()).equals("sucess");
+            DataManager.save(GAME_BOARD.getBoard());
+            for (shapesList players : Players) {
+                GAME_SETTINGS.put(players.getColorName(), players.getPlacedShapesIndexes());
+            }
+            GAME_SETTINGS.put("turn", turnHandler.getCurrentPlayer().getColorName());
             DataManager.updateGameSettings(GAME_SETTINGS);
-            DataManager.getGameSettings().forEach((key, value) -> System.out.println(key + "," + value));
-                JOptionPane.showMessageDialog(new JFrame(), "Successfully saved");
-//            } else {
-//                JOptionPane.showMessageDialog(new JFrame(), "Failed to save");
-//            }
+            JOptionPane.showMessageDialog(new JFrame(), "Successfully saved");
         });
         mntmOption.setFont(new Font("Century Gothic", Font.PLAIN, 14));
         mnOptions.add(mntmOption);
-
     }
 
     private Color[] getColorsArray(String colors, int totalPlayers) {
@@ -303,11 +295,14 @@ class Game extends JPanel {
         for (int i = 0; i < Players.length; i++) {
             if (i < numberOfPlayers) {
                 Players[i] = new Player(playerColors[i]);
-                playerLabels[i] = "Turn: Player " + (i + 1);
+                if (GAME_SETTINGS.get(Players[i].getColorName()) != null)
+                    Players[i].removePanelsBasedOnString(GAME_SETTINGS.get(Players[i].getColorName()));
+                playerLabels[i] = "Turn: Player " + Players[i].getColorName();
             } else {
                 Players[i] = new AI(playerColors[i], gAME_SETTINGS.get("difficulty"));
-                playerLabels[i] = "Turn: AI ";
-                //Players[i].setEnabled(false);
+                if (GAME_SETTINGS.get(Players[i].getColorName()) != null)
+                    Players[i].removePanelsBasedOnString(GAME_SETTINGS.get(Players[i].getColorName()));
+                playerLabels[i] = "Turn: AI " + Players[i].getColorName();
             }
             Players[i].setVisible(false);
             if (i == 0)
@@ -315,13 +310,5 @@ class Game extends JPanel {
             Players[i].setBounds(15, 114, 187, 430);
             this.add(Players[i]);
         }
-
-
     }
-
-// --Commented out by Inspection START (11/10/2019 1:04 PM):
-//    private void settingsLoader() {
-//
-//    }
-// --Commented out by Inspection STOP (11/10/2019 1:04 PM)
 }

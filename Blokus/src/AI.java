@@ -1,9 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * The type Ai.
@@ -11,8 +9,9 @@ import java.util.Arrays;
 public class AI extends shapesList {
     private final Color color;
     private boolean hasTakenCorner = false, stillPlaying = true;
-    private ArrayList<Integer> availableShapes = new ArrayList<>();
-    private String difficulty;
+    private final ArrayList<Integer> availableShapes = new ArrayList<>();
+    private final String difficulty;
+    private String placedShapesIndexes = "";
 
     /**
      * Create the panel.
@@ -27,8 +26,20 @@ public class AI extends shapesList {
         setUPShapesIndex();
     }
 
-    private int getRandom(int min, int max) {
-        return (int) (Math.random() * max + min);
+    private int getRandom(int max) {
+        return (int) (Math.random() * max + 0);
+    }
+
+    public void removePanelsBasedOnString(String s) {
+        String[] splitS = s.split(",");
+        for (String es : splitS) {
+            for (int i = 0; i < availableShapes.size(); i++) {
+                if (availableShapes.get(i) == Integer.parseInt(es)) {
+                    //noinspection SuspiciousListRemoveInLoop
+                    availableShapes.remove(i);
+                }
+            }
+        }
     }
 
     private int[][] convertArrayListTo2dIntArray(ArrayList s) {
@@ -53,56 +64,56 @@ public class AI extends shapesList {
     }
 
     private void delayActionByNMilliSeconds() {
-        ActionListener taskPerformer = new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                if (difficulty.equals("0")) {
+        ActionListener taskPerformer = evt -> {
+            switch (difficulty) {
+                case "0":
                     if (!doEasyAction()) {
                         JOptionPane.showMessageDialog(null, getColorName() + " surrenders");
                         setStillPlaying(false);
                         getPlayingAtBoard().surrenderAI();
                     }
-                }else if(difficulty.equals("1")){
+                    break;
+                case "1":
                     if (!doMediumAction()) {
                         JOptionPane.showMessageDialog(null, getColorName() + " surrenders");
                         setStillPlaying(false);
                         getPlayingAtBoard().surrenderAI();
                     }
-                }else if(difficulty.equals("2")){
+                    break;
+                case "2":
                     if (!doHardAction()) {
                         JOptionPane.showMessageDialog(null, getColorName() + " surrenders");
                         setStillPlaying(false);
                         getPlayingAtBoard().surrenderAI();
                     }
-                }
-
+                    break;
             }
+
         };
         Timer timer = new Timer(150, taskPerformer);
         timer.setRepeats(false);
         timer.start();
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private boolean doEasyAction() {
         GameBoard gameBoard = getPlayingAtBoard();
         for (int i = 0; i < availableShapes.size(); i++) {
-            int shapeIndex = availableShapes.remove(getRandom(0, availableShapes.size()));
+            int shapeIndex = availableShapes.remove(getRandom(availableShapes.size()));
             int[][] shapeCoordinates = getShapeFromIndex(shapeIndex);
             gameBoard.setActions(shapeCoordinates);
             gameBoard.setCurrentPlayingPlayerColor(this.getColor());
             int[][] legalPlacesOnBoard = convertArrayListTo2dIntArray(gameBoard.getLegalActionAi());
-            System.out.println(Arrays.deepToString(legalPlacesOnBoard));
             if (legalPlacesOnBoard.length == 0) {
                 if (getLegalActionsByRotatingAndFlippingTheShape(gameBoard))
                     legalPlacesOnBoard = convertArrayListTo2dIntArray(gameBoard.getLegalActionAi());
             }
             if (legalPlacesOnBoard.length > 0 && legalPlacesOnBoard[0].length > 0) {
-                int randomSHapeIndex = getRandom(0, gameBoard.getLegalActionAi().size());
-                int[] randomLegalPlace = gameBoard.getLegalActionAi().get(randomSHapeIndex);
-                if (legalPlacesOnBoard.length > 0) {
-                    gameBoard.placeShapeOnGridByAI(randomLegalPlace[0], randomLegalPlace[1]);
-                    return true;
-
-                }
+                int randomLegalPlaceIndex = getRandom(gameBoard.getLegalActionAi().size());
+                int[] randomLegalPlace = gameBoard.getLegalActionAi().get(randomLegalPlaceIndex);
+                placedShapesIndexes += shapeIndex + ",";
+                gameBoard.placeShapeOnGridByAI(randomLegalPlace[0], randomLegalPlace[1]);
+                return true;
             } else if (i == availableShapes.size() - 1) {
                 return false;
             } else {
@@ -130,13 +141,14 @@ public class AI extends shapesList {
 
     // Hard AI is a combination of easy and medium
     private boolean doHardAction() {
-        int randInt=getRandom(0,10);
+        int randInt = getRandom(10);
         if(randInt<3)
             return doEasyAction();
         else
             return doMediumAction();
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private boolean doMediumAction() {
         GameBoard gameBoard = getPlayingAtBoard();
         for (int i = 0; i < availableShapes.size(); i++) {
@@ -151,16 +163,14 @@ public class AI extends shapesList {
                     legalPlacesOnBoard = convertArrayListTo2dIntArray(gameBoard.getLegalActionAi());
             }
             if (legalPlacesOnBoard.length > 0) {
-                int shapeIndexToPlaceAt = getRandom(0, gameBoard.getLegalActionAi().size());
+                int shapeIndexToPlaceAt = getRandom(gameBoard.getLegalActionAi().size());
                 if(legalPlacesOnBoard.length>1){
                     shapeIndexToPlaceAt=isClosestToCenter(legalPlacesOnBoard,gameBoard.getGRID_SIZE());
                 }
                 int[] randomLegalPlace = gameBoard.getLegalActionAi().get(shapeIndexToPlaceAt);
-                if (legalPlacesOnBoard.length > 0) {
-                    gameBoard.placeShapeOnGridByAI(randomLegalPlace[0], randomLegalPlace[1]);
-                    return true;
+                gameBoard.placeShapeOnGridByAI(randomLegalPlace[0], randomLegalPlace[1]);
+                return true;
 
-                }
             } else if (i == availableShapes.size() - 1) {
                 return false;
             } else {
@@ -170,27 +180,23 @@ public class AI extends shapesList {
         return false;
     }
     // using pythogeras theorem
-    public double findClosest(int arr[], int target)
+    private double findClosest(int[] arr, int target)
     {
-        int x=arr[0],y=arr[1],x2=target,y2=target;
-        return Math.sqrt((x - x2)*(x - x2) + (y - y2)*(y - y2));
+        int x = arr[0], y = arr[1];
+        return Math.sqrt((x - target) * (x - target) + (y - target) * (y - target));
     }
 
 
-    private String getColorName() {
-        Color color = getColor();
-
-        if (Color.red.toString().equals(color.toString()))
-            return "Red";
-        else if (Color.green.toString().equals(color.toString()))
-            return "Green";
-        else if (Color.blue.toString().equals(color.toString()))
-            return "Blue";
-        else if (Color.orange.toString().equals(color.toString()))
-            return "Yellow";
-        return "";
+    /**
+     * @return
+     */
+    public String getPlacedShapesIndexes() {
+        return placedShapesIndexes;
     }
 
+    /**
+     *
+     */
     public void doAction() {
         delayActionByNMilliSeconds();
     }

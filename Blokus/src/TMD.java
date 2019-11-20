@@ -1,5 +1,5 @@
-/**
- * @author: Atul Mehla
+/*
+  @author: Atul Mehla
  */
 import javax.swing.*;
 import java.awt.*;
@@ -67,7 +67,8 @@ class TMD extends JPanel {
 		});
 		add(backButtonPanel);
 
-        TMD tmd = this;
+		//noinspection unused
+		TMD tmd = this;
 		setBackground(new Color(63, 71, 204));
 		setBounds(342, 0, 345, 478);
 		setLayout(null);

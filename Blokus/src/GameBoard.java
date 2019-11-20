@@ -1,5 +1,5 @@
-/**
- * @author: Atul Mehla
+/*
+  @author: Atul Mehla
  */
 
 import javax.swing.*;
@@ -212,7 +212,7 @@ class GameBoard extends JPanel {
             if (isShapeInsideGrid(x, y)) {
                 if (((notPlaceableNWSE(x, y) && (isDiagonallyPlaceable(x, y))) ||
                         (isOnGridCorner(x, y) && notPlaceableNWSE(x, y) && turnHandler.getCurrentPlayer().hasTakenCorner()) && isPlaceable(x, y))) {
-
+                    turnHandler.getCurrentPlayer().addPlacedShapeIndex();
                     for (int i = 0; i < actions.length; i++) {
                         AudioManager.playPlaced();
                         button[x + actions[i][0]][y + actions[i][1]].setBackground(turnHandler.getCurrentPlayer().getColor());
@@ -277,7 +277,6 @@ class GameBoard extends JPanel {
         try {
             for (int[] action : actions) {
                 if (isShapeInsideGrid(x, y)) {
-                    // System.out.println((x + action[0]) + "," + y + action[1]);
                     if (!button[x + action[0]][y + action[1]].isTaken())
                         button[x + action[0]][y + action[1]].setBackground(Color.white);
                 }

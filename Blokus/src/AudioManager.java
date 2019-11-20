@@ -3,7 +3,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 
-public class AudioManager {
+class AudioManager {
     private static Clip clip;
 
     public static void playPlaced() {

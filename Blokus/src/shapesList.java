@@ -1,5 +1,5 @@
-/**
- * @author: Atul Mehla
+/*
+  @author: Atul Mehla
  */
 
 import javax.swing.*;
@@ -226,11 +226,16 @@ class shapesList extends JPanel {
         hideShapePanel();
     }
 
-    public int[][] getShapeFromIndex(int i) {
+    void hideShapePanelFromIndex(int x) {
+        shapesPanelContainer[x].setVisible(false);
+    }
+
+    int[][] getShapeFromIndex(int i) {
         currentSelectedShapePanel = i;
         actions = this.shapes[i];
         return this.shapes[i];
     }
+
 
     // flip horizontally
     private void flipH(int[][] actions) {
@@ -248,7 +253,7 @@ class shapesList extends JPanel {
         rotateCoordinatesCW();
     }
 
-    public void flipForAI() {
+    void flipForAI() {
         flipV(actions);
     }
 
@@ -371,7 +376,7 @@ class shapesList extends JPanel {
         this.playingAtBoard = playingAtBoard;
     }
 
-    public GameBoard getPlayingAtBoard() {
+    GameBoard getPlayingAtBoard() {
         return playingAtBoard;
     }
 
@@ -391,11 +396,9 @@ class shapesList extends JPanel {
                 }
     }
 
-// --Commented out by Inspection START (11/17/2019 2:11 PM):
-//    public void reDrawShapes() {
-//        drawShapes();
-//    }
-// --Commented out by Inspection STOP (11/17/2019 2:11 PM)
+    int getCurrentSelectedShapePanel() {
+        return currentSelectedShapePanel;
+    }
 
     public void scrollActionHide() {
         try {
@@ -421,11 +424,27 @@ class shapesList extends JPanel {
         drawShapes();
     }
 
-    // --Commented out by Inspection START (11/17/2019 2:11 PM):
-//    //left for AI
-    public void doAction() throws InterruptedException {
+    public String getColorName() {
+        Color color = getColor();
+        if (Color.red.toString().equals(color.toString()))
+            return "Red";
+        else if (Color.green.toString().equals(color.toString()))
+            return "Green";
+        else if (Color.blue.toString().equals(color.toString()))
+            return "Blue";
+        else if (Color.orange.toString().equals(color.toString()))
+            return "Yellow";
+        return "";
     }
-// --Commented out by Inspection STOP (11/17/2019 2:11 PM)
+
+
+    //left for AI
+    public void doAction() {
+    }
+
+    public String getPlacedShapesIndexes() {
+        return "";
+    }
 
     // Methods to be overriden in children classes
     public boolean hasTakenCorner() {
@@ -439,6 +458,9 @@ class shapesList extends JPanel {
     public void setHasTakenCorner(boolean b) {
     }
 
+    public void addPlacedShapeIndex() {
+    }
+
     public boolean isStillPlaying() {
         return false;
     }
@@ -446,10 +468,6 @@ class shapesList extends JPanel {
     public void setStillPlaying(boolean stillPlaying) {
     }
 
-
-// --Commented out by Inspection START (11/10/2019 1:09 PM):
-//	public int[][] getAction() {
-//		return this.actions;
-//	}
-// --Commented out by Inspection STOP (11/10/2019 1:09 PM)
+    public void removePanelsBasedOnString(String s) {
+    }
 }

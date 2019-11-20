@@ -17,9 +17,9 @@ import java.util.Map;
 
 class DataManager {
 	private static final File boardSaveData = new File("session_data.json");
-	private static File gameSaveData = new File("settings_data.json");
+	private static final File gameSaveData = new File("settings_data.json");
 	private static final String[][][] data = new String[20][20][1];
-    private static final Map<String, String> settingsMap = new HashMap<String, String>();
+	private static final Map<String, String> settingsMap = new HashMap<>();
 
 	private static void parseGameData(JSONObject obj) {
 		//System.out.println((JSONObject) obj.get("Data"));
@@ -40,7 +40,7 @@ class DataManager {
 	}
 	
 	@SuppressWarnings("unchecked")
-    public static String save(String[][][] shapes) {
+	public static void save(String[][][] shapes) {
 
 		// when saving a file we need to see if the file already exists or not and the status of save
 		String status;
@@ -78,7 +78,6 @@ class DataManager {
 			e.printStackTrace();
 			status="failed";
 		}
-		return status;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -106,7 +105,7 @@ class DataManager {
 	@SuppressWarnings("unchecked")
     public static void updateGameSettings(Map<String, String> settings) {
 		JSONObject settingsObj = new JSONObject(); //Create JSONObject for all map values
-		settings.forEach((key, value) -> settingsObj.put(key, value)); //Iterate over map and add each pair to JSONObject
+		settings.forEach(settingsObj::put); //Iterate over map and add each pair to JSONObject
 		
 		//Nest the previous JSONObject into an outer JSONObject (for easy finding):
 		JSONObject saveObj = new JSONObject(); //Create outer JSONObject

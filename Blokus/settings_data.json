@@ -1,1 +1,19 @@
-[{"Data":{"timeLimit":"0","difficulty":"0","playerColors":"R","gridSize":"16","players":"1","minutes":"0","AI":"3","AIColors":"GBY"}}]
+[
+  {
+    "Data": {
+      "Blue": "6,14,12,",
+      "minutes": "0",
+      "players": "2",
+      "AI": "2",
+      "turn": "Green",
+      "AIColors": "BY",
+      "timeLimit": "0",
+      "difficulty": "0",
+      "Red": "20,19,18,17,",
+      "playerColors": "RG",
+      "gridSize": "16",
+      "Yellow": "0,17,20,",
+      "Green": "20,19,18,"
+    }
+  }
+]

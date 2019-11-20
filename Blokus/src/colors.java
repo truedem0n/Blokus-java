@@ -1,5 +1,5 @@
-/**
- * @author: Atul Mehla
+/*
+  @author: Atul Mehla
  */
 
 import javax.swing.*;
@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.Map;
 import java.util.Objects;
 
+@SuppressWarnings("StringConcatenationInLoop")
 class colors extends JPanel {
     /**
      * All the declarations
@@ -221,6 +222,7 @@ class colors extends JPanel {
         return true;
     }
 
+    @SuppressWarnings("StringConcatenationInLoop")
     private void setUpAIColors(int AI) {
         for (int i = 0; i < AI; i++) {
             if (!selectedColorsForPlayers.contains("G") && !selectedColorsForAI.contains("G"))
