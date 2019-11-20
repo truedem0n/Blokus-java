@@ -93,12 +93,11 @@ class Game extends JPanel {
                     GAME_SETTINGS.put("turn", turnHandler.getCurrentPlayer().getColorName());
                     DataManager.updateGameSettings(GAME_SETTINGS);
                     JOptionPane.showMessageDialog(new JFrame(), "Successfully saved");
+                    GAME_SETTINGS.get("turn");
                     System.exit(0);
                 } else if (value == 1) {
                     System.exit(0);
                 }
-
-
             }
         };
         dontAskBeforeClosing = e -> System.exit(0);
@@ -204,9 +203,11 @@ class Game extends JPanel {
 
         turnHandler = new TurnManager(Players, playerLabels, lblTurn, this);
         for (shapesList p : Players) {
-            if (GAME_SETTINGS.get("turn") != null && !GAME_SETTINGS.get("turn").equals(p.getColorName()) && p.getClass() == Player.class)
+            if (GAME_SETTINGS.get("turn") != null && !GAME_SETTINGS.get("turn").equals(p.getColorName()) && p.getClass() == Player.class) {
                 turnHandler.nextPlayer();
-
+            } else {
+                break;
+            }
         }
 
         GAME_BOARD = new GameBoard(GRID_SIZE, turnHandler, savedArray);
