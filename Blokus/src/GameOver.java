@@ -22,10 +22,8 @@ class GameOver extends JPanel {
      * @param frame        the frame
      */
     GameOver(String[] placedBlocks, GUI frame) {
-        System.out.println(Arrays.toString(placedBlocks));
         calGameState(placedBlocks);
         findWinner();
-        System.out.println(Arrays.toString(playerScores));
 
         setBackground(new Color(63, 71, 204));
         setBounds(0, 0, 600, 600);
