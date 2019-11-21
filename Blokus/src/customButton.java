@@ -48,7 +48,7 @@ class customButton extends JButton {
             c = "  " + c;
             JLabel label = new JLabel(c);
             int r = color.getRed(), g = color.getGreen(), b = color.getBlue();
-            label.setForeground(new Color(255 - r, 255 - g, 255 - b));
+            label.setForeground(new Color(Math.abs(255 - r), Math.abs(255 - g), Math.abs(255 - b)));
             label.setFont(new Font("Tahoma", Font.BOLD, 15));
             label.setBounds(0, 0, getWidth(), getHeight());
             label.setHorizontalAlignment(SwingConstants.LEADING);
