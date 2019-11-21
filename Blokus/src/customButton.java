@@ -27,7 +27,7 @@ class customButton extends JButton {
         setLayout(null);
     }
 
-    public String getColorName() {
+    private String getColorName() {
         Color color = this.getBackground();
         if (Color.red.toString().equals(color.toString()))
             return "Red";
@@ -45,13 +45,12 @@ class customButton extends JButton {
         if (!c.equals("")) {
             Color color = getColor();
             c = c.substring(0, 1);
-            c = "  " + c;
             JLabel label = new JLabel(c);
             int r = color.getRed(), g = color.getGreen(), b = color.getBlue();
             label.setForeground(new Color(Math.abs(255 - r), Math.abs(255 - g), Math.abs(255 - b)));
             label.setFont(new Font("Tahoma", Font.BOLD, 15));
             label.setBounds(0, 0, getWidth(), getHeight());
-            label.setHorizontalAlignment(SwingConstants.LEADING);
+            label.setHorizontalAlignment(SwingConstants.CENTER);
             add(label);
         }
         revalidate();

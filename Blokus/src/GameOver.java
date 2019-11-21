@@ -25,7 +25,7 @@ class GameOver extends JPanel {
         findWinner();
 
         setBackground(new Color(63, 71, 204));
-        setBounds(0, 0, 500, 500);
+        setBounds(0, 0, 600, 600);
         setLayout(null);
 
         JLabel lblNewLabel = new JLabel("Game Over");

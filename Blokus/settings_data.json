@@ -1,7 +1,7 @@
 [
   {
     "Data": {
-      "Blue": "2,0,4,13,3,",
+      "Blue": "10,13,",
       "minutes": "0",
       "players": "1",
       "AI": "3",
@@ -9,12 +9,12 @@
       "notPlaying": "Red,",
       "AIColors": "GBY",
       "timeLimit": "0",
-      "difficulty": "0",
-      "Red": "",
+      "difficulty": "2",
+      "Red": "20,",
       "playerColors": "R",
-      "gridSize": "16",
-      "Yellow": "13,14,8,0,",
-      "Green": "11,12,5,2,18,"
+      "gridSize": "20",
+      "Yellow": "",
+      "Green": "4,11,"
     }
   }
 ]
