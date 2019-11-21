@@ -1,18 +1,20 @@
 [
   {
     "Data": {
-      "timeLimit": "0",
-      "difficulty": "0",
-      "Red": "20,",
-      "playerColors": "R",
-      "gridSize": "16",
+      "Blue": "2,0,4,13,3,",
       "minutes": "0",
       "players": "1",
-      "AI": "1",
-      "turn": "Red",
-      "notPlaying": "",
-      "AIColors": "G",
-      "Green": "0,"
+      "AI": "3",
+      "turn": "Yellow",
+      "notPlaying": "Red,",
+      "AIColors": "GBY",
+      "timeLimit": "0",
+      "difficulty": "0",
+      "Red": "",
+      "playerColors": "R",
+      "gridSize": "16",
+      "Yellow": "13,14,8,0,",
+      "Green": "11,12,5,2,18,"
     }
   }
 ]
