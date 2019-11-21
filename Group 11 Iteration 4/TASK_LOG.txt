@@ -1,38 +1,38 @@
 Iteration 4 Tasks and done by whom
 Iteration4 Tasks:
-[#]       [Activity]      [Responsible]                         [Review on]   [Status]         [Comments]
+[#]       [Activity]      [Responsible]                         [Review]            [Status]         [Comments]
 ---------------------------------------------------------------------------------------------------------
- 1  | Future Networking | Dylan Ellsworth or Devin Leriche    | Not Done    | Not done       | 
+ 1  | Future Networking | Dylan Ellsworth or Devin Leriche    |       Done    |       done       | 
       Study        
               
- 2  | Design Pattern    | Dylan Ellsworth or Devin Leriche    | Not Done    | Not done       |
+ 2  | Design Pattern    | Dylan Ellsworth or Devin Leriche    |       Done    |       done       |
       Study                       
               
- 3  | Unit Tests        | Farhan Rafid and Ricky Hineman      | Not Done    | Not done       |
+ 3  | Unit Tests        | Farhan Rafid and Ricky Hineman      |       Done    |       done       |
                                   
                                   
- 4  | Final Release     | Atul,Ricky,Devin, and Dylan         | Not Done    |       done     | final release tasks to be sub-divided amongst group memebers
+ 4  | Final Release     | Atul,Ricky,Devin, and Dylan         |       Done    |       done       | final release tasks to be sub-divided amongst group memebers
 
 
 Final Release tasks:
-[#]       [Activity]             [Responsible]                         [Review on]   [Status]          [Comments]
+[#]       [Activity]             [Responsible]                             [Review]          [Status]          [Comments]
 ---------------------------------------------------------------------------------------------------------
- 1  | Documentation              | Dylan Ellsworth or Devin Leriche    | Not Done    | Not done         | 
+ 1  | Documentation check        | Dylan Ellsworth or Devin Leriche    |       Done    |       done         | 
               
               
- 2  | Finding bugs(UI bugs)      | Dylan Ellsworth or Devin Leriche    | Not Done    | Not done         |
+ 2  | Finding bugs(UI bugs)      | Dylan Ellsworth or Devin Leriche    |       Done    |       done         |
       in Game           
               
                                   
- 4  | Final Release              | Ricky Hineman, and Atul Mehla       | not done    |       done       | 
+ 4  | Final Release              | Ricky Hineman, and Atul Mehla       |       done    |       done         | 
       features
 
 
 
 
 Final Release featues:
-[#]       [Activity]                             [Responsible]                         [Review on]   [Status]                [Comments]
----------------------------------------------------------------------------------------------------------
+[#]       [Activity]                             [Responsible]                         [Review]          [Status]                [Comments]
+-------------------------------------------------------------------------------------------------------------------------------------
  1  | ability to play a 4 player human game     | Atul Mehla                          |    Done    | finished on 17th Nov | 
               
               
