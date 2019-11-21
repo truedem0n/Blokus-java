@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Blokus:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Blokus_jar</output-path>
+    <root id="archive" name="Blokus.jar">
+      <element id="module-output" name="Blokus" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/dependencies/json-simple-1.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

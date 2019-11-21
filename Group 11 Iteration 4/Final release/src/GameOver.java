@@ -4,13 +4,14 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * The type Game over.
  */
 class GameOver extends JPanel {
 
-    private final int[] playerScores = new int[4];
+    private final int[] playerScores = {0,0,0,0};
     private String winner = "";
     private int winnerIndex;
 
@@ -25,7 +26,7 @@ class GameOver extends JPanel {
         findWinner();
 
         setBackground(new Color(63, 71, 204));
-        setBounds(0, 0, 500, 500);
+        setBounds(0, 0, 600, 600);
         setLayout(null);
 
         JLabel lblNewLabel = new JLabel("Game Over");
@@ -41,7 +42,7 @@ class GameOver extends JPanel {
         lblPlayerWins.setForeground(new Color(255, 255, 255));
         lblPlayerWins.setFont(new Font("Tahoma", Font.PLAIN, 15));
         lblPlayerWins.setHorizontalAlignment(SwingConstants.LEADING);
-        lblPlayerWins.setBounds(130, 118, 250, 26);
+        lblPlayerWins.setBounds(130, 118, 300, 26);
         add(lblPlayerWins);
 
         JLabel lblWouldLikeTo = new JLabel("Would like to play again?");
@@ -55,7 +56,7 @@ class GameOver extends JPanel {
         btnNewButton.addActionListener(e -> {
             GUI gui = new GUI();
             frame.setVisible(false);
-            gui.setVisible(true);
+            gui.main(null);
         });
         btnNewButton.setBounds(130, 190, 82, 36);
         btnNewButton.setBackground(new Color(255, 200, 0));

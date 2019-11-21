@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * The type Ai.
@@ -38,8 +39,10 @@ public class AI extends shapesList {
                 if (availableShapes.get(i) == Integer.parseInt(es)) {
                     //noinspection SuspiciousListRemoveInLoop
                     availableShapes.remove(i);
+
                 }
             }
+            hideShapePanelFromIndex(Integer.parseInt(es));
         }
         }
     }
@@ -63,6 +66,10 @@ public class AI extends shapesList {
             flipForAI();
         }
         return false;
+    }
+
+    public void setPlacedShapesIndexes(String s) {
+        placedShapesIndexes=s;
     }
 
     private void delayActionByNMilliSeconds() {
@@ -170,6 +177,7 @@ public class AI extends shapesList {
                     shapeIndexToPlaceAt=isClosestToCenter(legalPlacesOnBoard,gameBoard.getGRID_SIZE());
                 }
                 int[] randomLegalPlace = gameBoard.getLegalActionAi().get(shapeIndexToPlaceAt);
+                placedShapesIndexes += shapeIndex + ",";
                 gameBoard.placeShapeOnGridByAI(randomLegalPlace[0], randomLegalPlace[1]);
                 return true;
 
@@ -201,6 +209,7 @@ public class AI extends shapesList {
      */
     public void doAction() {
         delayActionByNMilliSeconds();
+
     }
 
     /**

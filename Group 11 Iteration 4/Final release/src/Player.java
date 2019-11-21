@@ -38,6 +38,10 @@ class Player extends shapesList {
         return placedShapesIndexes;
     }
 
+    public void setPlacedShapesIndexes(String s) {
+        placedShapesIndexes=s;
+    }
+
     public void setHasTakenCorner(boolean hasTakenCorner) {
         this.hasTakenCorner = hasTakenCorner;
     }

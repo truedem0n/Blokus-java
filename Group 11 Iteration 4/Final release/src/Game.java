@@ -333,13 +333,17 @@ class Game extends JPanel {
         for (int i = 0; i < Players.length; i++) {
             if (i < numberOfPlayers) {
                 Players[i] = new Player(playerColors[i]);
-                if (GAME_SETTINGS.get(Players[i].getColorName()) != null)
+                if (GAME_SETTINGS.get(Players[i].getColorName()) != null){
                     Players[i].removePanelsBasedOnString(GAME_SETTINGS.get(Players[i].getColorName()));
+                    Players[i].setPlacedShapesIndexes(GAME_SETTINGS.get(Players[i].getColorName()));
+                }
                 playerLabels[i] = "Turn: Player " + Players[i].getColorName();
             } else {
                 Players[i] = new AI(playerColors[i], gAME_SETTINGS.get("difficulty"));
-                if (GAME_SETTINGS.get(Players[i].getColorName()) != null)
+                if (GAME_SETTINGS.get(Players[i].getColorName()) != null){
                     Players[i].removePanelsBasedOnString(GAME_SETTINGS.get(Players[i].getColorName()));
+                    Players[i].setPlacedShapesIndexes(GAME_SETTINGS.get(Players[i].getColorName()));
+                }
                 playerLabels[i] = "Turn: AI " + Players[i].getColorName();
             }
             Players[i].setVisible(false);
