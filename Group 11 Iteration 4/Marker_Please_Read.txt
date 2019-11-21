@@ -16,10 +16,7 @@ So when you click on a shape, some sound should be played.
 -The jar file only runs on Linux and you can run it on a linux machine 
  using this command
  "java -jar blokus.jar"
--Please make sure that you have latest jdk to run the jar file, it is 
- compiled with the latest jdk 
--To load a game, please make sure that you restart the application before
- loading.
+ 
 -The included code in final release can be run using this command.
  On Windows
  "javac -cp ".;json-simple-1.1.jar" *.java"
