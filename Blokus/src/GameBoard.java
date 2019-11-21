@@ -182,25 +182,17 @@ class GameBoard extends JPanel {
     }
 
     public String[] getPlacedBlocks() {
-        String[] rgby = new String[4];
+        String[] rgby = {"","","",""};
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
                 Color color = button[i][j].getColor();
-                if (color.getRGB() == Color.red.getRGB()) {
-                    if (rgby[0] == null)
-                        rgby[0] = "";
+                if (color.toString().equals(Color.red.toString())) {
                     rgby[0] += "r";
-                } else if (color.getRGB() == Color.green.getRGB()) {
-                    if (rgby[1] == null)
-                        rgby[1] = "";
+                } else if (color.toString().equals(Color.green.toString())) {
                     rgby[1] += "g";
-                } else if (color.getRGB() == Color.blue.getRGB()) {
-                    if (rgby[2] == null)
-                        rgby[2] = "";
+                } else if (color.toString().equals(Color.blue.toString())) {
                     rgby[2] += "b";
-                } else if (color.getRGB() == Color.orange.getRGB()) {
-                    if (rgby[3] == null)
-                        rgby[3] = "";
+                } else if (color.toString().equals(Color.orange.toString())) {
                     rgby[3] += "y";
                 }
             }
