@@ -12,18 +12,26 @@ won't be registered. We couldn't fix this but we made sure that when
 a click successfully registers  a sound feedback is given to the user.
 So when you click on a shape, some sound should be played.
 
--Running instructions
+-jar file running instructions
 -The jar file only runs on Linux and you can run it on a linux machine 
  using this command
  "java -jar blokus.jar"
  
--The included code in final release can be run using this command.
+-Compiling instructions.
  On Windows
  "javac -cp ".;json-simple-1.1.jar" *.java"
  "java -cp ".;json-simple-1.1.jar" GUI"
  On Linux
  "javac -cp ".:json-simple-1.1.jar" *.java"
  "java -cp ".:json-simple-1.1.jar" GUI"
+
+-Everything that proffessor requested in the announcement should be 
+ working fine. What's partially working is time limit because this is
+ what we plan to implement if we procced with networking in blokus.
+
+-We removed the randomize color option for now because we focused more on 
+ how we should be assigning colors to players and AI. There's a lot 
+ of logic behind it and we simply didn't have time for randomize.
  
 -We are using json to save and load our board data since it's the most well
  know data structure to pass data.
