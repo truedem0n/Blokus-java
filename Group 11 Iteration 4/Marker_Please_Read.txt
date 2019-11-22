@@ -27,3 +27,23 @@ So when you click on a shape, some sound should be played.
  
 -We are using json to save and load our board data since it's the most well
  know data structure to pass data.
+
+-In our code we don't have so many comments because we are using longer variable
+ names so that commenting is less needed. However, we have commented where needed.
+
+-Also we didn't specify in previous iterations that you can use mouse wheel to 
+ rotate a shape, middle click to flip vertically, and right click to flip
+ horizontally.
+
+-We have hints implemented but only for AI because playing with hints is no fun.
+
+-The feedback we got for load and save from the last iteration is implemented in 
+ the design so figuring how to save shouldn't be a problem.
+
+ AI Behaviours:
+  Easy  - plays random shape at a random legal place
+  Medium- plays biggest shape at a legal place that is closest to the center of the grid.
+  Hard  - 30% of time plays easy and the rest 70% plays medium.
+
+and finally
+Thank you for looking at this file and our project.
